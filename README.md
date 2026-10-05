@@ -5,8 +5,11 @@ This is a *VERY* simple HTML for Twitch &amp; Kick Chat! (uses AI for designing,
 I'd *LOVE* to add more if possible, but with how much I added to it, I kinda doubt I could add anymore. But if you wish to support me, even a little, you should go check out my YouTube channel! 
 
 YouTube: @TheRhythmGamingChannel
+
 Twitch: Kawaiikoneko3128
+
 Steam: CookieKid92 (I know, *BAD* usernames lol) 
+
 
 The rest is just translated stuff for other users that doesn't know English!
 
