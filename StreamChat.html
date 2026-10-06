@@ -2759,5 +2759,697 @@ function handleLogoClick(){let url;if(currentPlatform==='twitch')url=(connState.
 init();
 })();
 </script>
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   StreamChat i18n — Popup language switcher
+   Languages: 日本語 (default) · English · Deutsch · Español · 한국어 · 中文
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ── Language registry — order matters, ja is the default ─────────────── */
+const LANGUAGES = [
+  { code:'ja', flag:'🇯🇵', native:'日本語',    en:'Japanese' },
+  { code:'en', flag:'🇺🇸', native:'English',   en:'English'  },
+  { code:'de', flag:'🇩🇪', native:'Deutsch',   en:'German'   },
+  { code:'es', flag:'🇪🇸', native:'Español',   en:'Spanish'  },
+  { code:'ko', flag:'🇰🇷', native:'한국어',     en:'Korean'   },
+  { code:'zh', flag:'🇨🇳', native:'中文',       en:'Chinese'  }
+];
+
+/* ── Master key list (English source strings) ─────────────────────────── */
+/* Every parallel translation array below must match this exactly by index. */
+const K = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Custom','Settings','Help','Extra information','Keyboard shortcuts',
+/* 10 */'Twitch Streamer','Kick Streamer','Discord Server','YouTube Live','Custom WebSocket','streamer name','Connect','Disconnect','Not connected','Connected',
+/* 20 */'Connecting…','Reconnecting…','Connection error','Streamer Stats','Channel','Uptime','Viewers','Game','Title','Status',
+/* 30 */'Preset Streamers','Live','Category','Recent','offline','Whitelisted Users','Bypass ALL filters','username','Layout Preset','Default',
+/* 40 */'Modern','Classic','Read-only chat.','All data stays local on this device.','Search','Stats','Bookmarks','Tags','Refresh','Export',
+/* 50 */'Clear','Browser Source Mode','Blocked','Search messages…','Previous','Next','Close','📌 Pinned','↓ New messages','New messages',
+/* 60 */'Connect to a streamer to see their live chat.','Read-only · Everything stays local','Read-only chat — no sending','Hide/show in-game display','First Message!','Copied ✓','Copy failed','Nothing to copy','Chat cleared','Chat refreshed ✓',
+/* 70 */'Settings loaded','Load failed:','Blocked:','Unblocked:','Highlighted:','Removed:','Tag added:','Preset saved:','Theme:','Layout:',
+/* 80 */'Volume:','Font:','Switched to','Exited Browser Source mode','Exit Overlay Mode','Sound on','Sound off','TTS ON','TTS OFF','Auto-scroll ON',
+/* 90 */'Auto-scroll OFF','Avatars ON','Avatars OFF','Usernames ON','Usernames OFF','Timestamps ON','Timestamps OFF','No messages','Message copied','Appearance',
+/* 100 */'Chat','Filters','Sounds','Animations','VTuber','Integrations','AI Tools','Mods & Games','VR / Quest','Advanced / Extras',
+/* 110 */'Test Setup','Shortcuts','Theme','Main theme','Desktop Default','White / Light','Dark / Black','Accent preset','Neon','Matrix',
+/* 120 */'Sunset','VTuber Pink','Custom accent','Chat background image URL','Chat opacity','Transparent background','Layout & Sizing','Resolution scale','Font size','Font family',
+/* 130 */'Monospace','Serif','Corner radius','Sharp','Small','Normal','Large','Rounded','Pill','Message spacing',
+/* 140 */'Compact','Spacious','Message style','Flat','Outlined','Avatar shape','Circle','Square','Console / TV mode','Compact avatars',
+/* 150 */'Badge size','Username font size (px)','Display','Show avatars','Show usernames','Show timestamps','Timestamp format','24-hour','12-hour','Relative',
+/* 160 */'Group consecutive messages','Auto-scroll','Pause auto-scroll on hover','Pause on hover message','Show uptime','Show New User Tag','Show user badges','Show message counter per user','Enable emotes','Show recent users strip',
+/* 170 */'Show stream info card','Show channel pill','Deduplicate identical msgs (30s)','Messages to keep','Max msgs / second','Persist chat on reload','Auto-connect default streamer','Highlighting','Highlight my mentions','Mention name',
+/* 180 */'Highlight color','Keyword highlight color','Spam Filter','Hide spam messages','Sensitivity','Low','Medium','High','Aggressive','Min repeated chars',
+/* 190 */'Min repeated words','Min message length','Anti-ASCII art','Block emoji-only messages','Block symbol-only messages','Max ALL-CAPS percentage (0 = off)','Content Filters','Auto-block chatbots','Hide links','Filter links',
+/* 200 */'Link whitelist','Blocked words','Extra bots','Regex filter','Notification Sound','Enable sound','Volume (0–175%)','Upload custom sound','Upload file…','Test',
+/* 210 */'Sound triggers','Play on all messages','Play on mentions only','Play on highlighted users','Play on donations/events','Only when tab is unfocused','Sound delay (ms)','Alerts','Desktop notifications','Read messages aloud (TTS)',
+/* 220 */'TTS rate','TTS pitch','Flash tab title on mention','Motion','Enable animations','Performance mode','Low power mode','Animation speed','Easing curve','Smooth',
+/* 230 */'Snappy','Bouncy','Linear','Message animations','Enter animation','Fade in','Pop in','Slide from left','Slide from right','Slide from top',
+/* 240 */'Bounce in','Flip in (3D)','Zoom + fade','Hover animation','None','Lift up','Glow','Scale','Highlight animation','Static',
+/* 250 */'Pulse','New user highlight animation','Shake the whole message','Accent animations','Refresh rate','Auto-detect','VTuber Overlay','Enable VTuber overlay','Auto-detect VTube Studio','VTS host',
+/* 260 */'VTS port','Detect VTS','Screen Capture','Stop','Position','Bottom Right','Bottom Left','Top Right','Top Left','Size (px)',
+/* 270 */'Opacity (%)','Mirror horizontally','Enable Browser Source mode','Copy OBS CSS','Copy this page URL','OBS WebSocket','Enable OBS WebSocket','OBS host','OBS port','OBS password',
+/* 280 */'Discord Chat Reader','Bot token','Auto-connect on load','YouTube Data API key','Auto-reconnect','Now Playing / Music','Show now-playing card','Poll interval (ms)','Local relay polling','Relay URL',
+/* 290 */'Nightbot relay mode','YouTube Music support','Enable Spotify','Spotify Client ID','Streamlabs Socket API','Enable Streamlabs events','Socket token','Webhooks','Discord webhook URL','Slack webhook URL',
+/* 300 */'TikTok Live (relay)','AI Chat Summarizer','Enable AI summarizer','AI provider','API key','Model name','Custom endpoint URL','Summarize every (s)','Max messages to analyze','Show summary in chat',
+/* 310 */'AI Insights','Sentiment analysis','Topic detection','Download Everything','Minecraft Mod','Download full .zip','Download single .jar','Copy setup guide','osu! (stable) Plugin','Download C# project',
+/* 320 */'Game Integration Code','Target','Meta Quest / VR HTML','Download VR HTML','Transfer to Quest','Forget Quest folder','Behavior','Stream delay buffer (s)','Auto-remove messages after (s)','Auto-clear on reconnect',
+/* 330 */'Default streamer','Recent strip size','Max messages per user','Cleanup interval','Streamer Mode','Enable Streamer Mode','Mobile','Show bottom navigation bar','Edge swipe to open sidebar','Haptic feedback',
+/* 340 */'Compact toolbar on mobile','Your PC','Detect my PC','Copy specs','Check if Setup supports [game]','Check','Estimated FPS on your setup','Lowest quality','Default / Basic','Highest / Max',
+/* 350 */'Your detected','Steam requirements','Hear / Test Microphone','Microphone','Input volume','Monitor output volume','Listen',"This App's Resource Usage",'FPS (this tab)','JS Heap used',
+/* 360 */'JS Heap total','JS Heap limit','DOM nodes','Chat messages','CPU cores','Tab visibility','Start live stats','How to open Task Manager','Private notes','Only you can see this.',
+/* 370 */'Chat history','No tracked messages yet.','Account age','Following','First seen','Messages','Last message','Avg length','Session msgs','View',
+/* 380 */'Highlight','Bookmark','Tag','Block','Warning',"Don't Remind Me Again",'Okay, I Understand','Save','Cancel','File name',
+/* 390 */'Format','Welcome to Stream Chat!','Yes, show me!',"No, I'll figure it out",'Pick your platform','Connect to a streamer','Live chat','Status bar','Now Playing','Step',
+/* 400 */'of','Back','Skip','Finish','Switch language','Language','Japanese','English','German','Spanish',
+/* 410 */'Korean','Chinese'
+];
+
+/* ── Translations (parallel arrays, index-aligned with K) ─────────────── */
+
+const JA = [
+/* 0 */'ストリームチャット','Twitch','Kick','Discord','YouTube','カスタム','設定','ヘルプ','追加情報','キーボードショートカット',
+/* 10 */'Twitch配信者','Kick配信者','Discordサーバー','YouTubeライブ','カスタムWebSocket','配信者名','接続','切断','未接続','接続済み',
+/* 20 */'接続中…','再接続中…','接続エラー','配信者統計','チャンネル','配信時間','視聴者数','ゲーム','タイトル','ステータス',
+/* 30 */'プリセット配信者','ライブ','カテゴリ','最近','オフライン','ホワイトリストユーザー','すべてのフィルターを回避','ユーザー名','レイアウトプリセット','デフォルト',
+/* 40 */'モダン','クラシック','閲覧専用チャット。','すべてのデータはこのデバイスにのみ保存されます。','検索','統計','ブックマーク','タグ','更新','エクスポート',
+/* 50 */'クリア','ブラウザソースモード','ブロック済み','メッセージを検索…','前へ','次へ','閉じる','📌 ピン留め','↓ 新着メッセージ','新着メッセージ',
+/* 60 */'配信者に接続してライブチャットを表示しましょう。','閲覧専用 · すべてローカルに保存','閲覧専用チャット — 送信できません','ゲーム内表示の切替','初メッセージ！','コピーしました ✓','コピーに失敗しました','コピーする内容がありません','チャットをクリアしました','チャットを更新しました ✓',
+/* 70 */'設定を読み込みました','読み込みに失敗:','ブロックしました:','ブロックを解除:','ハイライト:','削除しました:','タグを追加:','プリセットを保存:','テーマ:','レイアウト:',
+/* 80 */'音量:','フォント:','切り替えました:','ブラウザソースモードを終了しました','オーバーレイモードを終了','サウンドON','サウンドOFF','読み上げON','読み上げOFF','自動スクロールON',
+/* 90 */'自動スクロールOFF','アバター表示ON','アバター表示OFF','ユーザー名表示ON','ユーザー名表示OFF','タイムスタンプON','タイムスタンプOFF','メッセージがありません','メッセージをコピーしました','外観',
+/* 100 */'チャット','フィルター','サウンド','アニメーション','VTuber','連携','AIツール','MOD＆ゲーム','VR / Quest','詳細設定 / その他',
+/* 110 */'テスト設定','ショートカット','テーマ','メインテーマ','デスクトップ既定','ホワイト / ライト','ダーク / ブラック','アクセントプリセット','ネオン','マトリックス',
+/* 120 */'サンセット','VTuberピンク','カスタムアクセント','チャット背景画像URL','チャットの不透明度','透明背景','レイアウトとサイズ','解像度スケール','フォントサイズ','フォントファミリー',
+/* 130 */'等幅','セリフ','角の丸み','シャープ','小','標準','大','丸め','ピル','メッセージ間隔',
+/* 140 */'コンパクト','広め','メッセージスタイル','フラット','枠線','アバターの形','円形','四角','コンソール / TVモード','コンパクトアバター',
+/* 150 */'バッジサイズ','ユーザー名フォントサイズ (px)','表示','アバターを表示','ユーザー名を表示','タイムスタンプを表示','タイムスタンプ形式','24時間','12時間','相対',
+/* 160 */'連続メッセージをまとめる','自動スクロール','ホバー時に自動スクロールを停止','メッセージのホバー時に停止','配信時間を表示','新規ユーザータグを表示','ユーザーバッジを表示','ユーザーごとのメッセージ数を表示','エモートを有効化','最近のユーザー欄を表示',
+/* 170 */'配信情報カードを表示','チャンネルピルを表示','同一メッセージを重複排除（30秒）','保持するメッセージ数','1秒あたりの最大メッセージ数','リロード時にチャットを保持','デフォルト配信者に自動接続','ハイライト','自分のメンションをハイライト','メンション名',
+/* 180 */'ハイライト色','キーワードのハイライト色','スパムフィルター','スパムメッセージを非表示','感度','低','中','高','強力','最小連続文字数',
+/* 190 */'最小連続単語数','最小メッセージ長','ASCIIアート対策','絵文字のみのメッセージをブロック','記号のみのメッセージをブロック','大文字の最大割合（0 = 無効）','コンテンツフィルター','チャットボットを自動ブロック','リンクを非表示','リンクを除外（メッセージ全体を削除）',
+/* 200 */'リンクホワイトリスト','ブロック語','追加Bot','正規表現フィルター','通知音','サウンドを有効化','音量（0〜175%）','カスタムサウンドをアップロード','ファイルを選択…','テスト',
+/* 210 */'サウンドトリガー','すべてのメッセージで再生','メンション時のみ再生','ハイライトユーザーで再生','投げ銭・イベントで再生','タブが非アクティブ時のみ','サウンド遅延 (ms)','アラート','デスクトップ通知','メッセージを読み上げ（TTS）',
+/* 220 */'TTS速度','TTSピッチ','メンション時にタブタイトルを点滅','モーション','アニメーションを有効化','パフォーマンスモード','低電力モード','アニメーション速度','イージングカーブ','スムーズ',
+/* 230 */'スナッピー','バウンス','リニア','メッセージアニメーション','登場アニメーション','フェードイン','ポップイン','左からスライド','右からスライド','上からスライド',
+/* 240 */'バウンスイン','3Dフリップ','ズーム + フェード','ホバーアニメーション','なし','浮き上がり','グロー','拡大','ハイライトアニメーション','静止',
+/* 250 */'パルス','新規ユーザーのハイライトアニメーション','メッセージ全体を振動','アクセントアニメーション','リフレッシュレート','自動検出','VTuberオーバーレイ','VTuberオーバーレイを有効化','VTube Studioを自動検出','VTSホスト',
+/* 260 */'VTSポート','VTSを検出','画面キャプチャ','停止','位置','右下','左下','右上','左上','サイズ (px)',
+/* 270 */'不透明度 (%)','左右反転','ブラウザソースモードを有効化','OBS CSSをコピー','このページのURLをコピー','OBS WebSocket','OBS WebSocketを有効化','OBSホスト','OBSポート','OBSパスワード',
+/* 280 */'Discordチャット読み取り','Botトークン','読み込み時に自動接続','YouTube Data APIキー','自動再接続','再生中 / 音楽','再生中カードを表示','ポーリング間隔 (ms)','ローカルリレーをポーリング','リレーURL',
+/* 290 */'Nightbotリレーモード','YouTube Music対応','Spotifyを有効化','SpotifyクライアントID','Streamlabs Socket API','Streamlabsイベントを有効化','ソケットトークン','Webhook','Discord Webhook URL','Slack Webhook URL',
+/* 300 */'TikTokライブ（リレー）','AIチャット要約','AI要約を有効化','AIプロバイダ','APIキー','モデル名','カスタムエンドポイントURL','要約間隔 (秒)','解析する最大メッセージ数','チャットに要約を表示',
+/* 310 */'AIインサイト','感情分析','トピック検出','すべてをダウンロード','Minecraft MOD','完全版.zipをダウンロード','単一.jarをダウンロード','セットアップ手順をコピー','osu!（stable）プラグイン','C#プロジェクトをダウンロード',
+/* 320 */'ゲーム連携コード','ターゲット','Meta Quest / VR HTML','VR HTMLをダウンロード','Questに転送','Questフォルダを忘れる','動作','配信遅延バッファ (秒)','メッセージを自動削除 (秒後)','再接続時に自動クリア',
+/* 330 */'デフォルト配信者','最近欄のサイズ','ユーザーごとの最大メッセージ数','クリーンアップ間隔','配信者モード','配信者モードを有効化','モバイル','下部ナビゲーションバーを表示','エッジスワイプでサイドバーを開く','触覚フィードバック',
+/* 340 */'モバイルでコンパクトツールバー','あなたのPC','PCを検出','スペックをコピー','[ゲーム]が動作するか確認','確認','あなたの環境での推定FPS','最低画質','標準 / 基本','最高 / 最大',
+/* 350 */'検出結果','Steam要件','マイクのテスト','マイク','入力音量','モニター出力音量','聴く','このアプリのリソース使用量','FPS（このタブ）','JSヒープ使用量',
+/* 360 */'JSヒープ合計','JSヒープ上限','DOMノード数','チャットメッセージ','CPUコア','タブの表示状態','ライブ統計を開始','タスクマネージャーの開き方','プライベートメモ','あなただけが見られます。',
+/* 370 */'チャット履歴','追跡中のメッセージがありません。','アカウント年齢','フォロー中','初回確認','メッセージ','最終メッセージ','平均文字数','セッション中のメッセージ数','表示',
+/* 380 */'ハイライト','ブックマーク','タグ','ブロック','警告','次回から表示しない','はい、理解しました','保存','キャンセル','ファイル名',
+/* 390 */'形式','ストリームチャットへようこそ！','はい、見せてください！','いいえ、自分で試します','プラットフォームを選択','配信者に接続','ライブチャット','ステータスバー','再生中','ステップ',
+/* 400 */'/','戻る','スキップ','完了','言語を切り替え','言語','日本語','英語','ドイツ語','スペイン語',
+/* 410 */'韓国語','中国語'
+];
+
+const DE = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Benutzerdefiniert','Einstellungen','Hilfe','Zusätzliche Informationen','Tastenkürzel',
+/* 10 */'Twitch-Streamer','Kick-Streamer','Discord-Server','YouTube Live','Benutzerdefiniertes WebSocket','Streamer-Name','Verbinden','Trennen','Nicht verbunden','Verbunden',
+/* 20 */'Verbinde…','Neuverbindung…','Verbindungsfehler','Streamer-Statistik','Kanal','Sendezeit','Zuschauer','Spiel','Titel','Status',
+/* 30 */'Vorausgewählte Streamer','Live','Kategorie','Kürzlich','offline','Erlaubte Nutzer','Alle Filter umgehen','Benutzername','Layout-Vorlage','Standard',
+/* 40 */'Modern','Klassisch','Nur-Lese-Chat.','Alle Daten bleiben lokal auf diesem Gerät.','Suche','Statistik','Lesezeichen','Tags','Aktualisieren','Exportieren',
+/* 50 */'Leeren','Browser-Quellmodus','Blockiert','Nachrichten durchsuchen…','Zurück','Weiter','Schließen','📌 Angepinnt','↓ Neue Nachrichten','Neue Nachrichten',
+/* 60 */'Mit einem Streamer verbinden, um den Live-Chat zu sehen.','Nur-Lese · Alles bleibt lokal','Nur-Lese-Chat — kein Senden','In-Game-Anzeige ein/aus','Erste Nachricht!','Kopiert ✓','Kopieren fehlgeschlagen','Nichts zu kopieren','Chat geleert','Chat aktualisiert ✓',
+/* 70 */'Einstellungen geladen','Laden fehlgeschlagen:','Blockiert:','Entsperrt:','Hervorgehoben:','Entfernt:','Tag hinzugefügt:','Vorlage gespeichert:','Thema:','Layout:',
+/* 80 */'Lautstärke:','Schrift:','Gewechselt zu','Browser-Quellmodus beendet','Overlay-Modus beenden','Ton an','Ton aus','TTS an','TTS aus','Auto-Scroll an',
+/* 90 */'Auto-Scroll aus','Avatare an','Avatare aus','Benutzernamen an','Benutzernamen aus','Zeitstempel an','Zeitstempel aus','Keine Nachrichten','Nachricht kopiert','Erscheinungsbild',
+/* 100 */'Chat','Filter','Töne','Animationen','VTuber','Integrationen','KI-Werkzeuge','Mods & Spiele','VR / Quest','Erweitert / Extras',
+/* 110 */'Test-Einrichtung','Tastenkürzel','Thema','Hauptthema','Desktop-Standard','Weiß / Hell','Dunkel / Schwarz','Akzent-Voreinstellung','Neon','Matrix',
+/* 120 */'Sonnenuntergang','VTuber Pink','Benutzerdefinierter Akzent','Chat-Hintergrundbild-URL','Chat-Deckkraft','Transparenter Hintergrund','Layout & Größe','Auflösungsskalierung','Schriftgröße','Schriftfamilie',
+/* 130 */'Monospace','Serif','Eckenradius','Scharf','Klein','Normal','Groß','Abgerundet','Pille','Nachrichtenabstand',
+/* 140 */'Kompakt','Geräumig','Nachrichtenstil','Flach','Umrandet','Avatar-Form','Kreis','Quadrat','Konsolen-/TV-Modus','Kompakte Avatare',
+/* 150 */'Abzeichengröße','Benutzernamen-Schriftgröße (px)','Anzeige','Avatare anzeigen','Benutzernamen anzeigen','Zeitstempel anzeigen','Zeitstempel-Format','24-Stunden','12-Stunden','Relativ',
+/* 160 */'Aufeinanderfolgende Nachrichten gruppieren','Auto-Scroll','Auto-Scroll bei Hover pausieren','Pause bei Hover über Nachricht','Sendezeit anzeigen','Neuer-Benutzer-Tag anzeigen','Benutzerabzeichen anzeigen','Nachrichtenzähler pro Benutzer anzeigen','Emotes aktivieren','Kürzlich-Benutzer-Leiste anzeigen',
+/* 170 */'Stream-Info-Karte anzeigen','Kanal-Pille anzeigen','Identische Nachrichten entdoppeln (30 s)','Nachrichten behalten','Max. Nachrichten/Sekunde','Chat beim Neuladen behalten','Standard-Streamer automatisch verbinden','Hervorhebung','Meine Erwähnungen hervorheben','Erwähnungsname',
+/* 180 */'Hervorhebungsfarbe','Schlüsselwort-Hervorhebungsfarbe','Spam-Filter','Spam-Nachrichten ausblenden','Empfindlichkeit','Niedrig','Mittel','Hoch','Aggressiv','Min. wiederholte Zeichen',
+/* 190 */'Min. wiederholte Wörter','Min. Nachrichtenlänge','Anti-ASCII-Kunst','Nur-Emoji-Nachrichten blockieren','Nur-Symbol-Nachrichten blockieren','Max. Großbuchstaben-Prozentsatz (0 = aus)','Inhaltsfilter','Chatbots automatisch blockieren','Links ausblenden','Links filtern (ganze Nachricht verwerfen)',
+/* 200 */'Link-Whitelist','Blockierte Wörter','Zusätzliche Bots','Regex-Filter','Benachrichtigungston','Ton aktivieren','Lautstärke (0–175 %)','Benutzerdefinierten Ton hochladen','Datei hochladen…','Testen',
+/* 210 */'Ton-Auslöser','Bei allen Nachrichten abspielen','Nur bei Erwähnungen abspielen','Bei hervorgehobenen Benutzern abspielen','Bei Spenden/Events abspielen','Nur wenn Tab inaktiv','Ton-Verzögerung (ms)','Warnungen','Desktop-Benachrichtigungen','Nachrichten vorlesen (TTS)',
+/* 220 */'TTS-Geschwindigkeit','TTS-Tonhöhe','Tab-Titel bei Erwähnung blinken','Bewegung','Animationen aktivieren','Leistungsmodus','Energiesparmodus','Animationsgeschwindigkeit','Beschleunigungskurve','Sanft',
+/* 230 */'Schnell','Federn','Linear','Nachrichtenanimationen','Eingangsanimation','Einblenden','Einpoppen','Von links schieben','Von rechts schieben','Von oben schieben',
+/* 240 */'Einspringen','3D-Flip','Zoom + Ausblenden','Hover-Animation','Keine','Anheben','Leuchten','Skalieren','Hervorhebungsanimation','Statisch',
+/* 250 */'Pulsieren','Neuer-Benutzer-Hervorhebungsanimation','Gesamte Nachricht schütteln','Akzent-Animationen','Bildwiederholrate','Automatisch erkennen','VTuber-Overlay','VTuber-Overlay aktivieren','VTube Studio automatisch erkennen','VTS-Host',
+/* 260 */'VTS-Port','VTS erkennen','Bildschirmaufnahme','Stoppen','Position','Unten rechts','Unten links','Oben rechts','Oben links','Größe (px)',
+/* 270 */'Deckkraft (%)','Horizontal spiegeln','Browser-Quellmodus aktivieren','OBS-CSS kopieren','Diese Seiten-URL kopieren','OBS WebSocket','OBS WebSocket aktivieren','OBS-Host','OBS-Port','OBS-Passwort',
+/* 280 */'Discord-Chat-Leser','Bot-Token','Beim Laden automatisch verbinden','YouTube Data API-Schlüssel','Automatisch neu verbinden','Jetzt läuft / Musik','Jetzt-läuft-Karte anzeigen','Abfrageintervall (ms)','Lokales Relay abfragen','Relay-URL',
+/* 290 */'Nightbot-Relay-Modus','YouTube Music-Unterstützung','Spotify aktivieren','Spotify-Client-ID','Streamlabs Socket API','Streamlabs-Events aktivieren','Socket-Token','Webhooks','Discord-Webhook-URL','Slack-Webhook-URL',
+/* 300 */'TikTok Live (Relay)','KI-Chat-Zusammenfassung','KI-Zusammenfassung aktivieren','KI-Anbieter','API-Schlüssel','Modellname','Benutzerdefinierte Endpunkt-URL','Zusammenfassen alle (s)','Max. zu analysierende Nachrichten','Zusammenfassung im Chat anzeigen',
+/* 310 */'KI-Einblicke','Stimmungsanalyse','Themenerkennung','Alles herunterladen','Minecraft-Mod','Vollständige .zip herunterladen','Einzelne .jar herunterladen','Setup-Anleitung kopieren','osu! (stable) Plugin','C#-Projekt herunterladen',
+/* 320 */'Spiel-Integrationscode','Ziel','Meta Quest / VR HTML','VR-HTML herunterladen','Auf Quest übertragen','Quest-Ordner vergessen','Verhalten','Stream-Verzögerungspuffer (s)','Nachrichten automatisch entfernen nach (s)','Bei Neuverbindung automatisch leeren',
+/* 330 */'Standard-Streamer','Größe der Kürzlich-Leiste','Max. Nachrichten pro Benutzer','Bereinigungsintervall','Streamer-Modus','Streamer-Modus aktivieren','Mobil','Untere Navigationsleiste anzeigen','Kantenwischen zum Öffnen der Seitenleiste','Haptisches Feedback',
+/* 340 */'Kompakte Symbolleiste auf Mobilgeräten','Ihr PC','PC erkennen','Spezifikationen kopieren','Prüfen, ob Setup [Spiel] unterstützt','Prüfen','Geschätzte FPS auf Ihrem Setup','Niedrigste Qualität','Standard / Basis','Höchste / Max',
+/* 350 */'Ihre erkannten','Steam-Anforderungen','Mikrofon hören/testen','Mikrofon','Eingangslautstärke','Monitor-Ausgangslautstärke','Anhören','Ressourcennutzung dieser App','FPS (dieser Tab)','JS-Heap verwendet',
+/* 360 */'JS-Heap gesamt','JS-Heap-Limit','DOM-Knoten','Chat-Nachrichten','CPU-Kerne','Tab-Sichtbarkeit','Live-Statistiken starten','Task-Manager öffnen','Private Notizen','Nur Sie können dies sehen.',
+/* 370 */'Chat-Verlauf','Noch keine verfolgten Nachrichten.','Kontoalter','Folgt','Zuerst gesehen','Nachrichten','Letzte Nachricht','Durchschnittliche Länge','Sitzungs-Nachrichten','Anzeigen',
+/* 380 */'Hervorheben','Lesezeichen','Tag','Blockieren','Warnung','Nicht erneut erinnern','Okay, verstanden','Speichern','Abbrechen','Dateiname',
+/* 390 */'Format','Willkommen bei Stream Chat!','Ja, zeigen Sie mir!','Nein, ich schaffe das','Wählen Sie Ihre Plattform','Mit einem Streamer verbinden','Live-Chat','Statusleiste','Jetzt läuft','Schritt',
+/* 400 */'von','Zurück','Überspringen','Fertig','Sprache wechseln','Sprache','Japanisch','Englisch','Deutsch','Spanisch',
+/* 410 */'Koreanisch','Chinesisch'
+];
+
+const ES = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Personalizado','Ajustes','Ayuda','Información adicional','Atajos de teclado',
+/* 10 */'Streamer de Twitch','Streamer de Kick','Servidor de Discord','YouTube Live','WebSocket personalizado','nombre del streamer','Conectar','Desconectar','No conectado','Conectado',
+/* 20 */'Conectando…','Reconectando…','Error de conexión','Estadísticas del streamer','Canal','Tiempo en vivo','Espectadores','Juego','Título','Estado',
+/* 30 */'Streamers predefinidos','En vivo','Categoría','Recientes','sin conexión','Usuarios permitidos','Omitir TODOS los filtros','usuario','Plantilla de diseño','Predeterminado',
+/* 40 */'Moderno','Clásico','Chat de solo lectura.','Todos los datos permanecen en este dispositivo.','Buscar','Estadísticas','Marcadores','Etiquetas','Actualizar','Exportar',
+/* 50 */'Limpiar','Modo fuente del navegador','Bloqueados','Buscar mensajes…','Anterior','Siguiente','Cerrar','📌 Fijado','↓ Nuevos mensajes','Nuevos mensajes',
+/* 60 */'Conéctate a un streamer para ver su chat en vivo.','Solo lectura · Todo permanece local','Chat de solo lectura — sin envío','Mostrar/ocultar en el juego','¡Primer mensaje!','Copiado ✓','Error al copiar','Nada que copiar','Chat limpiado','Chat actualizado ✓',
+/* 70 */'Ajustes cargados','Error al cargar:','Bloqueado:','Desbloqueado:','Destacado:','Eliminado:','Etiqueta añadida:','Plantilla guardada:','Tema:','Diseño:',
+/* 80 */'Volumen:','Fuente:','Cambiado a','Modo fuente del navegador salido','Salir del modo superposición','Sonido activado','Sonido desactivado','TTS activado','TTS desactivado','Desplazamiento automático activado',
+/* 90 */'Desplazamiento automático desactivado','Avatares activados','Avatares desactivados','Nombres de usuario activados','Nombres de usuario desactivados','Marcas de tiempo activadas','Marcas de tiempo desactivadas','Sin mensajes','Mensaje copiado','Apariencia',
+/* 100 */'Chat','Filtros','Sonidos','Animaciones','VTuber','Integraciones','Herramientas de IA','Mods y juegos','VR / Quest','Avanzado / Extras',
+/* 110 */'Configuración de prueba','Atajos','Tema','Tema principal','Predeterminado de escritorio','Blanco / Claro','Oscuro / Negro','Preajuste de acento','Neón','Matrix',
+/* 120 */'Atardecer','VTuber Rosa','Acento personalizado','URL de imagen de fondo del chat','Opacidad del chat','Fondo transparente','Diseño y tamaño','Escala de resolución','Tamaño de fuente','Familia de fuente',
+/* 130 */'Monoespaciada','Serif','Radio de esquina','Afilado','Pequeño','Normal','Grande','Redondeado','Pastilla','Espaciado de mensajes',
+/* 140 */'Compacto','Espacioso','Estilo del mensaje','Plano','Con contorno','Forma del avatar','Círculo','Cuadrado','Modo consola/TV','Avatares compactos',
+/* 150 */'Tamaño de insignia','Tamaño de fuente del usuario (px)','Visualización','Mostrar avatares','Mostrar nombres de usuario','Mostrar marcas de tiempo','Formato de marca de tiempo','24 horas','12 horas','Relativo',
+/* 160 */'Agrupar mensajes consecutivos','Desplazamiento automático','Pausar desplazamiento al pasar el ratón','Pausar al pasar sobre un mensaje','Mostrar tiempo en vivo','Mostrar etiqueta de nuevo usuario','Mostrar insignias de usuario','Mostrar contador de mensajes por usuario','Activar emotes','Mostrar barra de usuarios recientes',
+/* 170 */'Mostrar tarjeta de info del stream','Mostrar píldora de canal','Deduplicar mensajes idénticos (30 s)','Mensajes a conservar','Máx. mensajes/segundo','Conservar chat al recargar','Conectar automáticamente al streamer predeterminado','Resaltado','Resaltar mis menciones','Nombre de mención',
+/* 180 */'Color de resaltado','Color de resaltado de palabras clave','Filtro de spam','Ocultar mensajes de spam','Sensibilidad','Bajo','Medio','Alto','Agresivo','Mín. caracteres repetidos',
+/* 190 */'Mín. palabras repetidas','Longitud mínima del mensaje','Anti-arte ASCII','Bloquear mensajes solo con emojis','Bloquear mensajes solo con símbolos','Porcentaje máx. de MAYÚSCULAS (0 = desactivado)','Filtros de contenido','Bloquear chatbots automáticamente','Ocultar enlaces','Filtrar enlaces (descartar mensaje completo)',
+/* 200 */'Lista blanca de enlaces','Palabras bloqueadas','Bots adicionales','Filtro regex','Sonido de notificación','Activar sonido','Volumen (0–175 %)','Subir sonido personalizado','Subir archivo…','Probar',
+/* 210 */'Disparadores de sonido','Reproducir en todos los mensajes','Reproducir solo en menciones','Reproducir en usuarios resaltados','Reproducir en donaciones/eventos','Solo cuando la pestaña no está activa','Retardo de sonido (ms)','Alertas','Notificaciones de escritorio','Leer mensajes en voz alta (TTS)',
+/* 220 */'Velocidad TTS','Tono TTS','Parpadear título de pestaña en mención','Movimiento','Activar animaciones','Modo rendimiento','Modo bajo consumo','Velocidad de animación','Curva de suavizado','Suave',
+/* 230 */'Ágil','Rebote','Lineal','Animaciones de mensajes','Animación de entrada','Fundido','Aparecer','Deslizar desde la izquierda','Deslizar desde la derecha','Deslizar desde arriba',
+/* 240 */'Rebotar','Giro 3D','Zoom + fundido','Animación al pasar el ratón','Ninguna','Elevar','Brillo','Escalar','Animación de resaltado','Estático',
+/* 250 */'Pulso','Animación de resaltado de nuevo usuario','Agitar todo el mensaje','Animaciones de acento','Tasa de refresco','Detección automática','Superposición VTuber','Activar superposición VTuber','Detectar VTube Studio automáticamente','Host VTS',
+/* 260 */'Puerto VTS','Detectar VTS','Captura de pantalla','Detener','Posición','Abajo derecha','Abajo izquierda','Arriba derecha','Arriba izquierda','Tamaño (px)',
+/* 270 */'Opacidad (%)','Espejo horizontal','Activar modo fuente del navegador','Copiar CSS de OBS','Copiar URL de esta página','OBS WebSocket','Activar OBS WebSocket','Host OBS','Puerto OBS','Contraseña OBS',
+/* 280 */'Lector de chat de Discord','Token de bot','Conectar automáticamente al cargar','Clave API de YouTube Data','Reconexión automática','Reproduciendo / Música','Mostrar tarjeta de reproducción','Intervalo de sondeo (ms)','Sondeo de relay local','URL del relay',
+/* 290 */'Modo relay de Nightbot','Soporte de YouTube Music','Activar Spotify','ID de cliente de Spotify','Streamlabs Socket API','Activar eventos de Streamlabs','Token de socket','Webhooks','URL de webhook de Discord','URL de webhook de Slack',
+/* 300 */'TikTok Live (relay)','Resumen de chat con IA','Activar resumen de IA','Proveedor de IA','Clave API','Nombre del modelo','URL de endpoint personalizada','Resumir cada (s)','Máx. mensajes a analizar','Mostrar resumen en el chat',
+/* 310 */'Perspectivas de IA','Análisis de sentimiento','Detección de temas','Descargar todo','Mod de Minecraft','Descargar .zip completo','Descargar .jar único','Copiar guía de configuración','Plugin de osu! (stable)','Descargar proyecto C#',
+/* 320 */'Código de integración de juego','Objetivo','Meta Quest / VR HTML','Descargar VR HTML','Transferir a Quest','Olvidar carpeta de Quest','Comportamiento','Búfer de retardo de stream (s)','Eliminar mensajes automáticamente después de (s)','Limpiar automáticamente al reconectar',
+/* 330 */'Streamer predeterminado','Tamaño de la barra de recientes','Máx. mensajes por usuario','Intervalo de limpieza','Modo streamer','Activar modo streamer','Móvil','Mostrar barra de navegación inferior','Deslizar desde el borde para abrir la barra lateral','Respuesta háptica',
+/* 340 */'Barra de herramientas compacta en móvil','Tu PC','Detectar mi PC','Copiar especificaciones','Comprobar si el setup admite [juego]','Comprobar','FPS estimados en tu setup','Calidad más baja','Predeterminado / Básico','Más alta / Máx',
+/* 350 */'Tus detectados','Requisitos de Steam','Escuchar / Probar micrófono','Micrófono','Volumen de entrada','Volumen de salida del monitor','Escuchar','Uso de recursos de esta app','FPS (esta pestaña)','Heap JS usado',
+/* 360 */'Heap JS total','Límite de heap JS','Nodos DOM','Mensajes de chat','Núcleos de CPU','Visibilidad de pestaña','Iniciar estadísticas en vivo','Cómo abrir el Administrador de tareas','Notas privadas','Solo tú puedes ver esto.',
+/* 370 */'Historial de chat','Aún no hay mensajes rastreados.','Antigüedad de la cuenta','Siguiendo','Visto por primera vez','Mensajes','Último mensaje','Longitud promedio','Mensajes de sesión','Ver',
+/* 380 */'Resaltar','Marcador','Etiqueta','Bloquear','Advertencia','No volver a recordarme','Vale, entiendo','Guardar','Cancelar','Nombre del archivo',
+/* 390 */'Formato','¡Bienvenido a Stream Chat!','¡Sí, muéstrame!','No, lo descubriré','Elige tu plataforma','Conéctate a un streamer','Chat en vivo','Barra de estado','Reproduciendo','Paso',
+/* 400 */'de','Atrás','Omitir','Finalizar','Cambiar idioma','Idioma','Japonés','Inglés','Alemán','Español',
+/* 410 */'Coreano','Chino'
+];
+
+const KO = [
+/* 0 */'스트림 챗','Twitch','Kick','Discord','YouTube','사용자 지정','설정','도움말','추가 정보','키보드 단축키',
+/* 10 */'Twitch 스트리머','Kick 스트리머','Discord 서버','YouTube 라이브','사용자 지정 WebSocket','스트리머 이름','연결','연결 해제','연결되지 않음','연결됨',
+/* 20 */'연결 중…','재연결 중…','연결 오류','스트리머 통계','채널','방송 시간','시청자','게임','제목','상태',
+/* 30 */'프리셋 스트리머','라이브','카테고리','최근','오프라인','허용된 사용자','모든 필터 무시','사용자 이름','레이아웃 프리셋','기본',
+/* 40 */'모던','클래식','읽기 전용 채팅.','모든 데이터는 이 기기에 저장됩니다.','검색','통계','북마크','태그','새로고침','내보내기',
+/* 50 */'지우기','브라우저 소스 모드','차단됨','메시지 검색…','이전','다음','닫기','📌 고정됨','↓ 새 메시지','새 메시지',
+/* 60 */'스트리머에 연결하면 라이브 채팅을 볼 수 있습니다.','읽기 전용 · 모두 로컬에 저장','읽기 전용 채팅 — 전송 불가','인게임 표시 전환','첫 메시지!','복사됨 ✓','복사 실패','복사할 내용 없음','채팅 지워짐','채팅 새로고침 ✓',
+/* 70 */'설정 로드됨','로드 실패:','차단:','차단 해제:','강조됨:','제거됨:','태그 추가됨:','프리셋 저장됨:','테마:','레이아웃:',
+/* 80 */'볼륨:','글꼴:','전환됨:','브라우저 소스 모드 종료','오버레이 모드 종료','사운드 켜짐','사운드 꺼짐','TTS 켜짐','TTS 꺼짐','자동 스크롤 켜짐',
+/* 90 */'자동 스크롤 꺼짐','아바타 켜짐','아바타 꺼짐','사용자 이름 켜짐','사용자 이름 꺼짐','타임스탬프 켜짐','타임스탬프 꺼짐','메시지 없음','메시지 복사됨','모양',
+/* 100 */'채팅','필터','사운드','애니메이션','VTuber','연동','AI 도구','모드 및 게임','VR / Quest','고급 / 기타',
+/* 110 */'테스트 설정','단축키','테마','기본 테마','데스크톱 기본','흰색 / 밝게','어두움 / 검정','강조 프리셋','네온','매트릭스',
+/* 120 */'선셋','VTuber 핑크','사용자 지정 강조','채팅 배경 이미지 URL','채팅 불투명도','투명 배경','레이아웃 및 크기','해상도 스케일','글꼴 크기','글꼴 패밀리',
+/* 130 */'고정폭','세리프','모서리 반경','샤프','작게','보통','크게','둥글게','알약형','메시지 간격',
+/* 140 */'컴팩트','넓게','메시지 스타일','플랫','외곽선','아바타 모양','원형','사각형','콘솔 / TV 모드','컴팩트 아바타',
+/* 150 */'배지 크기','사용자 이름 글꼴 크기 (px)','표시','아바타 표시','사용자 이름 표시','타임스탬프 표시','타임스탬프 형식','24시간','12시간','상대',
+/* 160 */'연속 메시지 그룹화','자동 스크롤','호버 시 자동 스크롤 일시정지','메시지 호버 시 일시정지','방송 시간 표시','신규 사용자 태그 표시','사용자 배지 표시','사용자별 메시지 수 표시','이모트 사용','최근 사용자 표시줄 표시',
+/* 170 */'방송 정보 카드 표시','채널 알약 표시','동일 메시지 중복 제거 (30초)','유지할 메시지 수','초당 최대 메시지 수','새로고침 시 채팅 유지','기본 스트리머 자동 연결','강조','내 멘션 강조','멘션 이름',
+/* 180 */'강조 색상','키워드 강조 색상','스팸 필터','스팸 메시지 숨기기','민감도','낮음','중간','높음','공격적','최소 반복 문자 수',
+/* 190 */'최소 반복 단어 수','최소 메시지 길이','ASCII 아트 방지','이모지만 있는 메시지 차단','기호만 있는 메시지 차단','대문자 최대 비율 (0 = 끔)','콘텐츠 필터','챗봇 자동 차단','링크 숨기기','링크 필터 (메시지 전체 삭제)',
+/* 200 */'링크 허용 목록','차단 단어','추가 봇','정규식 필터','알림음','사운드 사용','볼륨 (0–175%)','사용자 지정 사운드 업로드','파일 업로드…','테스트',
+/* 210 */'사운드 트리거','모든 메시지에서 재생','멘션 시에만 재생','강조 사용자에서 재생','후원/이벤트에서 재생','탭 비활성 시에만','사운드 지연 (ms)','경고','데스크톱 알림','메시지 소리내어 읽기 (TTS)',
+/* 220 */'TTS 속도','TTS 음높이','멘션 시 탭 제목 깜빡임','모션','애니메이션 사용','성능 모드','저전력 모드','애니메이션 속도','이징 곡선','부드럽게',
+/* 230 */'빠르게','탄성','선형','메시지 애니메이션','등장 애니메이션','페이드 인','팝 인','왼쪽에서 슬라이드','오른쪽에서 슬라이드','위에서 슬라이드',
+/* 240 */'바운스 인','3D 플립','줌 + 페이드','호버 애니메이션','없음','떠오르기','빛남','확대','강조 애니메이션','정적',
+/* 250 */'펄스','신규 사용자 강조 애니메이션','메시지 전체 흔들기','강조 애니메이션','주사율','자동 감지','VTuber 오버레이','VTuber 오버레이 사용','VTube Studio 자동 감지','VTS 호스트',
+/* 260 */'VTS 포트','VTS 감지','화면 캡처','정지','위치','오른쪽 아래','왼쪽 아래','오른쪽 위','왼쪽 위','크기 (px)',
+/* 270 */'불투명도 (%)','가로 반전','브라우저 소스 모드 사용','OBS CSS 복사','이 페이지 URL 복사','OBS WebSocket','OBS WebSocket 사용','OBS 호스트','OBS 포트','OBS 비밀번호',
+/* 280 */'Discord 채팅 읽기','봇 토큰','로드 시 자동 연결','YouTube Data API 키','자동 재연결','재생 중 / 음악','재생 중 카드 표시','폴링 간격 (ms)','로컬 릴레이 폴링','릴레이 URL',
+/* 290 */'Nightbot 릴레이 모드','YouTube Music 지원','Spotify 사용','Spotify 클라이언트 ID','Streamlabs Socket API','Streamlabs 이벤트 사용','소켓 토큰','Webhook','Discord Webhook URL','Slack Webhook URL',
+/* 300 */'TikTok 라이브 (릴레이)','AI 채팅 요약','AI 요약 사용','AI 제공자','API 키','모델 이름','사용자 지정 엔드포인트 URL','요약 간격 (초)','분석할 최대 메시지 수','채팅에 요약 표시',
+/* 310 */'AI 인사이트','감정 분석','주제 감지','모두 다운로드','Minecraft 모드','전체 .zip 다운로드','단일 .jar 다운로드','설정 가이드 복사','osu! (stable) 플러그인','C# 프로젝트 다운로드',
+/* 320 */'게임 연동 코드','대상','Meta Quest / VR HTML','VR HTML 다운로드','Quest로 전송','Quest 폴더 잊기','동작','방송 지연 버퍼 (초)','메시지 자동 제거 (초 후)','재연결 시 자동 지우기',
+/* 330 */'기본 스트리머','최근 표시줄 크기','사용자별 최대 메시지 수','정리 간격','스트리머 모드','스트리머 모드 사용','모바일','하단 내비게이션 표시','가장자리 스와이프로 사이드바 열기','햅틱 피드백',
+/* 340 */'모바일에서 컴팩트 툴바','내 PC','PC 감지','사양 복사','[게임] 지원 여부 확인','확인','내 환경에서 예상 FPS','최저 품질','기본 / 표준','최고 / 최대',
+/* 350 */'감지된 항목','Steam 요구 사항','마이크 듣기/테스트','마이크','입력 볼륨','모니터 출력 볼륨','듣기','이 앱의 리소스 사용량','FPS (이 탭)','JS 힙 사용량',
+/* 360 */'JS 힙 합계','JS 힙 제한','DOM 노드','채팅 메시지','CPU 코어','탭 표시 상태','실시간 통계 시작','작업 관리자 여는 방법','비공개 메모','본인만 볼 수 있습니다.',
+/* 370 */'채팅 기록','아직 추적된 메시지가 없습니다.','계정 나이','팔로잉','최초 확인','메시지','마지막 메시지','평균 길이','세션 메시지','보기',
+/* 380 */'강조','북마크','태그','차단','경고','다시 알리지 않기','알겠습니다','저장','취소','파일 이름',
+/* 390 */'형식','스트림 챗에 오신 것을 환영합니다!','네, 보여주세요!','아니요, 직접 해볼게요','플랫폼을 선택하세요','스트리머에 연결','라이브 채팅','상태 표시줄','재생 중','단계',
+/* 400 */'/', '뒤로','건너뛰기','완료','언어 변경','언어','일본어','영어','독일어','스페인어',
+/* 410 */'한국어','중국어'
+];
+
+const ZH = [
+/* 0 */'流聊天','Twitch','Kick','Discord','YouTube','自定义','设置','帮助','附加信息','键盘快捷键',
+/* 10 */'Twitch 主播','Kick 主播','Discord 服务器','YouTube 直播','自定义 WebSocket','主播名称','连接','断开','未连接','已连接',
+/* 20 */'正在连接…','正在重连…','连接错误','主播统计','频道','直播时长','观众','游戏','标题','状态',
+/* 30 */'预设主播','直播','分类','最近','离线','白名单用户','绕过所有过滤器','用户名','布局预设','默认',
+/* 40 */'现代','经典','只读聊天。','所有数据都保存在本设备上。','搜索','统计','书签','标签','刷新','导出',
+/* 50 */'清空','浏览器源模式','已屏蔽','搜索消息…','上一个','下一个','关闭','📌 已固定','↓ 新消息','新消息',
+/* 60 */'连接到主播以查看他们的实时聊天。','只读 · 全部本地保存','只读聊天 — 无法发送','显示/隐藏游戏内显示','首条消息！','已复制 ✓','复制失败','没有可复制的内容','聊天已清空','聊天已刷新 ✓',
+/* 70 */'设置已加载','加载失败:','已屏蔽:','已取消屏蔽:','已高亮:','已移除:','已添加标签:','预设已保存:','主题:','布局:',
+/* 80 */'音量:','字体:','已切换到','已退出浏览器源模式','退出叠加模式','声音开启','声音关闭','TTS 开启','TTS 关闭','自动滚动开启',
+/* 90 */'自动滚动关闭','头像显示','头像隐藏','用户名显示','用户名隐藏','时间戳显示','时间戳隐藏','没有消息','消息已复制','外观',
+/* 100 */'聊天','过滤器','声音','动画','VTuber','集成','AI 工具','模组与游戏','VR / Quest','高级 / 附加',
+/* 110 */'测试设置','快捷键','主题','主主题','桌面默认','白色 / 浅色','深色 / 黑色','强调预设','霓虹','矩阵',
+/* 120 */'日落','VTuber 粉色','自定义强调色','聊天背景图片 URL','聊天不透明度','透明背景','布局与尺寸','分辨率缩放','字体大小','字体家族',
+/* 130 */'等宽','衬线','圆角半径','尖锐','小','正常','大','圆润','胶囊','消息间距',
+/* 140 */'紧凑','宽松','消息样式','扁平','描边','头像形状','圆形','方形','主机 / 电视模式','紧凑头像',
+/* 150 */'徽章大小','用户名字体大小 (px)','显示','显示头像','显示用户名','显示时间戳','时间戳格式','24 小时','12 小时','相对',
+/* 160 */'合并连续消息','自动滚动','悬停时暂停自动滚动','悬停消息时暂停','显示直播时长','显示新用户标签','显示用户徽章','显示每个用户的消息数','启用表情','显示最近用户栏',
+/* 170 */'显示直播信息卡','显示频道胶囊','去重相同消息（30秒）','保留消息数','每秒最大消息数','刷新时保留聊天','自动连接默认主播','高亮','高亮我的提及','提及名称',
+/* 180 */'高亮颜色','关键词高亮颜色','垃圾信息过滤器','隐藏垃圾消息','灵敏度','低','中','高','激进','最少重复字符',
+/* 190 */'最少重复词','最短消息长度','反 ASCII 艺术','屏蔽仅表情消息','屏蔽仅符号消息','最大大写字母百分比（0 = 关闭）','内容过滤器','自动屏蔽聊天机器人','隐藏链接','过滤链接（丢弃整条消息）',
+/* 200 */'链接白名单','屏蔽词','额外机器人','正则表达式过滤器','通知音','启用声音','音量（0–175%）','上传自定义声音','上传文件…','测试',
+/* 210 */'声音触发','在所有消息上播放','仅在提及时播放','在高亮用户上播放','在打赏/事件上播放','仅当标签页不活跃时','声音延迟 (ms)','提醒','桌面通知','朗读消息 (TTS)',
+/* 220 */'TTS 语速','TTS 音调','提及时闪烁标签页标题','动态','启用动画','性能模式','省电模式','动画速度','缓动曲线','平滑',
+/* 230 */'轻快','弹跳','线性','消息动画','入场动画','淡入','弹出','从左侧滑入','从右侧滑入','从顶部滑入',
+/* 240 */'弹入','3D 翻转','缩放 + 淡入','悬停动画','无','上浮','发光','缩放','高亮动画','静态',
+/* 250 */'脉冲','新用户高亮动画','震动整条消息','强调动画','刷新率','自动检测','VTuber 叠加','启用 VTuber 叠加','自动检测 VTube Studio','VTS 主机',
+/* 260 */'VTS 端口','检测 VTS','屏幕捕获','停止','位置','右下','左下','右上','左上','大小 (px)',
+/* 270 */'不透明度 (%)','水平镜像','启用浏览器源模式','复制 OBS CSS','复制此页面 URL','OBS WebSocket','启用 OBS WebSocket','OBS 主机','OBS 端口','OBS 密码',
+/* 280 */'Discord 聊天读取','机器人令牌','加载时自动连接','YouTube Data API 密钥','自动重连','正在播放 / 音乐','显示正在播放卡片','轮询间隔 (ms)','本地中继轮询','中继 URL',
+/* 290 */'Nightbot 中继模式','YouTube Music 支持','启用 Spotify','Spotify 客户端 ID','Streamlabs Socket API','启用 Streamlabs 事件','Socket 令牌','Webhook','Discord Webhook URL','Slack Webhook URL',
+/* 300 */'TikTok 直播（中继）','AI 聊天摘要','启用 AI 摘要','AI 提供商','API 密钥','模型名称','自定义端点 URL','摘要间隔 (秒)','分析的最大消息数','在聊天中显示摘要',
+/* 310 */'AI 洞察','情感分析','主题检测','下载全部','Minecraft 模组','下载完整 .zip','下载单个 .jar','复制安装指南','osu!（stable）插件','下载 C# 项目',
+/* 320 */'游戏集成代码','目标','Meta Quest / VR HTML','下载 VR HTML','传输到 Quest','忘记 Quest 文件夹','行为','直播延迟缓冲 (秒)','自动删除消息时间 (秒后)','重连时自动清空',
+/* 330 */'默认主播','最近栏大小','每用户最大消息数','清理间隔','主播模式','启用主播模式','移动端','显示底部导航栏','边缘滑动打开侧边栏','触觉反馈',
+/* 340 */'移动端紧凑工具栏','您的 PC','检测我的 PC','复制规格','检查设置是否支持 [游戏]','检查','您设置上的估计 FPS','最低画质','默认 / 基本','最高 / 最大',
+/* 350 */'检测到的','Steam 需求','听取 / 测试麦克风','麦克风','输入音量','监听输出音量','听取','此应用的资源使用量','FPS（本标签页）','JS 堆使用量',
+/* 360 */'JS 堆总量','JS 堆上限','DOM 节点','聊天消息','CPU 核心','标签页可见性','开始实时统计','如何打开任务管理器','私人笔记','只有您可以看到此内容。',
+/* 370 */'聊天历史','尚无追踪消息。','账号年龄','关注中','首次见到','消息','最后消息','平均长度','会话消息数','查看',
+/* 380 */'高亮','书签','标签','屏蔽','警告','不再提醒','好的，我明白了','保存','取消','文件名',
+/* 390 */'格式','欢迎使用 Stream Chat！','是的，请展示！','不用，我自己试试','选择您的平台','连接到主播','实时聊天','状态栏','正在播放','步骤',
+/* 400 */'/','返回','跳过','完成','切换语言','语言','日语','英语','德语','西班牙语',
+/* 410 */'韩语','中文'
+];
+
+const PACKS = { ja: JA, de: DE, es: ES, ko: KO, zh: ZH };
+
+/* Build a dictionary object for fast substring lookup */
+function buildDict(arr){
+  const d = {};
+  for(let i = 0; i < K.length; i++){
+    const en = K[i], tr = arr[i];
+    if(en && tr && en !== tr) d[en] = tr;
+  }
+  return d;
+}
+const DICTS = {};
+for(const code in PACKS) DICTS[code] = buildDict(PACKS[code]);
+
+/* ── Runtime state ────────────────────────────────────────────────────── */
+const LANG_KEY = 'sc_lang';
+let activeLang = localStorage.getItem(LANG_KEY) || 'ja';
+if(!LANGUAGES.some(l => l.code === activeLang)) activeLang = 'ja';
+
+let KEYS_DESC = [];
+let DICT = null;
+let observer = null;
+
+/* ── Skip list — user content and inputs must never be translated ─────── */
+const SKIP_SELECTORS = [
+  '.message', '.system-message',
+  '.recent-user .rname', '.streamer-item .s-name',
+  '.profile-card-username', '.profile-history-item',
+  '.bookmark-item', '.blocked-item-name',
+  '.tags-list-item .tag-name', '.top-chatter .name',
+  '.chip .chip-label',
+  '#profileNotes', '#streamerInput', '#searchInput', '#messageInput',
+  '#codeTextarea', '#htmlEditorTextarea', '#saveFileName', '#tagNameInput',
+  '#whitelistUsersInput', '#whitelistInput', '#blockedWordsInput',
+  '#keywordsInput', '#botsInput', '#emotesInput', '#spamWhitelistInput',
+  '#autoresponseInput', '#obsCommandInput', '#vtsQuickTriggerInput',
+  '#gameCheckInput', '#presetNameInput', '#regexInput',
+  '#settingMentionName', '#settingBgImage', '#settingCommandPrefix',
+  '#settingAiApiKey', '#settingAiModel', '#settingAiCustomUrl',
+  '#settingDiscordWebhook', '#settingSlackWebhook',
+  '#settingSlToken', '#settingObsPassword', '#settingObsHost',
+  '#settingVtuberHost', '#settingNpRelayUrl',
+  '#settingNpSpotifyClientId', '#settingNpSpotifyRedirect',
+  '#settingYouTubeApiKey', '#settingDiscordBotToken',
+  '#settingRelayUrl', '#settingTranslateApiKey', '#settingTikTokRelay',
+  '#settingDefaultStreamer', '#settingIhLatitude', '#settingIhLongitude'
+];
+const SKIP_TAGS = new Set(['SCRIPT','STYLE','CODE','PRE','TEXTAREA','INPUT','SVG','PATH','KBD']);
+
+function hasJA(s){ return /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\uAC00-\uD7AF]/.test(s); }
+function hasEN(s){ return /[A-Za-z]{3,}/.test(s); }
+
+function buildKeys(){
+  if(!DICT){ KEYS_DESC = []; return; }
+  KEYS_DESC = Object.keys(DICT).filter(k => k.length >= 5).sort((a,b) => b.length - a.length);
+}
+
+function translateString(s){
+  if(!s || !DICT) return s;
+  const trimmed = s.trim();
+  if(!trimmed) return s;
+  if(DICT[trimmed] !== undefined){
+    return s.replace(trimmed, DICT[trimmed]);
+  }
+  let out = s;
+  for(let i = 0; i < KEYS_DESC.length; i++){
+    const k = KEYS_DESC[i];
+    if(out.indexOf(k) !== -1){
+      out = out.split(k).join(DICT[k]);
+    }
+  }
+  return out;
+}
+
+function shouldSkip(el){
+  if(!el || el.nodeType !== 1) return false;
+  if(SKIP_TAGS.has(el.tagName)) return true;
+  for(let i = 0; i < SKIP_SELECTORS.length; i++){
+    try{ if(el.matches(SKIP_SELECTORS[i])) return true; }catch(e){}
+  }
+  return false;
+}
+
+function translateTextNode(node){
+  const parent = node.parentNode;
+  if(!parent) return;
+  if(parent.nodeType === 1 && shouldSkip(parent)) return;
+  const text = node.nodeValue;
+  if(!text || !text.trim()) return;
+  if(activeLang !== 'en' && hasJA(text)) return;
+  if(activeLang === 'en' && !hasJA(text)) return;
+  const t = translateString(text);
+  if(t !== text) node.nodeValue = t;
+}
+
+function translateAttr(el){
+  const attrs = ['title','placeholder','aria-label'];
+  for(let i = 0; i < attrs.length; i++){
+    if(!el.hasAttribute || !el.hasAttribute(attrs[i])) continue;
+    const v = el.getAttribute(attrs[i]);
+    if(!v || !v.trim()) continue;
+    if(activeLang !== 'en' && hasJA(v)) continue;
+    if(activeLang === 'en' && !hasJA(v)) continue;
+    const t = translateString(v);
+    if(t !== v) el.setAttribute(attrs[i], t);
+  }
+}
+
+function walk(node){
+  if(node.nodeType === 3){
+    translateTextNode(node);
+  } else if(node.nodeType === 1){
+    if(shouldSkip(node)) return;
+    translateAttr(node);
+    const kids = node.childNodes;
+    for(let i = 0; i < kids.length; i++) walk(kids[i]);
+  }
+}
+
+function startObserver(){
+  if(observer) observer.disconnect();
+  observer = new MutationObserver(function(muts){
+    for(let i = 0; i < muts.length; i++){
+      const m = muts[i];
+      if(m.type === 'childList'){
+        for(let j = 0; j < m.addedNodes.length; j++) walk(m.addedNodes[j]);
+      } else if(m.type === 'characterData'){
+        translateTextNode(m.target);
+      } else if(m.type === 'attributes'){
+        translateAttr(m.target);
+      }
+    }
+  });
+  observer.observe(document.body, {
+    childList:true, subtree:true, characterData:true,
+    attributes:true, attributeFilter:['title','placeholder','aria-label']
+  });
+}
+
+/* ── Native dialog wrapping so confirm/prompt/alert translate too ─────── */
+function wrapDialogs(){
+  if(window.__scDialogsWrapped) return;
+  const _a = window.alert, _c = window.confirm, _p = window.prompt;
+  window.alert   = function(m){ return _a.call(window, translateString(String(m||''))); };
+  window.confirm = function(m){ return _c.call(window, translateString(String(m||''))); };
+  window.prompt  = function(m,d){ return _p.call(window, translateString(String(m||'')), d); };
+  window.__scDialogsWrapped = true;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   POPUP MENU UI
+   ═══════════════════════════════════════════════════════════════════════ */
+
+const MENU_CSS = `
+#scLangBtn{
+  position:fixed;bottom:16px;right:16px;z-index:99999;
+  background:rgba(17,22,31,.92);color:#e8edf5;
+  border:1px solid #2a3342;border-radius:12px;
+  padding:9px 14px;font-family:Inter,system-ui,'Segoe UI',sans-serif;
+  font-size:.75rem;font-weight:700;cursor:pointer;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+  display:flex;align-items:center;gap:7px;
+  transition:background .15s,border-color .15s,transform .15s;
+  min-height:0;line-height:1;user-select:none;
+}
+#scLangBtn:hover{background:rgba(145,71,255,.9);border-color:#9147ff;transform:translateY(-1px)}
+#scLangBtn.active{background:#9147ff;border-color:#9147ff;color:#fff}
+#scLangBtn .scFlag{font-size:1.05rem;line-height:1}
+#scLangBtn .scLangCode{font-size:.66rem;opacity:.75;margin-left:2px;letter-spacing:.3px}
+#scLangMenu{
+  position:fixed;bottom:64px;right:16px;z-index:99999;
+  background:rgba(17,22,31,.97);border:1px solid #2a3342;
+  border-radius:14px;padding:6px;min-width:230px;
+  box-shadow:0 20px 60px rgba(0,0,0,.65);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  opacity:0;visibility:hidden;transform:translateY(10px) scale(.96);
+  transition:opacity .2s cubic-bezier(.22,1,.36,1),
+             visibility .2s cubic-bezier(.22,1,.36,1),
+             transform .2s cubic-bezier(.22,1,.36,1);
+  transform-origin:bottom right;
+  font-family:Inter,system-ui,'Segoe UI',sans-serif;
+  color:#e8edf5;
+}
+#scLangMenu.open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.scLangHeader{
+  padding:9px 12px 7px;font-size:.6rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.7px;
+  color:#5a6a80;border-bottom:1px solid rgba(42,51,66,.7);
+  margin-bottom:5px;
+}
+.scLangItem{
+  display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  background:transparent;color:#e8edf5;border:none;
+  padding:9px 12px;border-radius:8px;
+  font-size:.82rem;font-weight:500;cursor:pointer;
+  white-space:nowrap;min-height:0;font-family:inherit;
+  transition:background .12s;line-height:1.3;
+}
+.scLangItem:hover{background:rgba(255,255,255,.07)}
+.scLangItem.active{background:rgba(145,71,255,.16);color:#c89cff}
+.scLangItem .scFlag{font-size:1.1rem;width:22px;text-align:center;line-height:1}
+.scLangItem .scNative{font-weight:700}
+.scLangItem .scEN{font-size:.66rem;color:#8b99b0;margin-left:auto;font-weight:500}
+.scLangItem.active .scEN{color:#c89cff}
+.scLangItem .scCheck{width:12px;color:#9147ff;font-weight:800;font-size:.7rem;margin-left:4px;opacity:0}
+.scLangItem.active .scCheck{opacity:1}
+`;
+
+function injectMenuCSS(){
+  if(document.getElementById('scLangCSS')) return;
+  const s = document.createElement('style');
+  s.id = 'scLangCSS';
+  s.textContent = MENU_CSS;
+  document.head.appendChild(s);
+}
+
+function currentLangMeta(){
+  return LANGUAGES.find(l => l.code === activeLang) || LANGUAGES[0];
+}
+
+function ensureMenuUI(){
+  if(document.getElementById('scLangBtn')) return;
+
+  const btn = document.createElement('button');
+  btn.id = 'scLangBtn';
+  btn.type = 'button';
+  btn.title = 'Switch language';
+  btn.innerHTML = '<span class="scFlag"></span><span class="scNative"></span><span class="scLangCode"></span>';
+  document.body.appendChild(btn);
+
+  const menu = document.createElement('div');
+  menu.id = 'scLangMenu';
+  menu.setAttribute('role','menu');
+  menu.innerHTML = '<div class="scLangHeader"></div>' +
+    LANGUAGES.map(l =>
+      '<button type="button" class="scLangItem" role="menuitem" data-code="' + l.code + '">' +
+        '<span class="scFlag">' + l.flag + '</span>' +
+        '<span class="scNative">' + l.native + '</span>' +
+        '<span class="scEN">' + l.en + '</span>' +
+        '<span class="scCheck">✓</span>' +
+      '</button>'
+    ).join('');
+  document.body.appendChild(menu);
+
+  // Click on button toggles menu
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('active', open);
+  });
+
+  // Click outside closes
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') &&
+       !menu.contains(e.target) && e.target !== btn){
+      menu.classList.remove('open');
+      btn.classList.remove('active');
+    }
+  });
+
+  // Escape closes
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && menu.classList.contains('open')){
+      menu.classList.remove('open');
+      btn.classList.remove('active');
+    }
+  });
+
+  // Language item click
+  menu.querySelectorAll('.scLangItem').forEach(function(item){
+    item.addEventListener('click', function(e){
+      e.stopPropagation();
+      setLang(item.getAttribute('data-code'));
+      menu.classList.remove('open');
+      btn.classList.remove('active');
+    });
+  });
+
+  refreshMenuUI();
+}
+
+function refreshMenuUI(){
+  const btn = document.getElementById('scLangBtn');
+  const menu = document.getElementById('scLangMenu');
+  if(!btn || !menu) return;
+
+  const cur = currentLangMeta();
+  btn.querySelector('.scFlag').textContent = cur.flag;
+  btn.querySelector('.scNative').textContent = cur.native;
+  btn.querySelector('.scLangCode').textContent = cur.code.toUpperCase();
+  btn.title = translateString('Switch language');
+
+  const header = menu.querySelector('.scLangHeader');
+  header.textContent = translateString('Language');
+
+  menu.querySelectorAll('.scLangItem').forEach(function(item){
+    const code = item.getAttribute('data-code');
+    item.classList.toggle('active', code === activeLang);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LANGUAGE SWITCHING
+   ═══════════════════════════════════════════════════════════════════════ */
+
+function setLang(code){
+  // Translate back to English first if switching away from a non-English lang
+  const wasNonEN = activeLang !== 'en' && DICTS[activeLang];
+  if(wasNonEN){
+    // Reverse-translate everything currently on the page back to English
+    const reverse = {};
+    const srcArr = PACKS[activeLang];
+    for(let i = 0; i < K.length; i++){
+      const en = K[i], tr = srcArr[i];
+      if(en && tr && en !== tr && !reverse[tr]) reverse[tr] = en;
+    }
+    const savedDICT = DICT, savedKeys = KEYS_DESC;
+    DICT = reverse;
+    KEYS_DESC = Object.keys(reverse).sort((a,b) => b.length - a.length);
+    walk(document.body);
+    DICT = savedDICT; KEYS_DESC = savedKeys;
+  }
+
+  activeLang = code;
+  localStorage.setItem(LANG_KEY, code);
+
+  if(code === 'en'){
+    DICT = null;
+    KEYS_DESC = [];
+  } else {
+    DICT = DICTS[code] || null;
+    buildKeys();
+  }
+
+  walk(document.body);
+  refreshMenuUI();
+  showToast(translateString('Switched to') + ' ' + currentLangMeta().native);
+}
+
+function showToast(text){
+  const existing = document.getElementById('scLangToast');
+  if(existing) existing.remove();
+  const t = document.createElement('div');
+  t.id = 'scLangToast';
+  t.textContent = text;
+  t.style.cssText = [
+    'position:fixed','bottom:80px','left:50%',
+    'transform:translateX(-50%) translateY(20px)',
+    'background:rgba(26,32,43,.98)','color:#e8edf5',
+    'padding:11px 20px','border-radius:20px','font-size:.8rem','font-weight:500',
+    'border:1px solid #2a3342','box-shadow:0 6px 24px rgba(0,0,0,.5)',
+    'z-index:99999','pointer-events:none','opacity:0',
+    'transition:opacity .25s,transform .25s','max-width:90vw',
+    'white-space:nowrap','overflow:hidden','text-overflow:ellipsis',
+    'font-family:Inter,system-ui,sans-serif','backdrop-filter:blur(10px)'
+  ].join(';');
+  document.body.appendChild(t);
+  requestAnimationFrame(function(){
+    t.style.opacity = '1';
+    t.style.transform = 'translateX(-50%) translateY(0)';
+  });
+  setTimeout(function(){
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(20px)';
+    setTimeout(function(){ t.remove(); }, 300);
+  }, 2200);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BOOT
+   ═══════════════════════════════════════════════════════════════════════ */
+
+function boot(){
+  injectMenuCSS();
+  wrapDialogs();
+  ensureMenuUI();
+
+  if(activeLang !== 'en'){
+    DICT = DICTS[activeLang] || null;
+    buildKeys();
+    walk(document.body);
+    refreshMenuUI();
+  }
+
+  startObserver();
+}
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+
+/* Expose API */
+window.setStreamChatLang = setLang;
+window.translateStreamChat = translateString;
+
+})();
+</script>
 </body>
 </html>
