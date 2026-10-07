@@ -14,6 +14,15 @@ body.theme-discord{--accent:#5865f2;--accent-hover:#4752c4;--bg-deep:#1e1f22;--b
 body.theme-matrix{--accent:#00ff41;--accent-hover:#00cc34;--bg-deep:#000;--bg-surface:#0a0f0a;--bg-elevated:#0f1a0f;--bg-hover:#142814;--border:#1a331a;--text-primary:#c8ffc8;--text-secondary:#66cc66;--font-stack:'Courier New',monospace}
 body.theme-sunset{--accent:#ff6b35;--accent-hover:#e85a26}
 body.theme-vtuber{--accent:#ff7bd5;--accent-hover:#e85ec1;--bg-deep:#1a1226;--bg-surface:#231a33;--bg-elevated:#2c2140;--bg-hover:#3a2d52;--border:#3d2f56}
+body.theme-twitch{--accent:#9147ff;--accent-hover:#7a3ad6}
+body.theme-kick{--accent:#53fc18;--accent-hover:#4ad914}
+body.theme-youtube{--accent:#ff0000;--accent-hover:#cc0000}
+@property --accent{syntax:'<color>';inherits:true;initial-value:#9147ff}
+@property --accent-hover{syntax:'<color>';inherits:true;initial-value:#7a3ad6}
+body.theme-eyeburning{animation:eyeBurn 4s linear infinite}
+body.theme-eyeburning button,body.theme-eyeburning .toolbar-btn.active,body.theme-eyeburning .platform-toggle button.active{animation:eyeBurnGlow 4s linear infinite}
+@keyframes eyeBurn{0%{--accent:#ff0000;--accent-hover:#cc0000}14%{--accent:#ff8800;--accent-hover:#cc6a00}28%{--accent:#ffff00;--accent-hover:#cccc00}42%{--accent:#00ff00;--accent-hover:#00cc00}57%{--accent:#00ffff;--accent-hover:#00cccc}71%{--accent:#0088ff;--accent-hover:#0066cc}85%{--accent:#8800ff;--accent-hover:#6600cc}100%{--accent:#ff0000;--accent-hover:#cc0000}}
+@keyframes eyeBurnGlow{0%,100%{box-shadow:0 0 14px #ff0000}14%{box-shadow:0 0 14px #ff8800}28%{box-shadow:0 0 14px #ffff00}42%{box-shadow:0 0 14px #00ff00}57%{box-shadow:0 0 14px #00ffff}71%{box-shadow:0 0 14px #0088ff}85%{box-shadow:0 0 14px #8800ff}}
 body.layout-modern{--radius-sm:14px;--msg-pad:12px 16px}
 body.layout-modern .message{border-radius:16px;margin:5px 0;background:linear-gradient(135deg,var(--bg-surface),var(--bg-elevated));box-shadow:0 2px 10px rgba(0,0,0,.12);border:1px solid transparent}
 body.layout-classic{--radius-sm:0;--font-stack:'Courier New','Consolas',monospace;--msg-pad:3px 8px}
@@ -646,7 +655,7 @@ kbd{background:var(--bg-deep);border:1px solid var(--border);border-bottom-width
       <button id="toggleCustom" title="Custom WebSocket"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg><span>Custom</span></button>
       <button class="info-btn" id="extraInfoBtn" title="Extra information">i</button>
     </div>
-    <button class="toolbar-btn" id="helpBtn" title="Help"><span style="font-size:1rem;font-weight:700">?</span></button>
+    <button class="toolbar-btn" id="helpBtn" title="Information on how it works"><span style="font-size:1rem;font-weight:700">?</span></button>
     <button class="toolbar-btn" id="shortcutsBtn" title="Keyboard shortcuts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6.01" y2="10"/><line x1="10" y1="10" x2="10.01" y2="10"/><line x1="14" y1="10" x2="14.01" y2="10"/><line x1="18" y1="10" x2="18.01" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg></button>
   </div>
 </header>
@@ -763,7 +772,7 @@ kbd{background:var(--bg-deep);border:1px solid var(--border);border-bottom-width
           <div class="settings-card-header"><span class="title"><span class="icon">🎨</span> Theme</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
           <div class="settings-card-body">
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Main theme</span></div><select class="mini" id="settingMainTheme"><option value="desktop">Desktop Default</option><option value="light">White / Light</option><option value="dark">Dark / Black</option></select></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Accent preset</span></div><select class="mini" id="settingTheme"><option value="default">Default</option><option value="neon">Neon</option><option value="discord">Discord</option><option value="matrix">Matrix</option><option value="sunset">Sunset</option><option value="vtuber">VTuber Pink</option></select></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Accent preset</span></div><select class="mini" id="settingTheme"><option value="default">Default</option><option value="neon">Neon</option><option value="discord">Discord</option><option value="matrix">Matrix</option><option value="sunset">Sunset</option><option value="vtuber">VTuber Pink</option><option value="twitch">Twitch Purple</option><option value="kick">Kick Green</option><option value="youtube">YouTube Red</option><option value="eyeburning">Eye Burning 🌈</option></select></div>
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Custom accent</span></div><div><input type="color" id="settingAccentColor" value="#9147ff"></div></div>
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Chat background image URL</span></div><input type="text" class="text-input-mini" id="settingBgImage" placeholder="https://…"></div>
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Chat opacity</span></div><input type="range" id="settingChatOpacity" min="20" max="100" value="100"></div>
@@ -892,7 +901,7 @@ kbd{background:var(--bg-deep);border:1px solid var(--border);border-bottom-width
           <div class="settings-card-header"><span class="title"><span class="icon">🔊</span> Notification Sound</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
           <div class="settings-card-body">
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Enable sound</span></div><label class="switch"><input type="checkbox" id="settingSound"><span class="slider"></span></label></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Volume (0–175%)</span></div><input type="range" id="settingSoundVolume" min="0" max="175" value="40"></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Volume (0–200%)</span></div><input type="range" id="settingSoundVolume" min="0" max="200" value="40"></div>
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Upload custom sound</span></div></div>
             <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;"><button class="small secondary" id="uploadSoundBtn" type="button">Upload file…</button><button class="small secondary" id="testSoundBtn" type="button" style="display:none;">Test</button><button class="small danger" id="clearSoundBtn" type="button" style="display:none;">Clear</button><input type="file" id="soundFileInput" accept="audio/*,video/*,.mp3,.ogg,.wav,.mp4,.webm,.flac,.m4a" style="display:none;"></div>
             <div id="soundPreview" style="display:none;margin-top:8px;padding:8px;background:var(--bg-deep);border:1px solid var(--border);border-radius:6px;font-size:.72rem;color:var(--text-muted);align-items:center;gap:8px;"><span>🎵</span><span id="soundPreviewName" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-primary);"></span></div>
@@ -1043,24 +1052,6 @@ kbd{background:var(--bg-deep);border:1px solid var(--border);border-bottom-width
           <div class="settings-card-body">
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Auto-reconnect</span></div><label class="switch"><input type="checkbox" id="settingCustomAutoReconnect" checked><span class="slider"></span></label></div>
             <span class="chips-header-desc">Expected: <code>{"username":"…","message":"…","color":"#…","avatarUrl":"…"}</code></span>
-          </div>
-        </div>
-        <div class="settings-card">
-          <div class="settings-card-header"><span class="title"><span class="icon">🎵</span> Now Playing / Music</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-          <div class="settings-card-body">
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Show now-playing card</span></div><label class="switch"><input type="checkbox" id="settingNpVisible" checked><span class="slider"></span></label></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Always show when a song is playing</span></div><label class="switch"><input type="checkbox" id="settingNpAlwaysShow" checked><span class="slider"></span></label></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Poll interval (ms)</span></div><div class="timeout-input-wrap"><input type="number" id="settingNpPollInterval" min="500" max="30000" step="100" value="3000"><span class="timeout-suffix">ms</span></div></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Local relay polling</span></div><label class="switch"><input type="checkbox" id="settingNpRelayEnabled"><span class="slider"></span></label></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Relay URL</span></div><input type="text" class="text-input-mini" id="settingNpRelayUrl" value="http://localhost:7391/nowplaying"></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Nightbot relay mode</span><span class="settings-row-desc">Polls aggressively and expects nightbot-shaped payloads.</span></div><label class="switch"><input type="checkbox" id="settingNpNightbotMode"><span class="slider"></span></label></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">YouTube Music support</span><span class="settings-row-desc">Requires relay — YTM has no public currently-playing API.</span></div><label class="switch"><input type="checkbox" id="settingNpYouTubeMusic"><span class="slider"></span></label></div>
-            <div style="height:1px;background:var(--border);margin:10px 0"></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Enable Spotify</span></div><label class="switch"><input type="checkbox" id="settingNpSpotifyEnabled"><span class="slider"></span></label></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Spotify Client ID</span></div><input type="text" class="text-input-mini" id="settingNpSpotifyClientId" placeholder="from developer.spotify.com"></div>
-            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Spotify redirect URI</span></div><input type="text" class="text-input-mini" id="settingNpSpotifyRedirect" placeholder="https://your-host/path"></div>
-            <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><button class="small success" id="spotifyLoginBtn" type="button">🔓 Connect Spotify</button><button class="small danger" id="spotifyLogoutBtn" type="button">Disconnect</button></div>
-            <span class="vts-status" id="spotifyStatus">Not connected.</span>
           </div>
         </div>
         <div class="settings-card">
@@ -1237,6 +1228,25 @@ kbd{background:var(--bg-deep);border:1px solid var(--border);border-bottom-width
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Edge swipe to open sidebar</span></div><label class="switch"><input type="checkbox" id="settingMobileEdgeSwipe" checked><span class="slider"></span></label></div>
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Haptic feedback</span></div><label class="switch"><input type="checkbox" id="settingMobileHaptics" checked><span class="slider"></span></label></div>
             <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Compact toolbar on mobile</span></div><label class="switch"><input type="checkbox" id="settingMobileCompactToolbar" checked><span class="slider"></span></label></div>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-header"><span class="title"><span class="icon">🎵</span> Now Playing / Music</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="settings-card-body">
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Show now-playing card</span></div><label class="switch"><input type="checkbox" id="settingNpVisible" checked><span class="slider"></span></label></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Always show when a song is playing</span></div><label class="switch"><input type="checkbox" id="settingNpAlwaysShow" checked><span class="slider"></span></label></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Poll interval (ms)</span></div><div class="timeout-input-wrap"><input type="number" id="settingNpPollInterval" min="500" max="30000" step="100" value="3000"><span class="timeout-suffix">ms</span></div></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Local relay polling</span></div><label class="switch"><input type="checkbox" id="settingNpRelayEnabled"><span class="slider"></span></label></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Relay URL</span></div><input type="text" class="text-input-mini" id="settingNpRelayUrl" value="http://localhost:7391/nowplaying"></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Nightbot relay mode</span><span class="settings-row-desc">Polls aggressively and expects nightbot-shaped payloads.</span></div><label class="switch"><input type="checkbox" id="settingNpNightbotMode"><span class="slider"></span></label></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">YouTube Music support</span><span class="settings-row-desc">Requires relay — YTM has no public currently-playing API.</span></div><label class="switch"><input type="checkbox" id="settingNpYouTubeMusic"><span class="slider"></span></label></div>
+            <div style="height:1px;background:var(--border);margin:10px 0"></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Enable Spotify</span></div><label class="switch"><input type="checkbox" id="settingNpSpotifyEnabled"><span class="slider"></span></label></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Spotify Client ID</span></div><input type="text" class="text-input-mini" id="settingNpSpotifyClientId" placeholder="from developer.spotify.com"></div>
+            <div class="settings-row"><div class="settings-row-text"><span class="settings-row-label">Spotify redirect URI</span></div><input type="text" class="text-input-mini" id="settingNpSpotifyRedirect" placeholder="https://your-host/path"></div>
+            <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><button class="small success" id="spotifyLoginBtn" type="button">🔓 Connect Spotify</button><button class="small danger" id="spotifyLogoutBtn" type="button">Disconnect</button></div>
+            <span class="vts-status" id="spotifyStatus">Not connected.</span>
           </div>
         </div>
 
@@ -1509,7 +1519,7 @@ kbd{background:var(--bg-deep);border:1px solid var(--border);border-bottom-width
 
 <div class="modal-overlay" id="helpOverlay">
   <div class="modal wide">
-    <div class="modal-header"><h2>❓ Help</h2><button class="modal-close" id="helpClose">×</button></div>
+    <div class="modal-header"><h2>❓ Information on how it works</h2><button class="modal-close" id="helpClose">×</button></div>
     <div class="modal-body" id="helpBody"></div>
   </div>
 </div>
@@ -1551,7 +1561,7 @@ const STREAMER_WHITELIST=['youtube.com','music.youtube.com','twitch.tv','kick.co
 const HZ_MULTIPLIERS={5:24,10:12,15:8,30:4,60:2,120:1,144:.83,165:.73,180:.67,240:.5,285:.42,360:.333,480:.25,720:.167,1020:.118};
 const RES_SCALE={'144p':2,'240p':1.7,'360p':1.45,'480p':1.25,'720p':1.1,'1080p':1,'2K':.92,'4K':.85};
 const RES_HEIGHT={'144p':144,'240p':240,'360p':360,'480p':480,'720p':720,'1080p':1080,'2K':1440,'4K':2160};
-const THEME_CYCLE=['default','neon','discord','matrix','sunset','vtuber'];
+const THEME_CYCLE=['default','neon','discord','matrix','sunset','vtuber','twitch','kick','youtube','eyeburning'];
 const PRESET_STREAMERS=[{name:'xqc',cat:'Just Chatting'},{name:'kaicenat',cat:'Just Chatting'},{name:'tarik',cat:'VALORANT'},{name:'hasanabi',cat:'Just Chatting'},{name:'lirik',cat:'Variety'},{name:'summit1g',cat:'Variety'},{name:'ninja',cat:'Fortnite'},{name:'pokimane',cat:'Just Chatting'},{name:'shroud',cat:'FPS'},{name:'sodapoppin',cat:'Variety'},{name:'jynxzi',cat:'Rainbow Six'},{name:'asmongold',cat:'WoW'},{name:'nickmercs',cat:'Warzone'},{name:'timthetatman',cat:'Warzone'},{name:'ludwig',cat:'Variety'},{name:'tenz',cat:'VALORANT'},{name:'ishowspeed',cat:'IRL'},{name:'forsen',cat:'Variety'},{name:'mizkif',cat:'Variety'},{name:'aurateur',cat:'GTA V'},{name:'rubius',cat:'Minecraft'},{name:'auronplay',cat:'Minecraft'},{name:'ibai',cat:'Variety'},{name:'quackity',cat:'Minecraft'}];
 const settings={mainTheme:'desktop',theme:'default',accentColor:'#9147ff',layout:'default',bgImage:'',chatOpacity:100,transparentBg:false,consoleMode:false,compactAvatars:false,fontSize:14,fontFamily:'default',resolution:'1080p',spacing:'default',msgStyle:'default',radius:'2',avatarShape:'circle',boldUsernames:true,colorDots:false,msgDivider:false,badgeSize:'normal',usernameSize:14,usernameGlow:false,uppercaseNames:false,showAvatars:true,showUsernames:true,showTimestamps:true,timestampFormat:'24h',groupMessages:false,autoScroll:true,pauseOnHover:false,pauseOnHoverMessage:true,showUptime:true,newUserTag:true,showBadges:true,showMsgCount:false,emotesEnabled:true,recentStrip:true,streamInfo:true,channelPill:true,dedupeMessages:false,bitrateDisplay:false,emoteOnlyFilter:false,autoHighlightSelf:true,maxMessages:2000,maxMsgPerSec:60,persistChat:false,autoConnect:false,highlightMentions:true,mentionName:'',highlightColor:'#ff4d6d',keywordColor:'#ffc800',keywords:[],customEmotes:{},hideSpam:false,spamLevel:'medium',spamRepeatChars:8,spamRepeatWords:5,spamMinLen:6,spamWhitelist:[],antiAscii:true,blockEmojiOnly:false,blockSymbolOnly:false,capsThreshold:0,botBlock:false,hideLinks:true,filterLinks:false,whitelist:[],blockedWords:[],customBots:[],regexFilter:'',soundEnabled:false,soundVolume:.4,soundOnAll:true,soundOnMention:false,soundOnHighlight:false,soundOnDonation:true,soundOnlyWhenHidden:false,soundDelay:0,soundOnSub:false,soundOnRaid:false,soundOnFollow:false,eventSoundPreset:'default',subOnlySound:false,desktopNotifs:false,ttsEnabled:false,ttsRate:1.1,ttsPitch:1,flashTitle:false,streamDelay:0,messageTimeout:0,autoClear:false,defaultStreamer:'',recentSize:15,maxUserMsgs:800,cleanupInterval:3000,commandPrefix:'!',shoutoutHours:24,autoModHide:false,followerGoal:0,sessionTimer:true,pollTitle:true,pollViewers:true,viewerInterval:30000,animEnabled:true,performanceMode:false,lowPower:false,ease:'default',refreshHz:120,autoDetectedHz:null,animSpeed:1,msgEnterAnim:'fade',animHover:'none',animHighlight:'static',animAccentGlow:false,pulseSpeed:180,newUserAnim:'shake',streamerMode:false,debugMode:false,perfHud:false,vtuberEnabled:false,vtuberAutoDetect:true,vtuberHost:'localhost',vtuberPort:8001,vtuberPos:'pos-bottom-right',vtuberSize:320,vtuberOpacity:100,vtuberMirror:true,browserSourceMode:false,overlayOpacity:70,overlayMsgBg:true,overlayHideTime:true,overlayHideAvatar:false,overlayMaxMessages:25,overlayFadeAfter:90000,obsEnabled:false,obsHost:'localhost',obsPort:4455,obsPassword:'',slEnabled:false,slToken:'',slDonation:true,slFollow:true,slSub:true,slBits:true,slRaid:true,relayEnabled:false,relayUrl:'',discordBotToken:'',discordAutoConnect:false,discordShowChannel:true,discordWebhook:'',discordPostAll:false,discordPostEvents:true,slackWebhook:'',tiktokRelay:'',aiSummarizerEnabled:false,aiProvider:'openai',aiApiKey:'',aiModel:'gpt-4o-mini',aiCustomUrl:'',aiInterval:60,aiMaxMessages:100,aiShowInChat:true,aiSentiment:false,aiTopics:false,aiModSuggest:false,aiReplySuggestions:false,aiTitleGen:false,aiClipTags:false,gameIntegrationTarget:'minecraft',translateEnabled:false,translateAllMessages:false,translateTarget:'en',translateShowOriginal:false,translateProvider:'google',translateApiKey:'',mobileBottomNav:true,mobileEdgeSwipe:true,mobileHaptics:true,mobileCompactToolbar:true,topStreamersSort:'live',youtubeApiKey:'',customAutoReconnect:true,npVisible:true,npAlwaysShow:true,npPollInterval:3000,npRelayEnabled:false,npRelayUrl:'http://localhost:7391/nowplaying',npNightbotMode:false,npYouTubeMusic:false,npSpotifyEnabled:false,npSpotifyClientId:'',npSpotifyRedirect:''};
 let streamerModeBackup=null;
@@ -1626,7 +1636,7 @@ function normalizeKey(k){k=(k||'').toLowerCase();if(k===' ')return 'space';if(k=
 function comboMatches(combo,e){if(!combo)return false;const parts=combo.toLowerCase().split('+').map(p=>p.trim());const needCtrl=parts.includes('ctrl');const needAlt=parts.includes('alt');const needShift=parts.includes('shift');let key=parts.filter(p=>!['ctrl','alt','shift'].includes(p)).join('+');if(!key)return false;const m=key.match(/^([a-z0-9,.\/;'\[\]\\`-]+?)(\d)$/);if(m){key=m[1]}const eCtrl=e.ctrlKey||e.metaKey;if(needCtrl!==eCtrl)return false;if(needAlt!==e.altKey)return false;if(needShift!==e.shiftKey)return false;if(normalizeKey(e.key)!==key)return false;return true}
 function displayCombo(combo){if(!combo)return '';return combo.replace(/(\d)$/,'').split('+').map(p=>{const m={ctrl:'Ctrl',alt:'Alt',shift:'Shift',arrowup:'↑',arrowdown:'↓',arrowleft:'←',arrowright:'→',space:'Space',home:'Home',end:'End','0':'0'};if(p==='ctrl'||p==='alt'||p==='shift')return m[p];if(p.startsWith('arrow'))return m[p];if(p===',')return ',';return p.toUpperCase()}).join('+')}
 const SHORTCUTS_GROUPS=[
-  {name:'General / Navigation',actions:[['Close all panels / modals',null,'Esc'],['Open shortcuts overlay',null,'?'],['Open extra info','extraInfo'],['Open help','help'],['Open settings','settings'],['Toggle mobile sidebar','mobileSidebar'],['Focus streamer input','focusStreamer'],['Focus search','searchFocus'],['Cycle theme preset','themeCycle'],['Cycle theme reverse','themeCycleReverse'],['Toggle dark/light','darkMode'],['Toggle transparency','transparency'],['Toggle fullscreen','fullscreen'],['Toggle Zen mode','zenMode'],['Switch platform (cycle)','platformSwitch'],['Toggle Now Playing card','nowPlaying']]},
+  {name:'General / Navigation',actions:[['Close all panels / modals',null,'Esc'],['Open shortcuts overlay',null,'?'],['Open extra info','extraInfo'],['Information on how it works','help'],['Open settings','settings'],['Toggle mobile sidebar','mobileSidebar'],['Focus streamer input','focusStreamer'],['Focus search','searchFocus'],['Cycle theme preset','themeCycle'],['Cycle theme reverse','themeCycleReverse'],['Toggle dark/light','darkMode'],['Toggle transparency','transparency'],['Toggle fullscreen','fullscreen'],['Toggle Zen mode','zenMode'],['Switch platform (cycle)','platformSwitch'],['Toggle Now Playing card','nowPlaying']]},
   {name:'Chat Operations',actions:[['Refresh chat (soft)','softRefresh'],['Reload page (hard)','hardRefresh'],['Clear chat','clearChat'],['Copy entire chat','copyChat'],['Export chat as TXT','exportTxt'],['Export chat as JSON','exportJson'],['Export chat as HTML','exportHtml'],['Toggle auto-scroll','autoScroll'],['Toggle pause-on-hover','pauseHover'],['Toggle pause-on-hover message','pauseHoverMsg'],['Scroll to top','scrollTop'],['Scroll to bottom','scrollBottom']]},
   {name:'Search',actions:[['Open search','searchOpen'],['Next match','searchNext'],['Previous match','searchPrev']]},
   {name:'Display Toggles',actions:[['Toggle avatars','showAvatars'],['Toggle timestamps','showTimestamps'],['Toggle usernames','showUsernames'],['Toggle badges','showBadges'],['Toggle emotes','showEmotes'],['Toggle new-user tag','newUserTag'],['Toggle message divider','msgDivider'],['Toggle compact avatars','compactAvatars'],['Toggle console mode','consoleMode'],['Increase font size','fontUp'],['Decrease font size','fontDown'],['Reset font size','fontReset'],['Increase anim speed','speedUp'],['Decrease anim speed','speedDown'],['Reset anim speed','speedReset']]},
@@ -1788,7 +1798,7 @@ function searchNext(){if(!searchMatches.length)return;searchIndex=(searchIndex+1
 function searchPrev(){if(!searchMatches.length)return;searchIndex=(searchIndex-1+searchMatches.length)%searchMatches.length;highlightCurrentSearch();updateSearchCount()}
 function closeSearch(){$('searchBar').classList.remove('show');$('searchBtn').classList.remove('active');chatMessages.querySelectorAll('.message.search-hit').forEach(m=>m.classList.remove('search-hit','search-current'));searchMatches=[];searchIndex=-1}
 let audioCtx=null,soundAudioEl=null;
-function playNotification(){if(!settings.soundEnabled||!userHasInteracted)return;if(settings.soundOnlyWhenHidden&&!document.hidden)return;const fire=()=>{if(soundUrl){try{if(!soundAudioEl)soundAudioEl=new Audio();soundAudioEl.src=soundUrl;soundAudioEl.volume=Math.min(1,settings.soundVolume);if(settings.soundVolume>1&&!window.__boostAudioCtx){try{window.__boostAudioCtx=new(window.AudioContext||window.webkitAudioContext)();const src=window.__boostAudioCtx.createMediaElementSource(soundAudioEl);const g=window.__boostAudioCtx.createGain();g.gain.value=settings.soundVolume;src.connect(g).connect(window.__boostAudioCtx.destination);soundAudioEl.volume=1}catch(e){}}soundAudioEl.currentTime=0;soundAudioEl.play().catch(()=>{})}catch(e){}return}try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const preset=settings.eventSoundPreset||'default';const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);if(preset==='coin'){o.type='square';o.frequency.setValueAtTime(988,audioCtx.currentTime);o.frequency.setValueAtTime(1318,audioCtx.currentTime+.08)}else if(preset==='bell'){o.type='sine';o.frequency.setValueAtTime(880,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(1760,audioCtx.currentTime+.1)}else if(preset==='chime'){o.type='triangle';o.frequency.setValueAtTime(523,audioCtx.currentTime);o.frequency.setValueAtTime(659,audioCtx.currentTime+.06);o.frequency.setValueAtTime(784,audioCtx.currentTime+.12)}else if(preset==='pop'){o.type='sine';o.frequency.setValueAtTime(200,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(800,audioCtx.currentTime+.05)}else if(preset==='none'){return}else{o.type='sine';o.frequency.setValueAtTime(880,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(1320,audioCtx.currentTime+.08)}g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(Math.min(1.75,settings.soundVolume),audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.22);o.start();o.stop(audioCtx.currentTime+.24)}catch(e){}};if(settings.soundDelay>0)setTimeout(fire,settings.soundDelay);else fire()}
+function playNotification(){if(!settings.soundEnabled||!userHasInteracted)return;if(settings.soundOnlyWhenHidden&&!document.hidden)return;const fire=()=>{if(soundUrl){try{if(!soundAudioEl)soundAudioEl=new Audio();soundAudioEl.src=soundUrl;soundAudioEl.volume=Math.min(1,settings.soundVolume);if(settings.soundVolume>1&&!window.__boostAudioCtx){try{window.__boostAudioCtx=new(window.AudioContext||window.webkitAudioContext)();const src=window.__boostAudioCtx.createMediaElementSource(soundAudioEl);const g=window.__boostAudioCtx.createGain();g.gain.value=settings.soundVolume;src.connect(g).connect(window.__boostAudioCtx.destination);soundAudioEl.volume=1}catch(e){}}soundAudioEl.currentTime=0;soundAudioEl.play().catch(()=>{})}catch(e){}return}try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const preset=settings.eventSoundPreset||'default';const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);if(preset==='coin'){o.type='square';o.frequency.setValueAtTime(988,audioCtx.currentTime);o.frequency.setValueAtTime(1318,audioCtx.currentTime+.08)}else if(preset==='bell'){o.type='sine';o.frequency.setValueAtTime(880,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(1760,audioCtx.currentTime+.1)}else if(preset==='chime'){o.type='triangle';o.frequency.setValueAtTime(523,audioCtx.currentTime);o.frequency.setValueAtTime(659,audioCtx.currentTime+.06);o.frequency.setValueAtTime(784,audioCtx.currentTime+.12)}else if(preset==='pop'){o.type='sine';o.frequency.setValueAtTime(200,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(800,audioCtx.currentTime+.05)}else if(preset==='none'){return}else{o.type='sine';o.frequency.setValueAtTime(880,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(1320,audioCtx.currentTime+.08)}g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(Math.min(2,settings.soundVolume),audioCtx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.22);o.start();o.stop(audioCtx.currentTime+.24)}catch(e){}};if(settings.soundDelay>0)setTimeout(fire,settings.soundDelay);else fire()}
 let ttsVoice=null;
 function initTTS(){if(!('speechSynthesis' in window))return;const v=speechSynthesis.getVoices();ttsVoice=v.find(x=>x.lang.startsWith('en'))||v[0]}
 function speakMessage(t){if(!settings.ttsEnabled||!userHasInteracted||!('speechSynthesis' in window))return;try{const u=new SpeechSynthesisUtterance(t);u.rate=settings.ttsRate||1.1;u.pitch=settings.ttsPitch||1;if(ttsVoice)u.voice=ttsVoice;speechSynthesis.speak(u)}catch(e){}}
@@ -2046,8 +2056,7 @@ function updateTiktokStatus(){const el=$('tiktokStatus');if(!el)return;if(tiktok
 async function tiktokRelayConnect(){const url=(settings.tiktokRelay||'').trim();if(!url){showToast('Enter a TikTok relay URL','error');return}try{tiktokWs=new WebSocket(url)}catch(e){showToast('TikTok relay failed: '+e.message,'error');return}tiktokWs.onopen=()=>{updateTiktokStatus();showToast('TikTok relay connected','success')};tiktokWs.onmessage=(e)=>{try{const p=JSON.parse(e.data);const u=p.user||p.username||p.nickname||'TikTok';const t=p.comment||p.message||p.text||'';if(t)addMessageToChat(u,t,'#ff0050',false,p.avatar||null,{})}catch(_){}};tiktokWs.onclose=()=>{updateTiktokStatus()};tiktokWs.onerror=()=>{showToast('TikTok relay error','error')}}
 async function aiSummarizeChat(){if(!settings.aiApiKey){showToast('Configure your API key in AI Tools tab','error');return}const msgs=chatMessages.querySelectorAll('.message');if(msgs.length<3){showToast('Need at least 3 messages to summarize','info');return}const start=Math.max(0,msgs.length-settings.aiMaxMessages);const texts=[];for(let i=start;i<msgs.length;i++){const d=msgs[i]._messageData;if(d)texts.push(d.username+': '+d.message)}const prompt='Summarize this live chat in 2-3 short sentences. Focus on the main topics being discussed, overall mood, and any notable events:\n\n'+texts.join('\n');const statusEl=$('aiStatus');if(statusEl){statusEl.textContent='Summarizing…';statusEl.className='vts-status loading'}try{let result='';if(settings.aiProvider==='openai'){const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+settings.aiApiKey},body:JSON.stringify({model:settings.aiModel||'gpt-4o-mini',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.5})});const d=await r.json();if(d.error)throw new Error(d.error.message);result=d.choices[0].message.content}else if(settings.aiProvider==='gemini'){const model=settings.aiModel||'gemini-flash-latest';const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent?key='+settings.aiApiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:200,temperature:0.5}})});const d=await r.json();if(d.error)throw new Error(d.error.message);result=d.candidates[0].content.parts[0].text}else if(settings.aiProvider==='anthropic'){const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':settings.aiApiKey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:settings.aiModel||'claude-3-haiku-20240307',max_tokens:200,messages:[{role:'user',content:prompt}]})});const d=await r.json();if(d.error)throw new Error(d.error.message);result=d.content[0].text}else if(settings.aiProvider==='custom'&&settings.aiCustomUrl){const r=await fetch(settings.aiCustomUrl,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+settings.aiApiKey},body:JSON.stringify({model:settings.aiModel,messages:[{role:'user',content:prompt}],max_tokens:200})});const d=await r.json();result=d.choices?d.choices[0].message.content:JSON.stringify(d)}aiLastSummary=result||'No summary generated.';if(statusEl){statusEl.textContent='✅ Last summary: '+new Date().toLocaleTimeString();statusEl.className='vts-status ok'}const out=$('aiSummaryOutput');if(out)out.textContent=aiLastSummary;if(settings.aiShowInChat)addSystemMessage('🤖 AI Summary: '+aiLastSummary);if(settings.aiSentiment||settings.aiTopics||settings.aiModSuggest){aiAnalyzeInsights(texts)}}catch(e){if(statusEl){statusEl.textContent='❌ '+e.message;statusEl.className='vts-status err'}showToast('AI error: '+e.message,'error')}}
 async function aiAnalyzeInsights(texts){const insights=$('aiInsightsOutput');if(!insights)return;let insightsHtml='';if(settings.aiSentiment)insightsHtml+='<strong>Sentiment:</strong> Analyzing…<br>';if(settings.aiTopics)insightsHtml+='<strong>Topics:</strong> Analyzing…<br>';if(settings.aiModSuggest)insightsHtml+='<strong>Moderation:</strong> Analyzing…<br>';insights.innerHTML=insightsHtml;try{const prompt='Analyze this chat and return JSON with: {"sentiment":"positive/neutral/negative","topics":["topic1","topic2"],"moderationSuggestions":["user1"]}\n\n'+texts.slice(0,50).join('\n');const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+settings.aiApiKey},body:JSON.stringify({model:settings.aiModel||'gpt-4o-mini',messages:[{role:'user',content:prompt}],max_tokens:300,temperature:0.3})});const d=await r.json();const parsed=JSON.parse(d.choices[0].message.content);insightsHtml='';if(settings.aiSentiment)insightsHtml+='<strong>Sentiment:</strong> '+escapeHtml(parsed.sentiment||'?')+'<br>';if(settings.aiTopics)insightsHtml+='<strong>Topics:</strong> '+(parsed.topics||[]).map(t=>escapeHtml(t)).join(', ')+'<br>';if(settings.aiModSuggest)insightsHtml+='<strong>Moderation:</strong> '+((parsed.moderationSuggestions||[]).length?parsed.moderationSuggestions.map(u=>escapeHtml(u)).join(', '):'None')+'<br>';insights.innerHTML=insightsHtml}catch(e){insights.innerHTML='<span style="color:var(--danger)">Analysis failed: '+escapeHtml(e.message)+'</span>'}}
-function startAiTimer(){if(aiSummaryTimer)clearInterval(aiSummaryTimer);if(settings.aiSummarizerEnabled&&settings.aiApiKey){aiSummaryTimer=setInterval(aiSummarizeChat,(settings.aiInterval||60)*1000)}}
-const HTA_SOURCE=`<!DOCTYPE html>
+function startAiTimer(){if(aiSummaryTimer)clearInterval(aiSummaryTimer);if(settings.aiSummarizerEnabled&&settings.aiApiKey){aiSummaryTimer=setInterval(aiSummarizeChat,(settings.aiInterval||60)*1000)}}const HTA_SOURCE=`<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>StreamChat Now Playing</title>
 <hta:application id="app" applicationname="StreamChatNowPlaying" border="thin" caption="yes" maximizebutton="no" minimizebutton="yes" scroll="no" singleinstance="yes" sysmenu="yes" windowstate="normal" innerborder="no" contextmenu="no" selection="no" />
 <style>html,body{margin:0;padding:0;background:#0b0e14;color:#e8edf5;font-family:Segoe UI,system-ui;overflow:hidden;user-select:none;cursor:default}#wrap{padding:12px;width:340px;height:190px;position:relative}#art{width:90px;height:90px;border-radius:10px;background:#1a202b;object-fit:cover;border:1px solid #2a3342;float:left;margin-right:12px}#meta{float:left;width:220px}#title{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#e8edf5}#artist{font-size:12px;color:#8b99b0;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#album{font-size:11px;color:#5a6a80;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#src{position:absolute;top:8px;right:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:8px;background:rgba(145,71,255,.2);color:#c89cff;border:1px solid rgba(145,71,255,.4)}#barwrap{clear:both;padding-top:12px}#bar{height:4px;background:#2a3342;border-radius:2px;overflow:hidden}#fill{height:100%;width:0%;background:linear-gradient(90deg,#9147ff,#ff2bd6);transition:width .4s linear}#times{display:flex;justify-content:space-between;font-size:10px;color:#5a6a80;margin-top:4px}#status{position:absolute;bottom:6px;left:12px;right:12px;font-size:9px;color:#5a6a80;text-align:center}</style></head><body>
@@ -2056,7 +2065,7 @@ const HTA_SOURCE=`<!DOCTYPE html>
 const NODE_RELAY=`#!/usr/bin/env node
 const http=require('http');const PORT=${RELAY_PORT};
 let current={title:'',artist:'',album:'',albumArt:'',position:0,duration:0,paused:false,source:'idle',ts:Date.now()};
-const server=http.createServer((req,res)=>{res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Access-Control-Allow-Methods','GET,POST,OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type');if(req.method==='OPTIONS'){res.writeHead(204);return res.end()}const u=new URL(req.url,'http://localhost');if(u.pathname==='/nowplaying'&&req.method==='POST'){let body='';req.on('data',c=>body+=c);req.on('end',()=>{try{const d=JSON.parse(body||'{}');const s=d.song||d.track||d;current={title:s.title||s.name||'',artist:s.artist||s.author||s.channel||'',album:s.album||'',albumArt:s.albumArt||s.artwork||s.cover||s.thumbnail||'',position:parseFloat(s.position||s.progress||0),duration:parseFloat(s.duration||s.length||0),paused:!!s.paused,source:s.source||'nightbot',ts:Date.now()};console.log('[relay] '+current.source+': '+current.title+' — '+current.artist);res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({ok:true}))}catch(e){res.writeHead(400);res.end('bad json')}});return}if(u.pathname==='/nowplaying'){const live={...current};if(!live.paused&&live.ts)live.position+=(Date.now()-live.ts)/1000;res.writeHead(200,{'Content-Type':'application/json'});return res.end(JSON.stringify(live))}if(u.pathname==='/'){res.writeHead(200,{'Content-Type':'text/html'});return res.end('<!DOCTYPE html><meta charset="utf-8"><title>StreamChat Relay</title><style>body{background:#0b0e14;color:#e8edf5;font-family:system-ui;padding:20px;font-size:14px}input,button{font:inherit;background:#1a202b;color:#e8edf5;border:1px solid #2a3342;border-radius:6px;padding:8px 10px;width:100%;margin:4px 0}pre{background:#11161f;padding:12px;border-radius:8px;border:1px solid #2a3342;overflow:auto}</style><h2>StreamChat Relay</h2><p>POST JSON to <code>/nowplaying</code>. GET to read.</p><div id="now"></div><h3>Manual push</h3><input id="t" placeholder="Title"><input id="a" placeholder="Artist"><input id="al" placeholder="Album"><input id="ar" placeholder="Album art URL"><input id="d" placeholder="Duration (sec)" type="number"><input id="p" placeholder="Position (sec)" type="number"><button onclick="push()">Push</button><script>setInterval(async()=>{const r=await fetch("/nowplaying");const d=await r.json();document.getElementById("now").innerHTML="<pre>"+JSON.stringify(d,null,2)+"</pre>"},1000);function push(){fetch("/nowplaying",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({title:t.value,artist:a.value,album:al.value,albumArt:ar.value,duration:+d.value,position:+p.value,paused:false,source:"manual"})})}<\\/script>')}res.writeHead(404);res.end('not found')});
+const server=http.createServer((req,res)=>{res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Access-Control-Allow-Methods','GET,POST,OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type');if(req.method==='OPTIONS'){res.writeHead(204);return res.end()}const u=new URL(req.url,'http://localhost');if(u.pathname==='/nowplaying'&&req.method==='POST'){let body='';req.on('data',c=>body+=c);req.on('end',()=>{try{const d=JSON.parse(body||'{}');const s=d.song||d.track||d;current={title:s.title||s.name||'',artist:s.artist||s.author||s.channel||'',album:s.album||'',albumArt:s.albumArt||s.artwork||s.cover||s.thumbnail||'',position:parseFloat(s.position||s.progress||0),duration:parseFloat(s.duration||s.length||0),paused:!!s.paused,source:s.source||'nightbot',ts:Date.now()};console.log('[relay] '+current.source+': '+current.title+' — '+current.artist);res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({ok:true}))}catch(e){res.writeHead(400);res.end('bad json')}});return}if(u.pathname==='/nowplaying'){const live={...current};if(!live.paused&&live.ts)live.position+=(Date.now()-live.ts)/1000;res.writeHead(200,{'Content-Type':'application/json'});return res.end(JSON.stringify(live))}if(u.pathname==='/'){res.writeHead(200,{'Content-Type':'text/html'});return res.end('<!DOCTYPE html><meta charset="utf-8"><title>StreamChat Relay</title><style>body{background:#0b0e14;color:#e8edf5;font-family:system-ui;padding:20px;font-size:14px}input,button{font:inherit;background:#1a202b;color:#e8edf5;border:1px solid #2a3342;border-radius:6px;padding:8px 10px;width:100%;margin:4px 0}pre{background:#11161f;padding:12px;border-radius:8px;border:1px solid #2a3342;overflow:auto}</style><h2>StreamChat Relay</h2><p>POST JSON to <code>/nowplaying</code>. GET to read.</p><div id="now"></div><h3>Manual push</h3><input id="t" placeholder="Title"><input id="a" placeholder="Artist"><input id="al" placeholder="Album"><input id="ar" placeholder="Album art URL"><input id="d" placeholder="Duration (sec)" type="number"><input id="p" placeholder="Position (sec)" type="number"><button onclick="push()">Push</button><script>setInterval(async()=>{const r=await fetch("/nowplaying");const d=await r.json();document.getElementById("now").innerHTML="<pre>"+JSON.stringify(d,null,2)+"</pre>"},1000);function push(){fetch("/nowplaying",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({title:t.value,artist:a.value,album:al.value,albumArt:ar.value,duration:+d.value,position:+p.value,paused:false,source:"manual"})}}<\\/script>')}res.writeHead(404);res.end('not found')});
 server.listen(PORT,()=>{console.log('StreamChat Now Playing relay listening on http://localhost:'+PORT);console.log('  POST http://localhost:'+PORT+'/nowplaying  ← point your bot here');console.log('  GET  http://localhost:'+PORT+'/nowplaying  ← players poll this');console.log('  GET  http://localhost:'+PORT+'/           ← manual push UI')});
 `;
 const PY_PLAYER=`#!/usr/bin/env python3
@@ -2142,14 +2151,67 @@ async function detectMinecraftEnv(){const os=browserInfo.isMac?'macOS':browserIn
 /* ═══════ TEST SETUP ═══════ */
 async function detectPcSpecs(){const specs={platform:navigator.platform||'Unknown',os:(navigator.userAgentData&&navigator.userAgentData.platform)||(/Windows/i.test(navigator.userAgent)?'Windows':/Mac/i.test(navigator.userAgent)?'macOS':/Linux/i.test(navigator.userAgent)?'Linux':/Android/i.test(navigator.userAgent)?'Android':/iOS|iPhone|iPad/i.test(navigator.userAgent)?'iOS':'Unknown'),cores:navigator.hardwareConcurrency||'?',ram:navigator.deviceMemory?navigator.deviceMemory+' GB':'?',browser:browserLabel()+' '+browserInfo.version,screen:screen.width+'×'+screen.height,availScreen:screen.availWidth+'×'+screen.availHeight,colorDepth:screen.colorDepth+'-bit',pixelRatio:window.devicePixelRatio||1,touch:'ontouchstart' in window,language:navigator.language,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,gpu:'Detecting…',gpuVendor:'—',hz:'—',storage:'?'};try{const canvas=document.createElement('canvas');const gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');if(gl){const dbg=gl.getExtension('WEBGL_debug_renderer_info');if(dbg){specs.gpu=gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)||'Unknown';specs.gpuVendor=gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL)||'Unknown'}else{specs.gpu=gl.getParameter(gl.RENDERER)||'Unknown'}}}catch(e){}try{specs.hz=(await detectMonitorHz())+' Hz'}catch(e){specs.hz='?'}try{if(navigator.storage&&navigator.storage.estimate){const est=await navigator.storage.estimate();specs.storage=(est.usage/1048576).toFixed(1)+' MB used of '+(est.quota/1073741824).toFixed(1)+' GB quota'}}catch(e){}detectedPcSpecs=specs;renderPcSpecs();return specs}
 function renderPcSpecs(){const el=$('pcSpecsDisplay');if(!el||!detectedPcSpecs)return;const s=detectedPcSpecs;const rows=[['OS',s.os+' ('+s.platform+')'],['Browser',s.browser],['CPU cores (logical)',s.cores+' threads'],['Approx RAM',s.ram],['GPU',s.gpu],['GPU vendor',s.gpuVendor],['Monitor resolution',s.screen],['Available desktop',s.availScreen],['Refresh rate',s.hz],['Color depth',s.colorDepth],['Device pixel ratio',s.pixelRatio+'×'],['Touch capable',s.touch?'Yes':'No'],['Language',s.language],['Timezone',s.timezone],['Storage',s.storage]];el.innerHTML=rows.map(([k,v])=>'<div class="info-row"><span class="label">'+escapeHtml(k)+'</span><span class="value" title="'+escapeHtml(String(v))+'">'+escapeHtml(String(v))+'</span></div>').join('')}
-async function fetchSteamSearch(gameName){const url='https://store.steampowered.com/api/storesearch/?term='+encodeURIComponent(gameName)+'&cc=us&l=en';try{const r=await fetch(url);if(r.ok)return await r.json()}catch(e){}try{const r2=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url));if(r2.ok){const txt=await r2.text();return JSON.parse(txt)}}catch(e){}return null}
-async function fetchSteamDetails(appid){const url='https://store.steampowered.com/api/appdetails?appids='+appid+'&cc=us&l=en';try{const r=await fetch(url);if(r.ok)return await r.json()}catch(e){}try{const r2=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url));if(r2.ok){const txt=await r2.text();return JSON.parse(txt)}}catch(e){}return null}
+async function fetchJSONWithFallback(url){
+  try{ const r=await fetch(url,{mode:'cors'}); if(r.ok){ const t=await r.text(); try{return JSON.parse(t)}catch(e){} } }catch(e){}
+  const proxies=[
+    {p:'https://api.allorigins.win/raw?url=', encode:true},
+    {p:'https://corsproxy.io/?',              encode:true},
+    {p:'https://cors.eu.org/',                encode:false},
+    {p:'https://thingproxy.freeboard.io/fetch/', encode:false}
+  ];
+  for(const {p,encode} of proxies){
+    try{
+      const target = encode ? p+encodeURIComponent(url) : p+url;
+      const r=await fetch(target,{mode:'cors'});
+      if(!r.ok) continue;
+      const txt=await r.text();
+      try{ return JSON.parse(txt); }catch(e){ continue; }
+    }catch(e){ continue; }
+  }
+  return null;
+}
+async function fetchSteamSearch(gameName){
+  const url='https://store.steampowered.com/api/storesearch/?term='+encodeURIComponent(gameName)+'&cc=us&l=en';
+  return await fetchJSONWithFallback(url);
+}
+async function fetchSteamDetails(appid){
+  const url='https://store.steampowered.com/api/appdetails?appids='+appid+'&cc=us&l=en';
+  return await fetchJSONWithFallback(url);
+}
 function stripHtml(html){if(!html)return '';return html.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').trim()}
 function parseRequirementsBlock(text){const out={};if(!text)return out;text.split('\n').forEach(line=>{const m=line.match(/^\s*([A-Za-z ]+?):\s*(.+)$/);if(!m)return;const key=m[1].toLowerCase().trim();const val=m[2].trim();if(/os/.test(key))out.os=val;else if(/processor|cpu/.test(key))out.cpu=val;else if(/memory|ram/.test(key))out.ram=val;else if(/graphics|gpu|video/.test(key))out.gpu=val;else if(/storage|disk|hard drive|hard disk/.test(key))out.storage=val;else if(/directx/.test(key))out.directx=val;else if(/network/.test(key))out.network=val});return out}
 function parseRamGb(str){if(!str)return 0;const m=str.match(/(\d+(?:\.\d+)?)\s*(GB|MB)/i);if(!m)return 0;const n=parseFloat(m[1]);return /MB/i.test(m[2])?n/1024:n}
 function gpuTier(renderer){const r=(renderer||'').toLowerCase();if(/rtx\s*(40|30)/.test(r))return 5;if(/rtx\s*20/.test(r))return 4;if(/gtx\s*16|gtx\s*10[6-9]0/.test(r))return 3;if(/gtx\s*9[5-9]0|gtx\s*10[5]0/.test(r))return 2;if(/intel.*iris|radeon.*vega|mx[0-9]/.test(r))return 2;if(/intel.*uhd|intel.*hd|radeon.*graphics/.test(r))return 1;if(/apple m[1-9]/.test(r))return 4;return 2}
 function compareSpecs(min,rec,user){const uRam=(parseFloat((user.ram||'0').replace(/[^0-9.]/g,''))||0);const uCores=parseInt(user.cores,10)||4;const uGpu=gpuTier(user.gpu);const minRam=parseRamGb(min.ram);const recRam=parseRamGb(rec.ram);let minScore=0,recScore=0;if(uRam>=recRam&&recRam>0)recScore++;if(uRam>=minRam&&minRam>0)minScore++;if(uCores>=8){minScore++;recScore++}else if(uCores>=4){minScore++}if(uGpu>=4){minScore++;recScore++}else if(uGpu>=2){minScore++}return{meetsMin:minScore>=2,meetsRecommended:recScore>=2,userRam:uRam,uCores,uGpu}}
-async function checkGameSupport(gameName){const el=$('gameCheckResult');if(!el)return;el.innerHTML='<div class="info-loading">Searching Steam for "'+escapeHtml(gameName)+'"…</div>';if(!detectedPcSpecs)await detectPcSpecs();const search=await fetchSteamSearch(gameName);if(!search||!search.items||!search.items.length){el.innerHTML='<div class="info-err">No Steam game found matching "'+escapeHtml(gameName)+'". Try a different name.</div>';return}const app=search.items[0];el.innerHTML='<div class="info-loading">Found "'+escapeHtml(app.name)+'". Fetching requirements…</div>';const details=await fetchSteamDetails(app.id);if(!details||!details[app.id]||!details[app.id].success){el.innerHTML='<div class="info-err">Could not fetch requirements for "'+escapeHtml(app.name)+'". Steam API may be rate-limiting.</div>';return}const data=details[app.id].data;const reqs=data.pc_requirements||{};const minTxt=stripHtml(reqs.minimum||'');const recTxt=stripHtml(reqs.recommended||'');const min=parseRequirementsBlock(minTxt);const rec=parseRequirementsBlock(recTxt);if(!minTxt&&!recTxt){el.innerHTML='<div class="info-err">'+escapeHtml(app.name)+' has no published system requirements on Steam. <strong>Unknown / Game has no official stats for the PC parts!</strong></div>';return}const cmp=compareSpecs(min,rec,detectedPcSpecs);const banner=cmp.meetsRecommended?'<div style="background:rgba(46,168,110,.15);border:1px solid rgba(46,168,110,.4);color:#6ee7a8;padding:10px;border-radius:8px;font-weight:700;margin-bottom:10px;">✅ Your PC meets or exceeds the RECOMMENDED requirements</div>':cmp.meetsMin?'<div style="background:rgba(255,152,0,.15);border:1px solid rgba(255,152,0,.4);color:#ffb84d;padding:10px;border-radius:8px;font-weight:700;margin-bottom:10px;">⚠️ Your PC meets the MINIMUM requirements — expect reduced quality/FPS</div>':'<div style="background:rgba(227,76,76,.15);border:1px solid rgba(227,76,76,.4);color:#ff8888;padding:10px;border-radius:8px;font-weight:700;margin-bottom:10px;">❌ Your PC may NOT meet the minimum requirements</div>';let fpsLow='?',fpsMed='?',fpsHigh='?';if(cmp.meetsRecommended){fpsLow='120–200+ FPS';fpsMed='80–140 FPS';fpsHigh='50–90 FPS'}else if(cmp.meetsMin){fpsLow='60–100 FPS';fpsMed='40–70 FPS';fpsHigh='20–40 FPS'}else{fpsLow='20–50 FPS';fpsMed='10–30 FPS';fpsHigh='<20 FPS (may not run)'}const headerImg=data.header_image?'<img src="'+data.header_image+'" style="width:100%;border-radius:8px;margin-bottom:10px;border:1px solid var(--border);" onerror="this.style.display=\'none\'">':'';el.innerHTML=headerImg+banner+'<div style="font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Estimated FPS on your setup</div>'+'<div class="info-row"><span class="label">🟢 Lowest quality</span><span class="value" style="color:#6ee7a8;">'+fpsLow+'</span></div>'+'<div class="info-row"><span class="label">🟡 Default / Basic</span><span class="value" style="color:#ffb84d;">'+fpsMed+'</span></div>'+'<div class="info-row"><span class="label">🔴 Highest / Max</span><span class="value" style="color:#ff8888;">'+fpsHigh+'</span></div>'+'<div style="margin-top:12px;font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;">Your detected</div>'+'<div class="info-row"><span class="label">RAM</span><span class="value">'+detectedPcSpecs.ram+'</span></div>'+'<div class="info-row"><span class="label">CPU cores</span><span class="value">'+detectedPcSpecs.cores+' threads</span></div>'+'<div class="info-row"><span class="label">GPU</span><span class="value" title="'+escapeHtml(detectedPcSpecs.gpu)+'">'+escapeHtml(detectedPcSpecs.gpu.slice(0,40))+'</span></div>'+'<div style="margin-top:12px;font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;">Steam requirements</div>'+(minTxt?'<div style="font-family:monospace;font-size:.66rem;background:var(--bg-deep);padding:8px;border-radius:6px;white-space:pre-wrap;margin-top:4px;">Minimum:\n'+escapeHtml(minTxt)+'</div>':'')+(recTxt?'<div style="font-family:monospace;font-size:.66rem;background:var(--bg-deep);padding:8px;border-radius:6px;white-space:pre-wrap;margin-top:6px;">Recommended:\n'+escapeHtml(recTxt)+'</div>':'')+'<div style="margin-top:10px;font-size:.62rem;color:var(--text-muted);font-style:italic;">FPS estimates are heuristic — actual performance depends on drivers, settings, and background apps. Data source: Steam Web API.</div>'}
+async function checkGameSupport(gameName){
+  const el=$('gameCheckResult'); if(!el) return;
+  el.innerHTML='<div class="info-loading">Searching Steam for "'+escapeHtml(gameName)+'"…</div>';
+  if(!detectedPcSpecs) await detectPcSpecs();
+  const search=await fetchSteamSearch(gameName);
+  if(!search){
+    el.innerHTML='<div class="info-err">⚠️ Could not reach Steam (all proxies failed). This is usually caused by an ad-blocker, a strict firewall, or being offline.<br><br>Try again in a moment, or disable your content blocker for this page.</div>';
+    return;
+  }
+  if(!search.items||!search.items.length){
+    el.innerHTML='<div class="info-err">No Steam game found matching "'+escapeHtml(gameName)+'". Try the exact Steam title (e.g. "ELDEN RING", "Cyberpunk 2077").</div>';
+    return;
+  }
+  const app=search.items[0];
+  el.innerHTML='<div class="info-loading">Found "'+escapeHtml(app.name)+'". Fetching requirements…</div>';
+  const details=await fetchSteamDetails(app.id);
+  if(!details||!details[app.id]||!details[app.id].success){
+    el.innerHTML='<div class="info-err">Could not fetch requirements for <strong>'+escapeHtml(app.name)+'</strong>. Steam may be rate-limiting, or the game page has no structured requirements.<br><br><a href="https://store.steampowered.com/app/'+app.id+'/" target="_blank" rel="noopener" style="color:var(--accent)">Open the Steam store page →</a></div>';
+    return;
+  }
+  const data=details[app.id].data;
+  const reqs=data.pc_requirements||{};
+  const minTxt=stripHtml(reqs.minimum||'');
+  const recTxt=stripHtml(reqs.recommended||'');
+  if(!minTxt&&!recTxt){
+    el.innerHTML='<div class="info-err">'+escapeHtml(app.name)+' has no published PC system requirements on Steam. <strong>Unknown — the game does not expose its PC stats.</strong></div>';
+    return;
+  }
+  const min=parseRequirementsBlock(minTxt);const rec=parseRequirementsBlock(recTxt);const cmp=compareSpecs(min,rec,detectedPcSpecs);const banner=cmp.meetsRecommended?'<div style="background:rgba(46,168,110,.15);border:1px solid rgba(46,168,110,.4);color:#6ee7a8;padding:10px;border-radius:8px;font-weight:700;margin-bottom:10px;">✅ Your PC meets or exceeds the RECOMMENDED requirements</div>':cmp.meetsMin?'<div style="background:rgba(255,152,0,.15);border:1px solid rgba(255,152,0,.4);color:#ffb84d;padding:10px;border-radius:8px;font-weight:700;margin-bottom:10px;">⚠️ Your PC meets the MINIMUM requirements — expect reduced quality/FPS</div>':'<div style="background:rgba(227,76,76,.15);border:1px solid rgba(227,76,76,.4);color:#ff8888;padding:10px;border-radius:8px;font-weight:700;margin-bottom:10px;">❌ Your PC may NOT meet the minimum requirements</div>';let fpsLow='?',fpsMed='?',fpsHigh='?';if(cmp.meetsRecommended){fpsLow='120–200+ FPS';fpsMed='80–140 FPS';fpsHigh='50–90 FPS'}else if(cmp.meetsMin){fpsLow='60–100 FPS';fpsMed='40–70 FPS';fpsHigh='20–40 FPS'}else{fpsLow='20–50 FPS';fpsMed='10–30 FPS';fpsHigh='<20 FPS (may not run)'}const headerImg=data.header_image?'<img src="'+data.header_image+'" style="width:100%;border-radius:8px;margin-bottom:10px;border:1px solid var(--border);" onerror="this.style.display=\'none\'">':'';el.innerHTML=headerImg+banner+'<div style="font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Estimated FPS on your setup</div>'+'<div class="info-row"><span class="label">🟢 Lowest quality</span><span class="value" style="color:#6ee7a8;">'+fpsLow+'</span></div>'+'<div class="info-row"><span class="label">🟡 Default / Basic</span><span class="value" style="color:#ffb84d;">'+fpsMed+'</span></div>'+'<div class="info-row"><span class="label">🔴 Highest / Max</span><span class="value" style="color:#ff8888;">'+fpsHigh+'</span></div>'+'<div style="margin-top:12px;font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;">Your detected</div>'+'<div class="info-row"><span class="label">RAM</span><span class="value">'+detectedPcSpecs.ram+'</span></div>'+'<div class="info-row"><span class="label">CPU cores</span><span class="value">'+detectedPcSpecs.cores+' threads</span></div>'+'<div class="info-row"><span class="label">GPU</span><span class="value" title="'+escapeHtml(detectedPcSpecs.gpu)+'">'+escapeHtml(detectedPcSpecs.gpu.slice(0,40))+'</span></div>'+'<div style="margin-top:12px;font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;">Steam requirements</div>'+(minTxt?'<div style="font-family:monospace;font-size:.66rem;background:var(--bg-deep);padding:8px;border-radius:6px;white-space:pre-wrap;margin-top:4px;">Minimum:\n'+escapeHtml(minTxt)+'</div>':'')+(recTxt?'<div style="font-family:monospace;font-size:.66rem;background:var(--bg-deep);padding:8px;border-radius:6px;white-space:pre-wrap;margin-top:6px;">Recommended:\n'+escapeHtml(recTxt)+'</div>':'')+'<div style="margin-top:10px;font-size:.62rem;color:var(--text-muted);font-style:italic;">FPS estimates are heuristic — actual performance depends on drivers, settings, and background apps. Data source: Steam Web API.</div>'}
 async function requestMicPermission(){const sel=$('micSelect');if(!sel)return;try{const probe=await navigator.mediaDevices.getUserMedia({audio:true});probe.getTracks().forEach(t=>t.stop());const devices=await navigator.mediaDevices.enumerateDevices();const mics=devices.filter(d=>d.kind==='audioinput');sel.innerHTML=mics.map((m,i)=>'<option value="'+m.deviceId+'">'+escapeHtml(m.label||('Microphone '+(i+1)))+'</option>').join('')||'<option value="">No microphones found</option>';showToast('Found '+mics.length+' microphone(s)','success')}catch(e){showToast('Microphone permission denied: '+e.message,'error')}}
 async function startMicMonitor(){if(micStream){stopMicMonitor();return}const deviceId=$('micSelect').value;if(!deviceId){showToast('Pick a microphone first','error');return}try{micStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:{exact:deviceId},echoCancellation:false,noiseSuppression:false,autoGainControl:false}});micCtx=new(window.AudioContext||window.webkitAudioContext)();micSource=micCtx.createMediaStreamSource(micStream);micAnalyser=micCtx.createAnalyser();micAnalyser.fftSize=256;micGain=micCtx.createGain();micGain.gain.value=(parseFloat($('micVolume').value)||100)/100;const monitorGain=micCtx.createGain();monitorGain.gain.value=(parseFloat($('micMonitorVolume').value)||80)/100;micSource.connect(micAnalyser);micSource.connect(micGain);micGain.connect(monitorGain);monitorGain.connect(micCtx.destination);window.__micMonitorGain=monitorGain;$('startMicMonitorBtn').style.display='none';$('stopMicMonitorBtn').style.display='inline-flex';const bars=$('micMeter').querySelectorAll('span');const data=new Uint8Array(micAnalyser.frequencyBinCount);micMonitorTimer=setInterval(()=>{if(!micAnalyser)return;micAnalyser.getByteFrequencyData(data);const per=Math.floor(data.length/bars.length);bars.forEach((b,i)=>{let sum=0;for(let j=0;j<per;j++)sum+=data[i*per+j];const avg=sum/per;const h=Math.max(3,Math.min(32,avg/2.5));b.style.height=h+'px'})},60);showToast('🎤 Listening — speak and you should hear yourself','success')}catch(e){showToast('Could not open mic: '+e.message,'error')}}
 function stopMicMonitor(){if(micMonitorTimer){clearInterval(micMonitorTimer);micMonitorTimer=null}if(micSource){try{micSource.disconnect()}catch(e){}micSource=null}if(micGain){try{micGain.disconnect()}catch(e){}micGain=null}if(micStream){micStream.getTracks().forEach(t=>{try{t.stop()}catch(e){}});micStream=null}if(micCtx){try{micCtx.close()}catch(e){}micCtx=null}micAnalyser=null;const bars=$('micMeter');if(bars)bars.querySelectorAll('span').forEach(s=>s.style.height='3px');const s=$('startMicMonitorBtn'),t=$('stopMicMonitorBtn');if(s)s.style.display='inline-flex';if(t)t.style.display='none'}
@@ -2160,9 +2222,72 @@ async function showSettingsLocation(){const el=$('settingsLocationHint');if(!el)
 async function pickSettingsFolder(){if(!('showDirectoryPicker' in window)){showToast('Your browser does not support folder picking. Use Chrome or Edge.','error');return}try{const h=await window.showDirectoryPicker({mode:'readwrite',id:'streamchat-settings',startIn:'documents'});streamerDirectoryHandle=h;$('settingsFolderName').textContent=h.name;showToast('Save folder set to '+h.name,'success')}catch(e){}}
 async function forgetSettingsFolder(){streamerDirectoryHandle=null;const el=$('settingsFolderName');if(el)el.textContent='(not chosen)';showToast('Save folder forgotten')}
 function maybeShowTutorial(){if(localStorage.getItem(KEYS.TUTORIAL)==='1')return;const overlay=document.createElement('div');overlay.id='tutorialIntroOverlay';overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;';overlay.innerHTML='<div style="max-width:440px;width:100%;background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;padding:26px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7);"><div style="font-size:2.6rem;margin-bottom:8px;">👋</div><h2 style="font-size:1.1rem;margin-bottom:10px;">Welcome to Stream Chat!</h2><p style="font-size:.84rem;color:var(--text-secondary);line-height:1.5;margin-bottom:18px;">It looks like this is your first time here. Would you like a quick tour that shows you what everything does?</p><div style="display:flex;gap:8px;flex-wrap:wrap;"><button id="tutNo" style="flex:1;min-width:120px;background:var(--bg-elevated);color:var(--text-primary);border:1px solid var(--border);">No, I\'ll figure it out</button><button id="tutYes" style="flex:1;min-width:120px;" class="success">Yes, show me!</button></div></div>';document.body.appendChild(overlay);document.getElementById('tutNo').addEventListener('click',()=>{localStorage.setItem(KEYS.TUTORIAL,'1');overlay.remove();showToast('No problem! Press ? anytime for help.','info')});document.getElementById('tutYes').addEventListener('click',()=>{localStorage.setItem(KEYS.TUTORIAL,'1');overlay.remove();startTutorial()})}
-const TUTORIAL_STEPS=[{sel:'#platformLogo',title:'Pick your platform',text:'Switch between Twitch, Kick, Discord, YouTube, and Custom WebSockets here.'},{sel:'#streamerInput',title:'Connect to a streamer',text:'Type a streamer name, then click Connect. Read-only — you can\'t send messages.'},{sel:'#chatMessages',title:'Live chat',text:'Messages appear here in real time. Hover a message for actions, right-click for the context menu.'},{sel:'#chatToolbarTitle',title:'Status bar',text:'Live indicator, uptime, and filter badges appear here.'},{sel:'#settingsBtn',title:'Settings',text:'Massive customization panel — themes, filters, sounds, animations, integrations, and more.'},{sel:'#nowPlayingCard',title:'Now Playing',text:'Detects songs from a local relay, Spotify, or your bot. Draggable.'},{sel:'#statsBtn',title:'Stats',text:'Session counters, top chatters, filtered messages, and rate.'},{sel:'#shortcutsBtn',title:'Shortcuts',text:'Press ? anytime to see every keyboard shortcut available.'},{sel:'#helpBtn',title:'Help',text:'Full techy documentation lives behind the ? button.'}];
+const TUTORIAL_STEPS=[{sel:'#platformLogo',title:'Pick your platform',text:'Switch between Twitch, Kick, Discord, YouTube, and Custom WebSockets here.'},{sel:'#streamerInput',title:'Connect to a streamer',text:'Type a streamer name, then click Connect. Read-only — you can\'t send messages.'},{sel:'#chatMessages',title:'Live chat',text:'Messages appear here in real time. Hover a message for actions, right-click for the context menu.'},{sel:'#chatToolbarTitle',title:'Status bar',text:'Live indicator, uptime, and filter badges appear here.'},{sel:'#settingsBtn',title:'Settings',text:'Massive customization panel — themes, filters, sounds, animations, integrations, and more.'},{sel:'#nowPlayingCard',title:'Now Playing',text:'Detects songs from a local relay, Spotify, or your bot. Draggable.'},{sel:'#statsBtn',title:'Stats',text:'Session counters, top chatters, filtered messages, and rate.'},{sel:'#shortcutsBtn',title:'Shortcuts',text:'Press ? anytime to see every keyboard shortcut available.'},{sel:'#helpBtn',title:'Information on how it works',text:'Full techy documentation lives behind the ? button.'}];
+function isTutorialTargetVisible(el){
+  if(!el) return false;
+  const r=el.getBoundingClientRect();
+  if(r.width<4||r.height<4) return false;
+  const cs=getComputedStyle(el);
+  if(cs.display==='none'||cs.visibility==='hidden'||cs.opacity==='0') return false;
+  return true;
+}
+function showTutorialStep(){
+  if(!tutorialOverlay)return;
+  tutorialOverlay.innerHTML='';
+  if(tutorialStep>=TUTORIAL_STEPS.length){endTutorial();return}
+  const step=TUTORIAL_STEPS[tutorialStep];
+  const target=document.querySelector(step.sel);
+  if(!target||!isTutorialTargetVisible(target)){tutorialStep++;return showTutorialStep()}
+  const rect=target.getBoundingClientRect();
+  const vw=window.innerWidth, vh=window.innerHeight;
+  const pad=12;
+  const tipW=Math.min(340,vw-pad*2);
+  const tipMaxH=Math.min(320, vh-pad*2);
+
+  const boxL=Math.max(pad-6, rect.left-6);
+  const boxT=Math.max(pad-6, rect.top-6);
+  const boxR=Math.min(vw-pad+6, rect.right+6);
+  const boxB=Math.min(vh-pad+6, rect.bottom+6);
+  const box=document.createElement('div');
+  box.style.cssText='position:fixed;left:'+boxL+'px;top:'+boxT+'px;width:'+(boxR-boxL)+'px;height:'+(boxB-boxT)+'px;border:2px solid var(--accent);border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.7), 0 0 30px rgba(145,71,255,.9);pointer-events:none;animation:tutPulse 1.6s ease-in-out infinite;z-index:99999;';
+
+  const spaceBelow=vh-rect.bottom-pad;
+  const spaceAbove=rect.top-pad;
+  let placeAbove=false, tipTop, tipLeft;
+  if(spaceBelow>=tipMaxH*0.6){
+    tipTop=rect.bottom+16;
+  }else if(spaceAbove>=tipMaxH*0.6){
+    placeAbove=true;
+    tipTop=rect.top-16-tipMaxH;
+  }else{
+    tipTop=Math.max(pad, Math.min(vh-tipMaxH-pad, vh/2-tipMaxH/2));
+  }
+  tipLeft=rect.left+rect.width/2-tipW/2;
+  tipLeft=Math.max(pad, Math.min(tipLeft, vw-tipW-pad));
+
+  const tip=document.createElement('div');
+  tip.style.cssText='position:fixed;left:'+tipLeft+'px;top:'+tipTop+'px;width:'+tipW+'px;max-height:'+tipMaxH+'px;overflow-y:auto;background:var(--bg-surface);border:1px solid var(--accent);border-radius:12px;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.7);z-index:100001;animation:tutSlideIn .35s cubic-bezier(.22,1,.36,1);';
+  tip.innerHTML='<div style="font-size:.72rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">Step '+(tutorialStep+1)+' of '+TUTORIAL_STEPS.length+'</div><div style="font-size:.94rem;font-weight:700;margin-bottom:6px;">'+escapeHtml(step.title)+'</div><div style="font-size:.8rem;line-height:1.5;color:var(--text-secondary);margin-bottom:12px;">'+escapeHtml(step.text)+'</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><button id="tutPrev" class="small secondary" style="flex:1;min-width:70px;"'+(tutorialStep===0?' disabled':'')+'>← Back</button><button id="tutNext" class="small success" style="flex:1;min-width:70px;">'+(tutorialStep===TUTORIAL_STEPS.length-1?'Finish ✓':'Next →')+'</button><button id="tutSkip" class="small danger" style="min-width:56px;">Skip</button></div>';
+
+  let arrow=null;
+  const arrowSpace=placeAbove?rect.top:vh-rect.bottom;
+  if(arrowSpace>36){
+    arrow=document.createElement('div');
+    const ay=placeAbove?rect.top-32:rect.bottom+4;
+    arrow.style.cssText='position:fixed;left:'+Math.max(pad,Math.min(rect.left+rect.width/2-14,vw-32))+'px;top:'+ay+'px;font-size:24px;color:#ff2bd6;text-shadow:0 0 12px rgba(255,43,214,.9);pointer-events:none;z-index:100000;animation:tutBounce 1s ease-in-out infinite;';
+    arrow.textContent=placeAbove?'⬆':'⬇';
+  }
+
+  if(!document.getElementById('tutKeyframes')){const st=document.createElement('style');st.id='tutKeyframes';st.textContent='@keyframes tutPulse{0%,100%{box-shadow:0 0 0 9999px rgba(0,0,0,.7),0 0 30px rgba(145,71,255,.9);}50%{box-shadow:0 0 0 9999px rgba(0,0,0,.7),0 0 50px rgba(255,43,214,.9);}}@keyframes tutBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes tutSlideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}';document.head.appendChild(st)}
+  tutorialOverlay.appendChild(box);
+  if(arrow)tutorialOverlay.appendChild(arrow);
+  tutorialOverlay.appendChild(tip);
+  tip.style.pointerEvents='auto';
+  document.getElementById('tutPrev').addEventListener('click',()=>{if(tutorialStep>0){tutorialStep--;showTutorialStep()}});
+  document.getElementById('tutNext').addEventListener('click',()=>{tutorialStep++;showTutorialStep()});
+  document.getElementById('tutSkip').addEventListener('click',endTutorial);
+}
 function startTutorial(){tutorialStep=0;if(tutorialOverlay)tutorialOverlay.remove();tutorialOverlay=document.createElement('div');tutorialOverlay.id='tutorialOverlay';tutorialOverlay.style.cssText='position:fixed;inset:0;z-index:99998;pointer-events:none;';document.body.appendChild(tutorialOverlay);showTutorialStep()}
-function showTutorialStep(){if(!tutorialOverlay)return;tutorialOverlay.innerHTML='';if(tutorialStep>=TUTORIAL_STEPS.length){endTutorial();return}const step=TUTORIAL_STEPS[tutorialStep];const target=document.querySelector(step.sel);if(!target){tutorialStep++;return showTutorialStep()}const rect=target.getBoundingClientRect();const box=document.createElement('div');box.style.cssText='position:fixed;left:'+(rect.left-6)+'px;top:'+(rect.top-6)+'px;width:'+(rect.width+12)+'px;height:'+(rect.height+12)+'px;border:2px solid var(--accent);border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.7), 0 0 30px rgba(145,71,255,.9);pointer-events:none;animation:tutPulse 1.6s ease-in-out infinite;z-index:99999;';const arrow=document.createElement('div');arrow.style.cssText='position:fixed;left:'+(rect.left+rect.width/2-14)+'px;top:'+(rect.top-44)+'px;font-size:28px;color:#ff2bd6;text-shadow:0 0 12px rgba(255,43,214,.9);pointer-events:none;z-index:100000;animation:tutBounce 1s ease-in-out infinite;';arrow.textContent='⬇';const tip=document.createElement('div');tip.style.cssText='position:fixed;left:'+Math.max(12,Math.min(rect.left,window.innerWidth-360))+'px;top:'+(rect.bottom+16)+'px;width:min(340px, calc(100vw - 24px));background:var(--bg-surface);border:1px solid var(--accent);border-radius:12px;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.7);z-index:100001;animation:tutSlideIn .35s cubic-bezier(.22,1,.36,1);';tip.innerHTML='<div style="font-size:.72rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">Step '+(tutorialStep+1)+' of '+TUTORIAL_STEPS.length+'</div><div style="font-size:.94rem;font-weight:700;margin-bottom:6px;">'+escapeHtml(step.title)+'</div><div style="font-size:.8rem;line-height:1.5;color:var(--text-secondary);margin-bottom:12px;">'+escapeHtml(step.text)+'</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><button id="tutPrev" class="small secondary" style="flex:1;min-width:80px;"'+(tutorialStep===0?' disabled':'')+'>← Back</button><button id="tutNext" class="small success" style="flex:1;min-width:80px;">'+(tutorialStep===TUTORIAL_STEPS.length-1?'Finish ✓':'Next →')+'</button><button id="tutSkip" class="small danger" style="min-width:60px;">Skip</button></div>';if(!document.getElementById('tutKeyframes')){const st=document.createElement('style');st.id='tutKeyframes';st.textContent='@keyframes tutPulse{0%,100%{box-shadow:0 0 0 9999px rgba(0,0,0,.7),0 0 30px rgba(145,71,255,.9);}50%{box-shadow:0 0 0 9999px rgba(0,0,0,.7),0 0 50px rgba(255,43,214,.9);}}@keyframes tutBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes tutSlideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}';document.head.appendChild(st)}tutorialOverlay.appendChild(box);tutorialOverlay.appendChild(arrow);tutorialOverlay.appendChild(tip);tip.style.pointerEvents='auto';document.getElementById('tutPrev').addEventListener('click',()=>{if(tutorialStep>0){tutorialStep--;showTutorialStep()}});document.getElementById('tutNext').addEventListener('click',()=>{tutorialStep++;showTutorialStep()});document.getElementById('tutSkip').addEventListener('click',endTutorial)}
 function endTutorial(){if(tutorialOverlay){tutorialOverlay.remove();tutorialOverlay=null}showToast('Tutorial complete — press ? for shortcuts anytime','success')}
 /* ═══════ NOW PLAYING ═══════ */
 function fmtTime(sec){sec=Math.max(0,Math.floor(sec||0));return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
@@ -2281,7 +2406,7 @@ function doAction(action){switch(action){
   case 'speedReset':settings.animSpeed=1;saveSettings();syncSettingsUI();applyAnimationSettings();showToast('Anim speed reset');break;
   case 'streamerMode':if(settings.streamerMode)disableStreamerMode();else applyStreamerMode();break;
   case 'sound':settings.soundEnabled=!settings.soundEnabled;saveSettings();syncSettingsUI();showToast(settings.soundEnabled?'Sound on':'Sound off');break;
-  case 'volumeUp':settings.soundVolume=Math.min(1.75,(settings.soundVolume||0.4)+0.05);saveSettings();syncSettingsUI();showToast('Volume: '+Math.round(settings.soundVolume*100)+'%');break;
+  case 'volumeUp':settings.soundVolume=Math.min(2,(settings.soundVolume||0.4)+0.05);saveSettings();syncSettingsUI();showToast('Volume: '+Math.round(settings.soundVolume*100)+'%');break;
   case 'volumeDown':settings.soundVolume=Math.max(0,(settings.soundVolume||0.4)-0.05);saveSettings();syncSettingsUI();showToast('Volume: '+Math.round(settings.soundVolume*100)+'%');break;
   case 'spamFilter':settings.hideSpam=!settings.hideSpam;saveSettings();syncSettingsUI();refreshAllMessages();showToast(settings.hideSpam?'Spam filter ON':'Spam filter OFF');break;
   case 'linkFilter':settings.filterLinks=!settings.filterLinks;saveSettings();syncSettingsUI();refreshAllMessages();showToast(settings.filterLinks?'Link filter ON':'Link filter OFF');break;
@@ -2762,23 +2887,26 @@ init();
 <script>
 /* ═══════════════════════════════════════════════════════════════════════════
    StreamChat i18n — Popup language switcher
-   Languages: 日本語 (default) · English · Deutsch · Español · 한국어 · 中文
+   Languages: 日本語 (default) · English · Deutsch · Español · Français ·
+              Italiano · Português · Русский · العربية · 한국어 · 中文
    ═══════════════════════════════════════════════════════════════════════════ */
 (function(){
 'use strict';
 
-/* ── Language registry — order matters, ja is the default ─────────────── */
 const LANGUAGES = [
-  { code:'ja', flag:'🇯🇵', native:'日本語',    en:'Japanese' },
-  { code:'en', flag:'🇺🇸', native:'English',   en:'English'  },
-  { code:'de', flag:'🇩🇪', native:'Deutsch',   en:'German'   },
-  { code:'es', flag:'🇪🇸', native:'Español',   en:'Spanish'  },
-  { code:'ko', flag:'🇰🇷', native:'한국어',     en:'Korean'   },
-  { code:'zh', flag:'🇨🇳', native:'中文',       en:'Chinese'  }
+  { code:'ja', flag:'🇯🇵', native:'日本語',    en:'Japanese'   },
+  { code:'en', flag:'🇺🇸', native:'English',   en:'English'    },
+  { code:'de', flag:'🇩🇪', native:'Deutsch',   en:'German'     },
+  { code:'es', flag:'🇪🇸', native:'Español',   en:'Spanish'    },
+  { code:'fr', flag:'🇫🇷', native:'Français',  en:'French'     },
+  { code:'it', flag:'🇮🇹', native:'Italiano',  en:'Italian'    },
+  { code:'pt', flag:'🇵🇹', native:'Português', en:'Portuguese' },
+  { code:'ru', flag:'🇷🇺', native:'Русский',   en:'Russian'    },
+  { code:'ar', flag:'🇸🇦', native:'العربية',   en:'Arabic'     },
+  { code:'ko', flag:'🇰🇷', native:'한국어',     en:'Korean'     },
+  { code:'zh', flag:'🇨🇳', native:'中文',       en:'Chinese'    }
 ];
 
-/* ── Master key list (English source strings) ─────────────────────────── */
-/* Every parallel translation array below must match this exactly by index. */
 const K = [
 /* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Custom','Settings','Help','Extra information','Keyboard shortcuts',
 /* 10 */'Twitch Streamer','Kick Streamer','Discord Server','YouTube Live','Custom WebSocket','streamer name','Connect','Disconnect','Not connected','Connected',
@@ -2800,7 +2928,7 @@ const K = [
 /* 170 */'Show stream info card','Show channel pill','Deduplicate identical msgs (30s)','Messages to keep','Max msgs / second','Persist chat on reload','Auto-connect default streamer','Highlighting','Highlight my mentions','Mention name',
 /* 180 */'Highlight color','Keyword highlight color','Spam Filter','Hide spam messages','Sensitivity','Low','Medium','High','Aggressive','Min repeated chars',
 /* 190 */'Min repeated words','Min message length','Anti-ASCII art','Block emoji-only messages','Block symbol-only messages','Max ALL-CAPS percentage (0 = off)','Content Filters','Auto-block chatbots','Hide links','Filter links',
-/* 200 */'Link whitelist','Blocked words','Extra bots','Regex filter','Notification Sound','Enable sound','Volume (0–175%)','Upload custom sound','Upload file…','Test',
+/* 200 */'Link whitelist','Blocked words','Extra bots','Regex filter','Notification Sound','Enable sound','Volume (0–200%)','Upload custom sound','Upload file…','Test',
 /* 210 */'Sound triggers','Play on all messages','Play on mentions only','Play on highlighted users','Play on donations/events','Only when tab is unfocused','Sound delay (ms)','Alerts','Desktop notifications','Read messages aloud (TTS)',
 /* 220 */'TTS rate','TTS pitch','Flash tab title on mention','Motion','Enable animations','Performance mode','Low power mode','Animation speed','Easing curve','Smooth',
 /* 230 */'Snappy','Bouncy','Linear','Message animations','Enter animation','Fade in','Pop in','Slide from left','Slide from right','Slide from top',
@@ -2821,10 +2949,8 @@ const K = [
 /* 380 */'Highlight','Bookmark','Tag','Block','Warning',"Don't Remind Me Again",'Okay, I Understand','Save','Cancel','File name',
 /* 390 */'Format','Welcome to Stream Chat!','Yes, show me!',"No, I'll figure it out",'Pick your platform','Connect to a streamer','Live chat','Status bar','Now Playing','Step',
 /* 400 */'of','Back','Skip','Finish','Switch language','Language','Japanese','English','German','Spanish',
-/* 410 */'Korean','Chinese'
+/* 410 */'Korean','Chinese','French','Italian','Portuguese','Russian','Arabic'
 ];
-
-/* ── Translations (parallel arrays, index-aligned with K) ─────────────── */
 
 const JA = [
 /* 0 */'ストリームチャット','Twitch','Kick','Discord','YouTube','カスタム','設定','ヘルプ','追加情報','キーボードショートカット',
@@ -2847,7 +2973,7 @@ const JA = [
 /* 170 */'配信情報カードを表示','チャンネルピルを表示','同一メッセージを重複排除（30秒）','保持するメッセージ数','1秒あたりの最大メッセージ数','リロード時にチャットを保持','デフォルト配信者に自動接続','ハイライト','自分のメンションをハイライト','メンション名',
 /* 180 */'ハイライト色','キーワードのハイライト色','スパムフィルター','スパムメッセージを非表示','感度','低','中','高','強力','最小連続文字数',
 /* 190 */'最小連続単語数','最小メッセージ長','ASCIIアート対策','絵文字のみのメッセージをブロック','記号のみのメッセージをブロック','大文字の最大割合（0 = 無効）','コンテンツフィルター','チャットボットを自動ブロック','リンクを非表示','リンクを除外（メッセージ全体を削除）',
-/* 200 */'リンクホワイトリスト','ブロック語','追加Bot','正規表現フィルター','通知音','サウンドを有効化','音量（0〜175%）','カスタムサウンドをアップロード','ファイルを選択…','テスト',
+/* 200 */'リンクホワイトリスト','ブロック語','追加Bot','正規表現フィルター','通知音','サウンドを有効化','音量（0〜200%）','カスタムサウンドをアップロード','ファイルを選択…','テスト',
 /* 210 */'サウンドトリガー','すべてのメッセージで再生','メンション時のみ再生','ハイライトユーザーで再生','投げ銭・イベントで再生','タブが非アクティブ時のみ','サウンド遅延 (ms)','アラート','デスクトップ通知','メッセージを読み上げ（TTS）',
 /* 220 */'TTS速度','TTSピッチ','メンション時にタブタイトルを点滅','モーション','アニメーションを有効化','パフォーマンスモード','低電力モード','アニメーション速度','イージングカーブ','スムーズ',
 /* 230 */'スナッピー','バウンス','リニア','メッセージアニメーション','登場アニメーション','フェードイン','ポップイン','左からスライド','右からスライド','上からスライド',
@@ -2868,7 +2994,7 @@ const JA = [
 /* 380 */'ハイライト','ブックマーク','タグ','ブロック','警告','次回から表示しない','はい、理解しました','保存','キャンセル','ファイル名',
 /* 390 */'形式','ストリームチャットへようこそ！','はい、見せてください！','いいえ、自分で試します','プラットフォームを選択','配信者に接続','ライブチャット','ステータスバー','再生中','ステップ',
 /* 400 */'/','戻る','スキップ','完了','言語を切り替え','言語','日本語','英語','ドイツ語','スペイン語',
-/* 410 */'韓国語','中国語'
+/* 410 */'韓国語','中国語','フランス語','イタリア語','ポルトガル語','ロシア語','アラビア語'
 ];
 
 const DE = [
@@ -2892,7 +3018,7 @@ const DE = [
 /* 170 */'Stream-Info-Karte anzeigen','Kanal-Pille anzeigen','Identische Nachrichten entdoppeln (30 s)','Nachrichten behalten','Max. Nachrichten/Sekunde','Chat beim Neuladen behalten','Standard-Streamer automatisch verbinden','Hervorhebung','Meine Erwähnungen hervorheben','Erwähnungsname',
 /* 180 */'Hervorhebungsfarbe','Schlüsselwort-Hervorhebungsfarbe','Spam-Filter','Spam-Nachrichten ausblenden','Empfindlichkeit','Niedrig','Mittel','Hoch','Aggressiv','Min. wiederholte Zeichen',
 /* 190 */'Min. wiederholte Wörter','Min. Nachrichtenlänge','Anti-ASCII-Kunst','Nur-Emoji-Nachrichten blockieren','Nur-Symbol-Nachrichten blockieren','Max. Großbuchstaben-Prozentsatz (0 = aus)','Inhaltsfilter','Chatbots automatisch blockieren','Links ausblenden','Links filtern (ganze Nachricht verwerfen)',
-/* 200 */'Link-Whitelist','Blockierte Wörter','Zusätzliche Bots','Regex-Filter','Benachrichtigungston','Ton aktivieren','Lautstärke (0–175 %)','Benutzerdefinierten Ton hochladen','Datei hochladen…','Testen',
+/* 200 */'Link-Whitelist','Blockierte Wörter','Zusätzliche Bots','Regex-Filter','Benachrichtigungston','Ton aktivieren','Lautstärke (0–200 %)','Benutzerdefinierten Ton hochladen','Datei hochladen…','Testen',
 /* 210 */'Ton-Auslöser','Bei allen Nachrichten abspielen','Nur bei Erwähnungen abspielen','Bei hervorgehobenen Benutzern abspielen','Bei Spenden/Events abspielen','Nur wenn Tab inaktiv','Ton-Verzögerung (ms)','Warnungen','Desktop-Benachrichtigungen','Nachrichten vorlesen (TTS)',
 /* 220 */'TTS-Geschwindigkeit','TTS-Tonhöhe','Tab-Titel bei Erwähnung blinken','Bewegung','Animationen aktivieren','Leistungsmodus','Energiesparmodus','Animationsgeschwindigkeit','Beschleunigungskurve','Sanft',
 /* 230 */'Schnell','Federn','Linear','Nachrichtenanimationen','Eingangsanimation','Einblenden','Einpoppen','Von links schieben','Von rechts schieben','Von oben schieben',
@@ -2913,7 +3039,7 @@ const DE = [
 /* 380 */'Hervorheben','Lesezeichen','Tag','Blockieren','Warnung','Nicht erneut erinnern','Okay, verstanden','Speichern','Abbrechen','Dateiname',
 /* 390 */'Format','Willkommen bei Stream Chat!','Ja, zeigen Sie mir!','Nein, ich schaffe das','Wählen Sie Ihre Plattform','Mit einem Streamer verbinden','Live-Chat','Statusleiste','Jetzt läuft','Schritt',
 /* 400 */'von','Zurück','Überspringen','Fertig','Sprache wechseln','Sprache','Japanisch','Englisch','Deutsch','Spanisch',
-/* 410 */'Koreanisch','Chinesisch'
+/* 410 */'Koreanisch','Chinesisch','Französisch','Italienisch','Portugiesisch','Russisch','Arabisch'
 ];
 
 const ES = [
@@ -2937,7 +3063,7 @@ const ES = [
 /* 170 */'Mostrar tarjeta de info del stream','Mostrar píldora de canal','Deduplicar mensajes idénticos (30 s)','Mensajes a conservar','Máx. mensajes/segundo','Conservar chat al recargar','Conectar automáticamente al streamer predeterminado','Resaltado','Resaltar mis menciones','Nombre de mención',
 /* 180 */'Color de resaltado','Color de resaltado de palabras clave','Filtro de spam','Ocultar mensajes de spam','Sensibilidad','Bajo','Medio','Alto','Agresivo','Mín. caracteres repetidos',
 /* 190 */'Mín. palabras repetidas','Longitud mínima del mensaje','Anti-arte ASCII','Bloquear mensajes solo con emojis','Bloquear mensajes solo con símbolos','Porcentaje máx. de MAYÚSCULAS (0 = desactivado)','Filtros de contenido','Bloquear chatbots automáticamente','Ocultar enlaces','Filtrar enlaces (descartar mensaje completo)',
-/* 200 */'Lista blanca de enlaces','Palabras bloqueadas','Bots adicionales','Filtro regex','Sonido de notificación','Activar sonido','Volumen (0–175 %)','Subir sonido personalizado','Subir archivo…','Probar',
+/* 200 */'Lista blanca de enlaces','Palabras bloqueadas','Bots adicionales','Filtro regex','Sonido de notificación','Activar sonido','Volumen (0–200 %)','Subir sonido personalizado','Subir archivo…','Probar',
 /* 210 */'Disparadores de sonido','Reproducir en todos los mensajes','Reproducir solo en menciones','Reproducir en usuarios resaltados','Reproducir en donaciones/eventos','Solo cuando la pestaña no está activa','Retardo de sonido (ms)','Alertas','Notificaciones de escritorio','Leer mensajes en voz alta (TTS)',
 /* 220 */'Velocidad TTS','Tono TTS','Parpadear título de pestaña en mención','Movimiento','Activar animaciones','Modo rendimiento','Modo bajo consumo','Velocidad de animación','Curva de suavizado','Suave',
 /* 230 */'Ágil','Rebote','Lineal','Animaciones de mensajes','Animación de entrada','Fundido','Aparecer','Deslizar desde la izquierda','Deslizar desde la derecha','Deslizar desde arriba',
@@ -2958,7 +3084,232 @@ const ES = [
 /* 380 */'Resaltar','Marcador','Etiqueta','Bloquear','Advertencia','No volver a recordarme','Vale, entiendo','Guardar','Cancelar','Nombre del archivo',
 /* 390 */'Formato','¡Bienvenido a Stream Chat!','¡Sí, muéstrame!','No, lo descubriré','Elige tu plataforma','Conéctate a un streamer','Chat en vivo','Barra de estado','Reproduciendo','Paso',
 /* 400 */'de','Atrás','Omitir','Finalizar','Cambiar idioma','Idioma','Japonés','Inglés','Alemán','Español',
-/* 410 */'Coreano','Chino'
+/* 410 */'Coreano','Chino','Francés','Italiano','Portugués','Ruso','Árabe'
+];
+
+const FR = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Personnalisé','Paramètres','Aide','Informations supplémentaires','Raccourcis clavier',
+/* 10 */'Streamer Twitch','Streamer Kick','Serveur Discord','YouTube Live','WebSocket personnalisé','nom du streamer','Connecter','Déconnecter','Non connecté','Connecté',
+/* 20 */'Connexion…','Reconnexion…','Erreur de connexion','Statistiques du streamer','Chaîne','Durée du live','Spectateurs','Jeu','Titre','Statut',
+/* 30 */'Streamers prédéfinis','En direct','Catégorie','Récents','hors ligne','Utilisateurs autorisés','Ignorer TOUS les filtres','nom d\'utilisateur','Préréglage de mise en page','Par défaut',
+/* 40 */'Moderne','Classique','Chat en lecture seule.','Toutes les données restent sur cet appareil.','Rechercher','Stats','Favoris','Étiquettes','Actualiser','Exporter',
+/* 50 */'Effacer','Mode source navigateur','Bloqués','Rechercher des messages…','Précédent','Suivant','Fermer','📌 Épinglé','↓ Nouveaux messages','Nouveaux messages',
+/* 60 */'Connectez-vous à un streamer pour voir son chat en direct.','Lecture seule · Tout reste local','Chat en lecture seule — envoi désactivé','Afficher/masquer en jeu','Premier message !','Copié ✓','Échec de la copie','Rien à copier','Chat effacé','Chat actualisé ✓',
+/* 70 */'Paramètres chargés','Échec du chargement :','Bloqué :','Débloqué :','Surligné :','Supprimé :','Étiquette ajoutée :','Préréglage enregistré :','Thème :','Mise en page :',
+/* 80 */'Volume :','Police :','Basculé vers','Mode source navigateur quitté','Quitter le mode superposition','Son activé','Son désactivé','TTS activé','TTS désactivé','Défilement auto activé',
+/* 90 */'Défilement auto désactivé','Avatars affichés','Avatars masqués','Pseudos affichés','Pseudos masqués','Horodatages affichés','Horodatages masqués','Aucun message','Message copié','Apparence',
+/* 100 */'Chat','Filtres','Sons','Animations','VTuber','Intégrations','Outils IA','Mods et jeux','VR / Quest','Avancé / Extras',
+/* 110 */'Configuration de test','Raccourcis','Thème','Thème principal','Par défaut du bureau','Blanc / Clair','Sombre / Noir','Préréglage d\'accent','Néon','Matrix',
+/* 120 */'Coucher de soleil','VTuber Rose','Accent personnalisé','URL de l\'image de fond du chat','Opacité du chat','Fond transparent','Mise en page et taille','Échelle de résolution','Taille de police','Famille de police',
+/* 130 */'Monospace','Serif','Rayon des coins','Net','Petit','Normal','Grand','Arrondi','Pilule','Espacement des messages',
+/* 140 */'Compact','Spacieux','Style des messages','Plat','Contour','Forme des avatars','Cercle','Carré','Mode console / TV','Avatars compacts',
+/* 150 */'Taille des badges','Taille de police du pseudo (px)','Affichage','Afficher les avatars','Afficher les pseudos','Afficher les horodatages','Format d\'horodatage','24 heures','12 heures','Relatif',
+/* 160 */'Regrouper les messages consécutifs','Défilement automatique','Suspendre le défilement au survol','Pause au survol d\'un message','Afficher la durée du live','Afficher l\'étiquette nouvel utilisateur','Afficher les badges utilisateur','Afficher le compteur de messages par utilisateur','Activer les émotes','Afficher la barre des utilisateurs récents',
+/* 170 */'Afficher la fiche info du live','Afficher la pilule de chaîne','Dédoublonner les messages identiques (30 s)','Messages à conserver','Messages max / seconde','Conserver le chat au rechargement','Connexion auto au streamer par défaut','Surlignage','Surligner mes mentions','Nom de mention',
+/* 180 */'Couleur de surlignage','Couleur de surlignage des mots-clés','Filtre anti-spam','Masquer les messages spam','Sensibilité','Faible','Moyenne','Élevée','Agressive','Caractères répétés min.',
+/* 190 */'Mots répétés min.','Longueur min. du message','Anti-art ASCII','Bloquer les messages emoji uniquement','Bloquer les messages symbole uniquement','Pourcentage max de MAJUSCULES (0 = désactivé)','Filtres de contenu','Bloquer automatiquement les chatbots','Masquer les liens','Filtrer les liens (supprimer tout le message)',
+/* 200 */'Liste blanche de liens','Mots bloqués','Bots supplémentaires','Filtre regex','Son de notification','Activer le son','Volume (0–200 %)','Téléverser un son personnalisé','Téléverser un fichier…','Tester',
+/* 210 */'Déclencheurs de son','Jouer sur tous les messages','Jouer uniquement sur les mentions','Jouer sur les utilisateurs surlignés','Jouer sur les dons/événements','Uniquement quand l\'onglet est inactif','Délai du son (ms)','Alertes','Notifications du bureau','Lire les messages à voix haute (TTS)',
+/* 220 */'Vitesse TTS','Tonalité TTS','Faire clignoter le titre de l\'onglet sur mention','Mouvement','Activer les animations','Mode performance','Mode basse consommation','Vitesse d\'animation','Courbe d\'accélération','Fluide',
+/* 230 */'Vif','Rebondissant','Linéaire','Animations des messages','Animation d\'entrée','Fondu','Apparition','Glisser depuis la gauche','Glisser depuis la droite','Glisser depuis le haut',
+/* 240 */'Rebond','Retournement 3D','Zoom + fondu','Animation au survol','Aucune','Élévation','Lueur','Mise à l\'échelle','Animation de surlignage','Statique',
+/* 250 */'Pulsation','Animation de surlignage nouvel utilisateur','Secouer tout le message','Animations d\'accent','Taux de rafraîchissement','Détection auto','Superposition VTuber','Activer la superposition VTuber','Détecter VTube Studio automatiquement','Hôte VTS',
+/* 260 */'Port VTS','Détecter VTS','Capture d\'écran','Arrêter','Position','En bas à droite','En bas à gauche','En haut à droite','En haut à gauche','Taille (px)',
+/* 270 */'Opacité (%)','Miroir horizontal','Activer le mode source navigateur','Copier le CSS OBS','Copier l\'URL de cette page','OBS WebSocket','Activer OBS WebSocket','Hôte OBS','Port OBS','Mot de passe OBS',
+/* 280 */'Lecteur de chat Discord','Jeton du bot','Connexion auto au chargement','Clé API YouTube Data','Reconnexion auto','Lecture en cours / Musique','Afficher la fiche de lecture','Intervalle d\'interrogation (ms)','Interrogation du relais local','URL du relais',
+/* 290 */'Mode relais Nightbot','Prise en charge de YouTube Music','Activer Spotify','ID client Spotify','Streamlabs Socket API','Activer les événements Streamlabs','Jeton de socket','Webhooks','URL du webhook Discord','URL du webhook Slack',
+/* 300 */'TikTok Live (relais)','Résumé de chat IA','Activer le résumé IA','Fournisseur IA','Clé API','Nom du modèle','URL du point de terminaison personnalisé','Résumer toutes les (s)','Nombre max de messages à analyser','Afficher le résumé dans le chat',
+/* 310 */'Aperçus IA','Analyse de sentiment','Détection de sujets','Tout télécharger','Mod Minecraft','Télécharger le .zip complet','Télécharger le .jar unique','Copier le guide d\'installation','Plugin osu! (stable)','Télécharger le projet C#',
+/* 320 */'Code d\'intégration de jeu','Cible','Meta Quest / VR HTML','Télécharger le VR HTML','Transférer vers Quest','Oublier le dossier Quest','Comportement','Tampon de retard du live (s)','Supprimer auto les messages après (s)','Effacer auto à la reconnexion',
+/* 330 */'Streamer par défaut','Taille de la barre des récents','Messages max par utilisateur','Intervalle de nettoyage','Mode streamer','Activer le mode streamer','Mobile','Afficher la barre de navigation inférieure','Balayage du bord pour ouvrir la barre latérale','Retour haptique',
+/* 340 */'Barre d\'outils compacte sur mobile','Votre PC','Détecter mon PC','Copier la config','Vérifier si la config supporte [jeu]','Vérifier','FPS estimés sur votre config','Qualité la plus basse','Par défaut / Basique','La plus haute / Max',
+/* 350 */'Votre configuration détectée','Configuration Steam','Écouter / Tester le micro','Microphone','Volume d\'entrée','Volume de sortie moniteur','Écouter','Utilisation des ressources de cette app','FPS (cet onglet)','Tas JS utilisé',
+/* 360 */'Tas JS total','Limite du tas JS','Nœuds DOM','Messages du chat','Cœurs CPU','Visibilité de l\'onglet','Démarrer les stats en direct','Comment ouvrir le gestionnaire des tâches','Notes privées','Vous seul pouvez voir ceci.',
+/* 370 */'Historique du chat','Aucun message suivi pour l\'instant.','Âge du compte','Abonné à','Vu pour la première fois','Messages','Dernier message','Longueur moyenne','Messages de session','Voir',
+/* 380 */'Surligner','Favori','Étiquette','Bloquer','Avertissement','Ne plus me rappeler','D\'accord, compris','Enregistrer','Annuler','Nom du fichier',
+/* 390 */'Format','Bienvenue sur Stream Chat !','Oui, montrez-moi !','Non, je vais me débrouiller','Choisissez votre plateforme','Connectez-vous à un streamer','Chat en direct','Barre d\'état','Lecture en cours','Étape',
+/* 400 */'sur','Retour','Passer','Terminer','Changer de langue','Langue','Japonais','Anglais','Allemand','Espagnol',
+/* 410 */'Coréen','Chinois','Français','Italien','Portugais','Russe','Arabe'
+];
+
+const IT = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Personalizzato','Impostazioni','Aiuto','Informazioni aggiuntive','Scorciatoie da tastiera',
+/* 10 */'Streamer Twitch','Streamer Kick','Server Discord','YouTube Live','WebSocket personalizzato','nome dello streamer','Connetti','Disconnetti','Non connesso','Connesso',
+/* 20 */'Connessione…','Riconnessione…','Errore di connessione','Statistiche streamer','Canale','Durata diretta','Spettatori','Gioco','Titolo','Stato',
+/* 30 */'Streamer predefiniti','In diretta','Categoria','Recenti','offline','Utenti autorizzati','Ignora TUTTI i filtri','nome utente','Preset di layout','Predefinito',
+/* 40 */'Moderno','Classico','Chat di sola lettura.','Tutti i dati restano su questo dispositivo.','Cerca','Statistiche','Segnalibri','Tag','Aggiorna','Esporta',
+/* 50 */'Pulisci','Modalità sorgente browser','Bloccati','Cerca messaggi…','Precedente','Successivo','Chiudi','📌 Fissato','↓ Nuovi messaggi','Nuovi messaggi',
+/* 60 */'Connettiti a uno streamer per vedere la chat dal vivo.','Sola lettura · Tutto rimane locale','Chat di sola lettura — invio disabilitato','Mostra/nascondi nel gioco','Primo messaggio!','Copiato ✓','Copia non riuscita','Niente da copiare','Chat pulita','Chat aggiornata ✓',
+/* 70 */'Impostazioni caricate','Caricamento non riuscito:','Bloccato:','Sbloccato:','Evidenziato:','Rimosso:','Tag aggiunto:','Preset salvato:','Tema:','Layout:',
+/* 80 */'Volume:','Carattere:','Passato a','Modalità sorgente browser disattivata','Esci dalla modalità overlay','Audio attivo','Audio disattivato','TTS attivo','TTS disattivato','Scorrimento automatico attivo',
+/* 90 */'Scorrimento automatico disattivato','Avatar attivi','Avatar disattivati','Nomi utente attivi','Nomi utente disattivati','Timestamp attivi','Timestamp disattivati','Nessun messaggio','Messaggio copiato','Aspetto',
+/* 100 */'Chat','Filtri','Suoni','Animazioni','VTuber','Integrazioni','Strumenti IA','Mod e giochi','VR / Quest','Avanzate / Extra',
+/* 110 */'Configurazione di test','Scorciatoie','Tema','Tema principale','Predefinito desktop','Bianco / Chiaro','Scuro / Nero','Preset accento','Neon','Matrix',
+/* 120 */'Tramonto','VTuber Rosa','Accento personalizzato','URL immagine sfondo chat','Opacità chat','Sfondo trasparente','Layout e dimensioni','Scala risoluzione','Dimensione carattere','Famiglia carattere',
+/* 130 */'Monospazio','Serif','Raggio angoli','Netto','Piccolo','Normale','Grande','Arrotondato','Pillola','Spaziatura messaggi',
+/* 140 */'Compatto','Spazioso','Stile messaggi','Piatto','Contorno','Forma avatar','Cerchio','Quadrato','Modalità console / TV','Avatar compatti',
+/* 150 */'Dimensione badge','Dimensione carattere nome utente (px)','Visualizzazione','Mostra avatar','Mostra nomi utente','Mostra timestamp','Formato timestamp','24 ore','12 ore','Relativo',
+/* 160 */'Raggruppa messaggi consecutivi','Scorrimento automatico','Metti in pausa lo scorrimento al passaggio','Pausa al passaggio sul messaggio','Mostra durata diretta','Mostra tag nuovo utente','Mostra badge utente','Mostra contatore messaggi per utente','Abilita emote','Mostra barra utenti recenti',
+/* 170 */'Mostra scheda info diretta','Mostra pillola canale','Deduplica messaggi identici (30 s)','Messaggi da conservare','Max messaggi/secondo','Mantieni chat al ricaricamento','Connessione automatica allo streamer predefinito','Evidenziazione','Evidenzia le mie menzioni','Nome menzione',
+/* 180 */'Colore evidenziazione','Colore evidenziazione parole chiave','Filtro antispam','Nascondi messaggi spam','Sensibilità','Bassa','Media','Alta','Aggressiva','Caratteri ripetuti min.',
+/* 190 */'Parole ripetute min.','Lunghezza minima messaggio','Anti-arte ASCII','Blocca messaggi solo emoji','Blocca messaggi solo simboli','Percentuale massima MAIUSCOLE (0 = off)','Filtri contenuto','Blocca automaticamente i chatbot','Nascondi link','Filtra link (scarta l\'intero messaggio)',
+/* 200 */'Whitelist link','Parole bloccate','Bot extra','Filtro regex','Suono di notifica','Abilita suono','Volume (0–200%)','Carica suono personalizzato','Carica file…','Prova',
+/* 210 */'Trigger suono','Riproduci su tutti i messaggi','Riproduci solo sulle menzioni','Riproduci sugli utenti evidenziati','Riproduci su donazioni/eventi','Solo quando la scheda è inattiva','Ritardo suono (ms)','Avvisi','Notifiche desktop','Leggi i messaggi ad alta voce (TTS)',
+/* 220 */'Velocità TTS','Tono TTS','Lampeggia titolo scheda alla menzione','Movimento','Abilita animazioni','Modalità prestazioni','Modalità risparmio energetico','Velocità animazione','Curva di easing','Fluido',
+/* 230 */'Scattante','Rimbalzante','Lineare','Animazioni messaggi','Animazione ingresso','Dissolvenza','Pop','Scorri da sinistra','Scorri da destra','Scorri dall\'alto',
+/* 240 */'Rimbalzo','Flip 3D','Zoom + dissolvenza','Animazione al passaggio','Nessuna','Solleva','Bagliore','Scala','Animazione evidenziazione','Statico',
+/* 250 */'Impulso','Animazione evidenziazione nuovo utente','Scuoti l\'intero messaggio','Animazioni accento','Frequenza aggiornamento','Rilevamento automatico','Overlay VTuber','Abilita overlay VTuber','Rileva VTube Studio automaticamente','Host VTS',
+/* 260 */'Porta VTS','Rileva VTS','Acquisizione schermo','Ferma','Posizione','In basso a destra','In basso a sinistra','In alto a destra','In alto a sinistra','Dimensione (px)',
+/* 270 */'Opacità (%)','Specchia orizzontalmente','Abilita modalità sorgente browser','Copia CSS OBS','Copia URL di questa pagina','OBS WebSocket','Abilita OBS WebSocket','Host OBS','Porta OBS','Password OBS',
+/* 280 */'Lettore chat Discord','Token del bot','Connessione automatica al caricamento','Chiave API YouTube Data','Riconnessione automatica','In riproduzione / Musica','Mostra scheda in riproduzione','Intervallo polling (ms)','Polling relay locale','URL relay',
+/* 290 */'Modalità relay Nightbot','Supporto YouTube Music','Abilita Spotify','ID client Spotify','Streamlabs Socket API','Abilita eventi Streamlabs','Token socket','Webhook','URL webhook Discord','URL webhook Slack',
+/* 300 */'TikTok Live (relay)','Riassunto chat IA','Abilita riassunto IA','Provider IA','Chiave API','Nome modello','URL endpoint personalizzato','Riassumi ogni (s)','Numero massimo messaggi da analizzare','Mostra riassunto in chat',
+/* 310 */'Approfondimenti IA','Analisi del sentiment','Rilevamento argomenti','Scarica tutto','Mod Minecraft','Scarica .zip completo','Scarica .jar singolo','Copia guida di configurazione','Plugin osu! (stable)','Scarica progetto C#',
+/* 320 */'Codice integrazione gioco','Destinazione','Meta Quest / VR HTML','Scarica VR HTML','Trasferisci su Quest','Dimentica cartella Quest','Comportamento','Buffer ritardo diretta (s)','Rimuovi messaggi automaticamente dopo (s)','Pulisci automaticamente alla riconnessione',
+/* 330 */'Streamer predefinito','Dimensione barra recenti','Max messaggi per utente','Intervallo di pulizia','Modalità streamer','Abilita modalità streamer','Mobile','Mostra barra di navigazione inferiore','Scorri dal bordo per aprire la barra laterale','Feedback aptico',
+/* 340 */'Barra strumenti compatta su mobile','Il tuo PC','Rileva il mio PC','Copia specifiche','Verifica se la config supporta [gioco]','Verifica','FPS stimati sulla tua config','Qualità più bassa','Predefinito / Base','Massima / Max',
+/* 350 */'Rilevati','Requisiti Steam','Ascolta / Prova microfono','Microfono','Volume ingresso','Volume uscita monitor','Ascolta','Utilizzo risorse di questa app','FPS (questa scheda)','Heap JS utilizzato',
+/* 360 */'Heap JS totale','Limite heap JS','Nodi DOM','Messaggi chat','Core CPU','Visibilità scheda','Avvia statistiche live','Come aprire il Task Manager','Note private','Solo tu puoi vederlo.',
+/* 370 */'Cronologia chat','Ancora nessun messaggio tracciato.','Età account','Segue','Visto per la prima volta','Messaggi','Ultimo messaggio','Lunghezza media','Messaggi sessione','Visualizza',
+/* 380 */'Evidenzia','Segnalibro','Tag','Blocca','Avviso','Non ricordarmelo più','Ok, ho capito','Salva','Annulla','Nome file',
+/* 390 */'Formato','Benvenuto su Stream Chat!','Sì, mostrami!','No, me la cavo','Scegli la tua piattaforma','Connettiti a uno streamer','Chat dal vivo','Barra di stato','In riproduzione','Passo',
+/* 400 */'di','Indietro','Salta','Fine','Cambia lingua','Lingua','Giapponese','Inglese','Tedesco','Spagnolo',
+/* 410 */'Coreano','Cinese','Francese','Italiano','Portoghese','Russo','Arabo'
+];
+
+const PT = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Personalizado','Configurações','Ajuda','Informações adicionais','Atalhos de teclado',
+/* 10 */'Streamer da Twitch','Streamer do Kick','Servidor do Discord','YouTube Live','WebSocket personalizado','nome do streamer','Conectar','Desconectar','Não conectado','Conectado',
+/* 20 */'Conectando…','Reconectando…','Erro de conexão','Estatísticas do streamer','Canal','Tempo de transmissão','Espectadores','Jogo','Título','Status',
+/* 30 */'Streamers predefinidos','Ao vivo','Categoria','Recentes','offline','Usuários permitidos','Ignorar TODOS os filtros','nome de usuário','Predefinição de layout','Padrão',
+/* 40 */'Moderno','Clássico','Chat somente leitura.','Todos os dados ficam neste dispositivo.','Pesquisar','Estatísticas','Favoritos','Tags','Atualizar','Exportar',
+/* 50 */'Limpar','Modo fonte do navegador','Bloqueados','Pesquisar mensagens…','Anterior','Próximo','Fechar','📌 Fixado','↓ Novas mensagens','Novas mensagens',
+/* 60 */'Conecte-se a um streamer para ver o chat ao vivo.','Somente leitura · Tudo permanece local','Chat somente leitura — envio desativado','Mostrar/ocultar no jogo','Primeira mensagem!','Copiado ✓','Falha ao copiar','Nada para copiar','Chat limpo','Chat atualizado ✓',
+/* 70 */'Configurações carregadas','Falha ao carregar:','Bloqueado:','Desbloqueado:','Destacado:','Removido:','Tag adicionada:','Predefinição salva:','Tema:','Layout:',
+/* 80 */'Volume:','Fonte:','Mudou para','Modo fonte do navegador encerrado','Sair do modo sobreposição','Som ativado','Som desativado','TTS ativado','TTS desativado','Rolagem automática ativada',
+/* 90 */'Rolagem automática desativada','Avatares ativados','Avatares desativados','Nomes de usuário ativados','Nomes de usuário desativados','Timestamps ativados','Timestamps desativados','Sem mensagens','Mensagem copiada','Aparência',
+/* 100 */'Chat','Filtros','Sons','Animações','VTuber','Integrações','Ferramentas de IA','Mods e jogos','VR / Quest','Avançado / Extras',
+/* 110 */'Configuração de teste','Atalhos','Tema','Tema principal','Padrão do desktop','Branco / Claro','Escuro / Preto','Predefinição de destaque','Neon','Matrix',
+/* 120 */'Pôr do sol','VTuber Rosa','Destaque personalizado','URL da imagem de fundo do chat','Opacidade do chat','Fundo transparente','Layout e tamanho','Escala de resolução','Tamanho da fonte','Família da fonte',
+/* 130 */'Monoespaçada','Serifada','Raio do canto','Nítido','Pequeno','Normal','Grande','Arredondado','Pílula','Espaçamento das mensagens',
+/* 140 */'Compacto','Espaçoso','Estilo da mensagem','Plano','Contornado','Forma do avatar','Círculo','Quadrado','Modo console / TV','Avatares compactos',
+/* 150 */'Tamanho do emblema','Tamanho da fonte do usuário (px)','Exibição','Mostrar avatares','Mostrar nomes de usuário','Mostrar timestamps','Formato do timestamp','24 horas','12 horas','Relativo',
+/* 160 */'Agrupar mensagens consecutivas','Rolagem automática','Pausar rolagem ao passar o mouse','Pausar ao passar sobre a mensagem','Mostrar tempo de transmissão','Mostrar etiqueta de novo usuário','Mostrar emblemas do usuário','Mostrar contador de mensagens por usuário','Ativar emotes','Mostrar barra de usuários recentes',
+/* 170 */'Mostrar cartão de informações','Mostrar pílula do canal','Deduplicar mensagens idênticas (30 s)','Mensagens a manter','Máx. mensagens/segundo','Manter chat ao recarregar','Conectar automaticamente ao streamer padrão','Destaque','Destacar minhas menções','Nome da menção',
+/* 180 */'Cor do destaque','Cor do destaque de palavras-chave','Filtro de spam','Ocultar mensagens de spam','Sensibilidade','Baixa','Média','Alta','Agressiva','Caracteres repetidos mín.',
+/* 190 */'Palavras repetidas mín.','Comprimento mínimo da mensagem','Anti-arte ASCII','Bloquear mensagens só com emoji','Bloquear mensagens só com símbolos','Porcentagem máxima de MAIÚSCULAS (0 = desligado)','Filtros de conteúdo','Bloquear chatbots automaticamente','Ocultar links','Filtrar links (descartar mensagem inteira)',
+/* 200 */'Lista de links permitidos','Palavras bloqueadas','Bots extras','Filtro regex','Som de notificação','Ativar som','Volume (0–200%)','Enviar som personalizado','Enviar arquivo…','Testar',
+/* 210 */'Gatilhos de som','Tocar em todas as mensagens','Tocar apenas em menções','Tocar em usuários destacados','Tocar em doações/eventos','Somente quando a guia estiver inativa','Atraso do som (ms)','Alertas','Notificações da área de trabalho','Ler mensagens em voz alta (TTS)',
+/* 220 */'Velocidade do TTS','Tom do TTS','Piscar título da guia em menção','Movimento','Ativar animações','Modo desempenho','Modo baixo consumo','Velocidade da animação','Curva de suavização','Suave',
+/* 230 */'Ágil','Saltitante','Linear','Animações de mensagens','Animação de entrada','Fade in','Pop in','Deslizar da esquerda','Deslizar da direita','Deslizar de cima',
+/* 240 */'Quicar','Flip 3D','Zoom + fade','Animação ao passar o mouse','Nenhuma','Elevar','Brilho','Escala','Animação de destaque','Estático',
+/* 250 */'Pulso','Animação de destaque de novo usuário','Tremer a mensagem inteira','Animações de destaque','Taxa de atualização','Detecção automática','Sobreposição VTuber','Ativar sobreposição VTuber','Detectar VTube Studio automaticamente','Host do VTS',
+/* 260 */'Porta do VTS','Detectar VTS','Captura de tela','Parar','Posição','Inferior direito','Inferior esquerdo','Superior direito','Superior esquerdo','Tamanho (px)',
+/* 270 */'Opacidade (%)','Espelhar horizontalmente','Ativar modo fonte do navegador','Copiar CSS do OBS','Copiar URL desta página','OBS WebSocket','Ativar OBS WebSocket','Host do OBS','Porta do OBS','Senha do OBS',
+/* 280 */'Leitor de chat do Discord','Token do bot','Conectar automaticamente ao carregar','Chave da API YouTube Data','Reconexão automática','Tocando agora / Música','Mostrar cartão tocando agora','Intervalo de pesquisa (ms)','Pesquisa de relay local','URL do relay',
+/* 290 */'Modo relay do Nightbot','Suporte a YouTube Music','Ativar Spotify','ID do cliente Spotify','Streamlabs Socket API','Ativar eventos do Streamlabs','Token do socket','Webhooks','URL do webhook Discord','URL do webhook Slack',
+/* 300 */'TikTok Live (relay)','Resumo de chat por IA','Ativar resumo por IA','Provedor de IA','Chave de API','Nome do modelo','URL do endpoint personalizado','Resumir a cada (s)','Máx. mensagens para analisar','Mostrar resumo no chat',
+/* 310 */'Insights de IA','Análise de sentimento','Detecção de tópicos','Baixar tudo','Mod do Minecraft','Baixar .zip completo','Baixar .jar individual','Copiar guia de instalação','Plugin do osu! (stable)','Baixar projeto C#',
+/* 320 */'Código de integração de jogo','Destino','Meta Quest / VR HTML','Baixar VR HTML','Transferir para o Quest','Esquecer pasta do Quest','Comportamento','Buffer de atraso da transmissão (s)','Remover mensagens automaticamente após (s)','Limpar automaticamente ao reconectar',
+/* 330 */'Streamer padrão','Tamanho da barra de recentes','Máx. mensagens por usuário','Intervalo de limpeza','Modo streamer','Ativar modo streamer','Celular','Mostrar barra de navegação inferior','Deslizar da borda para abrir a barra lateral','Feedback tátil',
+/* 340 */'Barra de ferramentas compacta no celular','Seu PC','Detectar meu PC','Copiar especificações','Verificar se a configuração suporta [jogo]','Verificar','FPS estimados na sua configuração','Qualidade mais baixa','Padrão / Básico','Mais alta / Máx',
+/* 350 */'Seus detectados','Requisitos do Steam','Ouvir / Testar microfone','Microfone','Volume de entrada','Volume de saída do monitor','Ouvir','Uso de recursos deste app','FPS (esta guia)','Heap JS usado',
+/* 360 */'Heap JS total','Limite do heap JS','Nós do DOM','Mensagens do chat','Núcleos da CPU','Visibilidade da guia','Iniciar estatísticas ao vivo','Como abrir o Gerenciador de Tarefas','Notas privadas','Só você pode ver isto.',
+/* 370 */'Histórico do chat','Nenhuma mensagem rastreada ainda.','Idade da conta','Seguindo','Visto pela primeira vez','Mensagens','Última mensagem','Comprimento médio','Mensagens da sessão','Ver',
+/* 380 */'Destacar','Favorito','Tag','Bloquear','Aviso','Não me lembrar novamente','Ok, entendi','Salvar','Cancelar','Nome do arquivo',
+/* 390 */'Formato','Bem-vindo ao Stream Chat!','Sim, me mostre!','Não, vou descobrir','Escolha sua plataforma','Conecte-se a um streamer','Chat ao vivo','Barra de status','Tocando agora','Passo',
+/* 400 */'de','Voltar','Pular','Concluir','Trocar idioma','Idioma','Japonês','Inglês','Alemão','Espanhol',
+/* 410 */'Coreano','Chinês','Francês','Italiano','Português','Russo','Árabe'
+];
+
+const RU = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','Свой','Настройки','Справка','Дополнительная информация','Горячие клавиши',
+/* 10 */'Стример Twitch','Стример Kick','Сервер Discord','YouTube Live','Свой WebSocket','имя стримера','Подключить','Отключить','Не подключено','Подключено',
+/* 20 */'Подключение…','Переподключение…','Ошибка подключения','Статистика стримера','Канал','Время эфира','Зрители','Игра','Название','Статус',
+/* 30 */'Готовые стримеры','В эфире','Категория','Недавние','офлайн','Белый список','Обходить ВСЕ фильтры','имя пользователя','Шаблон оформления','По умолчанию',
+/* 40 */'Современный','Классический','Чат только для чтения.','Все данные остаются на этом устройстве.','Поиск','Статистика','Закладки','Теги','Обновить','Экспорт',
+/* 50 */'Очистить','Режим источника браузера','Заблокированные','Поиск сообщений…','Предыдущее','Следующее','Закрыть','📌 Закреплено','↓ Новые сообщения','Новые сообщения',
+/* 60 */'Подключитесь к стримеру, чтобы увидеть его чат в эфире.','Только чтение · Всё хранится локально','Чат только для чтения — отправка отключена','Показать/скрыть в игре','Первое сообщение!','Скопировано ✓','Не удалось скопировать','Нечего копировать','Чат очищен','Чат обновлён ✓',
+/* 70 */'Настройки загружены','Ошибка загрузки:','Заблокирован:','Разблокирован:','Выделен:','Удалено:','Тег добавлен:','Шаблон сохранён:','Тема:','Макет:',
+/* 80 */'Громкость:','Шрифт:','Переключено на','Режим источника браузера выключен','Выход из режима оверлея','Звук включён','Звук выключен','Озвучка включена','Озвучка выключена','Автопрокрутка включена',
+/* 90 */'Автопрокрутка выключена','Аватары включены','Аватары выключены','Имена включены','Имена выключены','Метки времени включены','Метки времени выключены','Нет сообщений','Сообщение скопировано','Внешний вид',
+/* 100 */'Чат','Фильтры','Звуки','Анимации','VTuber','Интеграции','Инструменты ИИ','Моды и игры','VR / Quest','Дополнительно / Прочее',
+/* 110 */'Тестовая настройка','Горячие клавиши','Тема','Основная тема','По умолчанию','Белая / Светлая','Тёмная / Чёрная','Пресет акцента','Неон','Матрица',
+/* 120 */'Закат','VTuber Розовый','Свой акцент','URL фона чата','Прозрачность чата','Прозрачный фон','Макет и размеры','Масштаб разрешения','Размер шрифта','Семейство шрифтов',
+/* 130 */'Моноширинный','С засечками','Скругление углов','Острые','Маленькое','Обычное','Большое','Скруглённые','Пилюля','Отступы сообщений',
+/* 140 */'Компактные','Просторные','Стиль сообщений','Плоский','С обводкой','Форма аватара','Круг','Квадрат','Режим консоли / ТВ','Компактные аватары',
+/* 150 */'Размер значков','Размер шрифта имени (px)','Отображение','Показывать аватары','Показывать имена','Показывать метки времени','Формат метки времени','24 часа','12 часов','Относительно',
+/* 160 */'Группировать подряд идущие сообщения','Автопрокрутка','Пауза автопрокрутки при наведении','Пауза при наведении на сообщение','Показывать время эфира','Показывать тег нового пользователя','Показывать значки пользователя','Показывать счётчик сообщений','Включить эмоуты','Показывать панель недавних',
+/* 170 */'Показывать карточку эфира','Показывать метку канала','Убирать дубликаты сообщений (30 с)','Хранить сообщений','Макс. сообщений/сек','Сохранять чат при перезагрузке','Автоподключение к стандартному стримеру','Выделение','Выделять мои упоминания','Имя для упоминания',
+/* 180 */'Цвет выделения','Цвет выделения ключевых слов','Фильтр спама','Скрывать спам-сообщения','Чувствительность','Низкая','Средняя','Высокая','Агрессивная','Мин. повторяющихся символов',
+/* 190 */'Мин. повторяющихся слов','Мин. длина сообщения','Защита от ASCII-арта','Блокировать сообщения только из эмодзи','Блокировать сообщения только из символов','Макс. процент ЗАГЛАВНЫХ (0 = выкл.)','Фильтры контента','Автоблокировка чат-ботов','Скрывать ссылки','Фильтровать ссылки (удалять всё сообщение)',
+/* 200 */'Белый список ссылок','Запрещённые слова','Дополнительные боты','Regex-фильтр','Звук уведомления','Включить звук','Громкость (0–200%)','Загрузить свой звук','Загрузить файл…','Проверить',
+/* 210 */'Триггеры звука','Играть на все сообщения','Играть только при упоминаниях','Играть на выделенных пользователей','Играть на донаты/события','Только когда вкладка неактивна','Задержка звука (мс)','Оповещения','Уведомления на рабочем столе','Читать сообщения вслух (TTS)',
+/* 220 */'Скорость TTS','Тон TTS','Мигать заголовком вкладки при упоминании','Движение','Включить анимации','Режим производительности','Режим энергосбережения','Скорость анимаций','Кривая сглаживания','Плавно',
+/* 230 */'Быстро','Упруго','Линейно','Анимации сообщений','Анимация появления','Появление','Всплытие','Слева','Справа','Сверху',
+/* 240 */'Отскок','3D-переворот','Увеличение + растворение','Анимация при наведении','Нет','Подъём','Свечение','Масштаб','Анимация выделения','Статично',
+/* 250 */'Пульсация','Анимация выделения нового пользователя','Трясти всё сообщение','Анимации акцента','Частота обновления','Автоопределение','Оверлей VTuber','Включить оверлей VTuber','Автоопределение VTube Studio','Хост VTS',
+/* 260 */'Порт VTS','Найти VTS','Захват экрана','Остановить','Позиция','Внизу справа','Внизу слева','Вверху справа','Вверху слева','Размер (px)',
+/* 270 */'Прозрачность (%)','Отразить по горизонтали','Включить режим источника браузера','Скопировать CSS для OBS','Скопировать URL страницы','OBS WebSocket','Включить OBS WebSocket','Хост OBS','Порт OBS','Пароль OBS',
+/* 280 */'Чтение чата Discord','Токен бота','Автоподключение при загрузке','Ключ YouTube Data API','Автопереподключение','Сейчас играет / Музыка','Показывать карточку «Сейчас играет»','Интервал опроса (мс)','Опрос локального реле','URL реле',
+/* 290 */'Режим реле Nightbot','Поддержка YouTube Music','Включить Spotify','Client ID Spotify','Streamlabs Socket API','Включить события Streamlabs','Токен сокета','Webhook','URL вебхука Discord','URL вебхука Slack',
+/* 300 */'TikTok Live (реле)','Сводка чата ИИ','Включить сводку ИИ','Провайдер ИИ','API-ключ','Имя модели','URL своего endpoint','Сводка каждые (с)','Макс. сообщений для анализа','Показывать сводку в чате',
+/* 310 */'Аналитика ИИ','Анализ тональности','Определение тем','Скачать всё','Мод Minecraft','Скачать полный .zip','Скачать отдельный .jar','Скопировать инструкцию','Плагин osu! (stable)','Скачать C# проект',
+/* 320 */'Код интеграции с игрой','Цель','Meta Quest / VR HTML','Скачать VR HTML','Передать на Quest','Забыть папку Quest','Поведение','Буфер задержки эфира (с)','Автоудаление сообщений через (с)','Автоочистка при переподключении',
+/* 330 */'Стандартный стример','Размер панели недавних','Макс. сообщений на пользователя','Интервал очистки','Режим стримера','Включить режим стримера','Мобильные','Показывать нижнюю панель навигации','Свайп от края для открытия панели','Тактильная отдача',
+/* 340 */'Компактная панель на мобильных','Ваш ПК','Определить мой ПК','Скопировать характеристики','Проверить, поддерживает ли [игра]','Проверить','Ожидаемый FPS на вашей системе','Самое низкое качество','По умолчанию / Базовое','Максимум',
+/* 350 */'Ваши характеристики','Требования Steam','Прослушать / Проверить микрофон','Микрофон','Громкость входа','Громкость вывода монитора','Слушать','Использование ресурсов приложением','FPS (эта вкладка)','Использовано JS heap',
+/* 360 */'JS heap всего','Лимит JS heap','DOM-узлы','Сообщения чата','Ядра CPU','Видимость вкладки','Запустить статистику','Как открыть диспетчер задач','Личные заметки','Видите только вы.',
+/* 370 */'История чата','Пока нет отслеживаемых сообщений.','Возраст аккаунта','Подписан','Впервые замечен','Сообщений','Последнее сообщение','Средняя длина','Сообщений за сеанс','Просмотр',
+/* 380 */'Выделить','Закладка','Тег','Блокировать','Предупреждение','Больше не напоминать','Хорошо, понятно','Сохранить','Отмена','Имя файла',
+/* 390 */'Формат','Добро пожаловать в Stream Chat!','Да, покажите!','Нет, сам разберусь','Выберите платформу','Подключитесь к стримеру','Живой чат','Строка состояния','Сейчас играет','Шаг',
+/* 400 */'из','Назад','Пропустить','Готово','Сменить язык','Язык','Японский','Английский','Немецкий','Испанский',
+/* 410 */'Корейский','Китайский','Французский','Итальянский','Португальский','Русский','Арабский'
+];
+
+const AR = [
+/* 0 */'Stream Chat','Twitch','Kick','Discord','YouTube','مخصص','الإعدادات','المساعدة','معلومات إضافية','اختصارات لوحة المفاتيح',
+/* 10 */'ستريمر Twitch','ستريمر Kick','سيرفر Discord','YouTube Live','WebSocket مخصص','اسم الستريمر','اتصال','قطع الاتصال','غير متصل','متصل',
+/* 20 */'جارٍ الاتصال…','جارٍ إعادة الاتصال…','خطأ في الاتصال','إحصائيات الستريمر','القناة','مدة البث','المشاهدون','اللعبة','العنوان','الحالة',
+/* 30 */'ستريمرات جاهزة','مباشر','الفئة','الأخيرة','غير متصل','المستخدمون المسموح لهم','تجاوز كل الفلاتر','اسم المستخدم','إعداد التخطيط المسبق','افتراضي',
+/* 40 */'حديث','كلاسيكي','دردشة للقراءة فقط.','كل البيانات تبقى على هذا الجهاز.','بحث','إحصائيات','الإشارات المرجعية','الوسوم','تحديث','تصدير',
+/* 50 */'تفريغ','وضع مصدر المتصفح','المحجوبون','ابحث في الرسائل…','السابق','التالي','إغلاق','📌 مثبّت','↓ رسائل جديدة','رسائل جديدة',
+/* 60 */'اتصل بستريمر لرؤية دردشته المباشرة.','للقراءة فقط · كل شيء محلي','دردشة للقراءة فقط — الإرسال معطّل','إظهار/إخفاء داخل اللعبة','أول رسالة!','تم النسخ ✓','فشل النسخ','لا يوجد شيء لنسخه','تم مسح الدردشة','تم تحديث الدردشة ✓',
+/* 70 */'تم تحميل الإعدادات','فشل التحميل:','تم الحجب:','تم إلغاء الحجب:','تم التمييز:','تمت الإزالة:','تمت إضافة الوسم:','تم حفظ الإعداد:','الثيم:','التخطيط:',
+/* 80 */'مستوى الصوت:','الخط:','تم التبديل إلى','تم الخروج من وضع مصدر المتصفح','الخروج من وضع الطبقة','الصوت مفعّل','الصوت معطّل','TTS مفعّل','TTS معطّل','التمرير التلقائي مفعّل',
+/* 90 */'التمرير التلقائي معطّل','الصور الرمزية مفعّلة','الصور الرمزية معطّلة','أسماء المستخدمين مفعّلة','أسماء المستخدمين معطّلة','الطوابع الزمنية مفعّلة','الطوابع الزمنية معطّلة','لا توجد رسائل','تم نسخ الرسالة','المظهر',
+/* 100 */'الدردشة','الفلاتر','الأصوات','الحركات','VTuber','التكاملات','أدوات الذكاء الاصطناعي','المودات والألعاب','VR / Quest','متقدم / إضافات',
+/* 110 */'إعداد الاختبار','الاختصارات','الثيم','الثيم الرئيسي','افتراضي سطح المكتب','أبيض / فاتح','داكن / أسود','إعداد التمييز','نيون','ماتريكس',
+/* 120 */'غروب الشمس','VTuber وردي','تمييز مخصص','رابط صورة خلفية الدردشة','شفافية الدردشة','خلفية شفافة','التخطيط والحجم','مقياس الدقة','حجم الخط','عائلة الخط',
+/* 130 */'أحادي المسافة','Serif','انحناء الحواف','حاد','صغير','عادي','كبير','دائري','حبة','تباعد الرسائل',
+/* 140 */'مضغوط','فسيح','نمط الرسالة','مسطح','بإطار','شكل الصورة الرمزية','دائري','مربع','وضع الكونسول / التلفاز','صور رمزية مضغوطة',
+/* 150 */'حجم الشارة','حجم خط اسم المستخدم (بكسل)','العرض','إظهار الصور الرمزية','إظهار أسماء المستخدمين','إظهار الطوابع الزمنية','تنسيق الطابع الزمني','24 ساعة','12 ساعة','نسبي',
+/* 160 */'تجميع الرسائل المتتالية','التمرير التلقائي','إيقاف التمرير عند المرور','إيقاف عند المرور على الرسالة','إظهار مدة البث','إظهار وسم المستخدم الجديد','إظهار شارات المستخدم','إظهار عدّاد رسائل كل مستخدم','تمكين الإيموتات','إظهار شريط المستخدمين الأخيرين',
+/* 170 */'إظهار بطاقة معلومات البث','إظهار وسم القناة','إزالة الرسائل المكررة (30 ث)','عدد الرسائل المحفوظة','أقصى رسائل / ثانية','حفظ الدردشة عند التحديث','الاتصال التلقائي بالستريمر الافتراضي','التمييز','تمييز الإشارات إليّ','اسم الإشارة',
+/* 180 */'لون التمييز','لون تمييز الكلمات المفتاحية','فلتر السبام','إخفاء رسائل السبام','الحساسية','منخفض','متوسط','مرتفع','عدواني','الحد الأدنى للأحرف المكررة',
+/* 190 */'الحد الأدنى للكلمات المكررة','أدنى طول للرسالة','مكافحة فن ASCII','حجب الرسائل بالإيموجي فقط','حجب الرسائل بالرموز فقط','النسبة القصوى للأحرف الكبيرة (0 = معطّل)','فلاتر المحتوى','الحجب التلقائي للبوتات','إخفاء الروابط','فلترة الروابط (حذف الرسالة كاملة)',
+/* 200 */'قائمة الروابط المسموحة','الكلمات المحجوبة','بوتات إضافية','فلتر Regex','صوت الإشعار','تفعيل الصوت','مستوى الصوت (0–200%)','رفع صوت مخصص','رفع ملف…','تجربة',
+/* 210 */'مشغلات الصوت','تشغيل على كل الرسائل','تشغيل على الإشارات فقط','تشغيل على المستخدمين المميزين','تشغيل على التبرعات/الأحداث','فقط عند عدم تفعيل التبويب','تأخير الصوت (مللي ثانية)','التنبيهات','إشعارات سطح المكتب','قراءة الرسائل بصوت عالٍ (TTS)',
+/* 220 */'سرعة TTS','نغمة TTS','وميض عنوان التبويب عند الإشارة','الحركة','تمكين الحركات','وضع الأداء','وضع الطاقة المنخفضة','سرعة الحركة','منحنى التمهيد','سلس',
+/* 230 */'سريع','مرتد','خطي','حركات الرسائل','حركة الدخول','تلاشي','ظهور','انزلاق من اليسار','انزلاق من اليمين','انزلاق من الأعلى',
+/* 240 */'ارتداد','انقلاب ثلاثي الأبعاد','تكبير + تلاشي','حركة المرور','بلا','ارتفاع','توهج','تكبير','حركة التمييز','ثابت',
+/* 250 */'نبض','حركة تمييز المستخدم الجديد','رجّ الرسالة كاملة','حركات التمييز','معدل التحديث','اكتشاف تلقائي','طبقة VTuber','تفعيل طبقة VTuber','اكتشاف VTube Studio تلقائيًا','مضيف VTS',
+/* 260 */'منفذ VTS','اكتشاف VTS','التقاط الشاشة','إيقاف','الموضع','أسفل اليمين','أسفل اليسار','أعلى اليمين','أعلى اليسار','الحجم (بكسل)',
+/* 270 */'الشفافية (%)','انعكاس أفقي','تفعيل وضع مصدر المتصفح','نسخ CSS لـ OBS','نسخ رابط هذه الصفحة','OBS WebSocket','تفعيل OBS WebSocket','مضيف OBS','منفذ OBS','كلمة مرور OBS',
+/* 280 */'قارئ دردشة Discord','توكن البوت','الاتصال التلقائي عند التحميل','مفتاح YouTube Data API','إعادة الاتصال التلقائي','يُشغّل الآن / الموسيقى','إظهار بطاقة التشغيل','فترة الاستقصاء (مللي ثانية)','استقصاء المرحّل المحلي','رابط المرحّل',
+/* 290 */'وضع مرحّل Nightbot','دعم YouTube Music','تفعيل Spotify','معرّف عميل Spotify','Streamlabs Socket API','تفعيل أحداث Streamlabs','توكن Socket','Webhook','رابط Webhook لـ Discord','رابط Webhook لـ Slack',
+/* 300 */'TikTok Live (مرحّل)','ملخّص دردشة الذكاء الاصطناعي','تفعيل ملخّص الذكاء الاصطناعي','مزوّد الذكاء الاصطناعي','مفتاح API','اسم الطراز','رابط نقطة نهاية مخصصة','تلخيص كل (ث)','أقصى عدد رسائل للتحليل','إظهار الملخّص في الدردشة',
+/* 310 */'رؤى الذكاء الاصطناعي','تحليل المشاعر','كشف المواضيع','تنزيل الكل','مود Minecraft','تنزيل .zip كامل','تنزيل .jar واحد','نسخ دليل الإعداد','إضافة osu! (stable)','تنزيل مشروع C#',
+/* 320 */'كود تكامل اللعبة','الهدف','Meta Quest / VR HTML','تنزيل VR HTML','نقل إلى Quest','نسيان مجلد Quest','السلوك','مخزن تأخير البث (ث)','إزالة الرسائل تلقائيًا بعد (ث)','مسح تلقائي عند إعادة الاتصال',
+/* 330 */'الستريمر الافتراضي','حجم شريط الأخيرين','أقصى رسائل لكل مستخدم','فترة التنظيف','وضع الستريمر','تفعيل وضع الستريمر','الجوال','إظهار شريط التنقل السفلي','سحب الحافة لفتح الشريط الجانبي','ردود لمسية',
+/* 340 */'شريط أدوات مضغوط على الجوال','جهازك','اكتشاف جهازي','نسخ المواصفات','تحقق إن كان الإعداد يدعم [لعبة]','تحقق','تقدير FPS على جهازك','أدنى جودة','افتراضي / أساسي','الأعلى',
+/* 350 */'المكتشف لديك','متطلبات Steam','الاستماع / اختبار الميكروفون','الميكروفون','مستوى الإدخال','مستوى إخراج المراقبة','استماع','استخدام الموارد لهذا التطبيق','FPS (هذا التبويب)','ذاكرة JS المستخدمة',
+/* 360 */'إجمالي ذاكرة JS','حد ذاكرة JS','عُقد DOM','رسائل الدردشة','أنوية CPU','ظهور التبويب','بدء الإحصاءات المباشرة','كيفية فتح مدير المهام','ملاحظات خاصة','تراها أنت فقط.',
+/* 370 */'سجل الدردشة','لا رسائل متتبَّعة بعد.','عمر الحساب','يتابع','أول ظهور','الرسائل','آخر رسالة','متوسط الطول','رسائل الجلسة','عرض',
+/* 380 */'تمييز','إشارة مرجعية','وسم','حجب','تحذير','لا تذكّرني مجددًا','حسنًا، فهمت','حفظ','إلغاء','اسم الملف',
+/* 390 */'التنسيق','مرحبًا بك في Stream Chat!','نعم، أرني!','لا، سأكتشف بنفسي','اختر منصتك','اتصل بستريمر','دردشة مباشرة','شريط الحالة','يُشغّل الآن','خطوة',
+/* 400 */'من','رجوع','تخطٍ','إنهاء','تغيير اللغة','اللغة','اليابانية','الإنجليزية','الألمانية','الإسبانية',
+/* 410 */'الكورية','الصينية','الفرنسية','الإيطالية','البرتغالية','الروسية','العربية'
 ];
 
 const KO = [
@@ -2982,7 +3333,7 @@ const KO = [
 /* 170 */'방송 정보 카드 표시','채널 알약 표시','동일 메시지 중복 제거 (30초)','유지할 메시지 수','초당 최대 메시지 수','새로고침 시 채팅 유지','기본 스트리머 자동 연결','강조','내 멘션 강조','멘션 이름',
 /* 180 */'강조 색상','키워드 강조 색상','스팸 필터','스팸 메시지 숨기기','민감도','낮음','중간','높음','공격적','최소 반복 문자 수',
 /* 190 */'최소 반복 단어 수','최소 메시지 길이','ASCII 아트 방지','이모지만 있는 메시지 차단','기호만 있는 메시지 차단','대문자 최대 비율 (0 = 끔)','콘텐츠 필터','챗봇 자동 차단','링크 숨기기','링크 필터 (메시지 전체 삭제)',
-/* 200 */'링크 허용 목록','차단 단어','추가 봇','정규식 필터','알림음','사운드 사용','볼륨 (0–175%)','사용자 지정 사운드 업로드','파일 업로드…','테스트',
+/* 200 */'링크 허용 목록','차단 단어','추가 봇','정규식 필터','알림음','사운드 사용','볼륨 (0–200%)','사용자 지정 사운드 업로드','파일 업로드…','테스트',
 /* 210 */'사운드 트리거','모든 메시지에서 재생','멘션 시에만 재생','강조 사용자에서 재생','후원/이벤트에서 재생','탭 비활성 시에만','사운드 지연 (ms)','경고','데스크톱 알림','메시지 소리내어 읽기 (TTS)',
 /* 220 */'TTS 속도','TTS 음높이','멘션 시 탭 제목 깜빡임','모션','애니메이션 사용','성능 모드','저전력 모드','애니메이션 속도','이징 곡선','부드럽게',
 /* 230 */'빠르게','탄성','선형','메시지 애니메이션','등장 애니메이션','페이드 인','팝 인','왼쪽에서 슬라이드','오른쪽에서 슬라이드','위에서 슬라이드',
@@ -3003,7 +3354,7 @@ const KO = [
 /* 380 */'강조','북마크','태그','차단','경고','다시 알리지 않기','알겠습니다','저장','취소','파일 이름',
 /* 390 */'형식','스트림 챗에 오신 것을 환영합니다!','네, 보여주세요!','아니요, 직접 해볼게요','플랫폼을 선택하세요','스트리머에 연결','라이브 채팅','상태 표시줄','재생 중','단계',
 /* 400 */'/', '뒤로','건너뛰기','완료','언어 변경','언어','일본어','영어','독일어','스페인어',
-/* 410 */'한국어','중국어'
+/* 410 */'한국어','중국어','프랑스어','이탈리아어','포르투갈어','러시아어','아랍어'
 ];
 
 const ZH = [
@@ -3027,7 +3378,7 @@ const ZH = [
 /* 170 */'显示直播信息卡','显示频道胶囊','去重相同消息（30秒）','保留消息数','每秒最大消息数','刷新时保留聊天','自动连接默认主播','高亮','高亮我的提及','提及名称',
 /* 180 */'高亮颜色','关键词高亮颜色','垃圾信息过滤器','隐藏垃圾消息','灵敏度','低','中','高','激进','最少重复字符',
 /* 190 */'最少重复词','最短消息长度','反 ASCII 艺术','屏蔽仅表情消息','屏蔽仅符号消息','最大大写字母百分比（0 = 关闭）','内容过滤器','自动屏蔽聊天机器人','隐藏链接','过滤链接（丢弃整条消息）',
-/* 200 */'链接白名单','屏蔽词','额外机器人','正则表达式过滤器','通知音','启用声音','音量（0–175%）','上传自定义声音','上传文件…','测试',
+/* 200 */'链接白名单','屏蔽词','额外机器人','正则表达式过滤器','通知音','启用声音','音量（0–200%）','上传自定义声音','上传文件…','测试',
 /* 210 */'声音触发','在所有消息上播放','仅在提及时播放','在高亮用户上播放','在打赏/事件上播放','仅当标签页不活跃时','声音延迟 (ms)','提醒','桌面通知','朗读消息 (TTS)',
 /* 220 */'TTS 语速','TTS 音调','提及时闪烁标签页标题','动态','启用动画','性能模式','省电模式','动画速度','缓动曲线','平滑',
 /* 230 */'轻快','弹跳','线性','消息动画','入场动画','淡入','弹出','从左侧滑入','从右侧滑入','从顶部滑入',
@@ -3048,12 +3399,11 @@ const ZH = [
 /* 380 */'高亮','书签','标签','屏蔽','警告','不再提醒','好的，我明白了','保存','取消','文件名',
 /* 390 */'格式','欢迎使用 Stream Chat！','是的，请展示！','不用，我自己试试','选择您的平台','连接到主播','实时聊天','状态栏','正在播放','步骤',
 /* 400 */'/','返回','跳过','完成','切换语言','语言','日语','英语','德语','西班牙语',
-/* 410 */'韩语','中文'
+/* 410 */'韩语','中文','法语','意大利语','葡萄牙语','俄语','阿拉伯语'
 ];
 
-const PACKS = { ja: JA, de: DE, es: ES, ko: KO, zh: ZH };
+const PACKS = { ja: JA, de: DE, es: ES, fr: FR, it: IT, pt: PT, ru: RU, ar: AR, ko: KO, zh: ZH };
 
-/* Build a dictionary object for fast substring lookup */
 function buildDict(arr){
   const d = {};
   for(let i = 0; i < K.length; i++){
@@ -3065,7 +3415,6 @@ function buildDict(arr){
 const DICTS = {};
 for(const code in PACKS) DICTS[code] = buildDict(PACKS[code]);
 
-/* ── Runtime state ────────────────────────────────────────────────────── */
 const LANG_KEY = 'sc_lang';
 let activeLang = localStorage.getItem(LANG_KEY) || 'ja';
 if(!LANGUAGES.some(l => l.code === activeLang)) activeLang = 'ja';
@@ -3074,7 +3423,6 @@ let KEYS_DESC = [];
 let DICT = null;
 let observer = null;
 
-/* ── Skip list — user content and inputs must never be translated ─────── */
 const SKIP_SELECTORS = [
   '.message', '.system-message',
   '.recent-user .rname', '.streamer-item .s-name',
@@ -3190,7 +3538,6 @@ function startObserver(){
   });
 }
 
-/* ── Native dialog wrapping so confirm/prompt/alert translate too ─────── */
 function wrapDialogs(){
   if(window.__scDialogsWrapped) return;
   const _a = window.alert, _c = window.confirm, _p = window.prompt;
@@ -3199,10 +3546,6 @@ function wrapDialogs(){
   window.prompt  = function(m,d){ return _p.call(window, translateString(String(m||'')), d); };
   window.__scDialogsWrapped = true;
 }
-
-/* ═══════════════════════════════════════════════════════════════════════
-   POPUP MENU UI
-   ═══════════════════════════════════════════════════════════════════════ */
 
 const MENU_CSS = `
 #scLangBtn{
@@ -3224,7 +3567,8 @@ const MENU_CSS = `
 #scLangMenu{
   position:fixed;bottom:64px;right:16px;z-index:99999;
   background:rgba(17,22,31,.97);border:1px solid #2a3342;
-  border-radius:14px;padding:6px;min-width:230px;
+  border-radius:14px;padding:6px;min-width:250px;max-width:min(360px, calc(100vw - 24px));
+  max-height:min(70vh, 520px);overflow-y:auto;overscroll-behavior:contain;
   box-shadow:0 20px 60px rgba(0,0,0,.65);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   opacity:0;visibility:hidden;transform:translateY(10px) scale(.96);
@@ -3234,9 +3578,14 @@ const MENU_CSS = `
   transform-origin:bottom right;
   font-family:Inter,system-ui,'Segoe UI',sans-serif;
   color:#e8edf5;
+  scrollbar-width:thin;scrollbar-color:#3f4147 transparent;
 }
+#scLangMenu::-webkit-scrollbar{width:6px}
+#scLangMenu::-webkit-scrollbar-thumb{background:#3f4147;border-radius:3px}
+#scLangMenu::-webkit-scrollbar-track{background:transparent}
 #scLangMenu.open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
 .scLangHeader{
+  position:sticky;top:0;background:rgba(17,22,31,.98);z-index:1;border-radius:8px 8px 0 0;
   padding:9px 12px 7px;font-size:.6rem;font-weight:800;
   text-transform:uppercase;letter-spacing:.7px;
   color:#5a6a80;border-bottom:1px solid rgba(42,51,66,.7);
@@ -3296,14 +3645,16 @@ function ensureMenuUI(){
     ).join('');
   document.body.appendChild(menu);
 
-  // Click on button toggles menu
   btn.addEventListener('click', function(e){
     e.stopPropagation();
     const open = menu.classList.toggle('open');
     btn.classList.toggle('active', open);
+    if(open){
+      const act = menu.querySelector('.scLangItem.active');
+      if(act) act.scrollIntoView({block:'nearest'});
+    }
   });
 
-  // Click outside closes
   document.addEventListener('click', function(e){
     if(menu.classList.contains('open') &&
        !menu.contains(e.target) && e.target !== btn){
@@ -3312,7 +3663,6 @@ function ensureMenuUI(){
     }
   });
 
-  // Escape closes
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && menu.classList.contains('open')){
       menu.classList.remove('open');
@@ -3320,7 +3670,6 @@ function ensureMenuUI(){
     }
   });
 
-  // Language item click
   menu.querySelectorAll('.scLangItem').forEach(function(item){
     item.addEventListener('click', function(e){
       e.stopPropagation();
@@ -3353,15 +3702,9 @@ function refreshMenuUI(){
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   LANGUAGE SWITCHING
-   ═══════════════════════════════════════════════════════════════════════ */
-
 function setLang(code){
-  // Translate back to English first if switching away from a non-English lang
   const wasNonEN = activeLang !== 'en' && DICTS[activeLang];
   if(wasNonEN){
-    // Reverse-translate everything currently on the page back to English
     const reverse = {};
     const srcArr = PACKS[activeLang];
     for(let i = 0; i < K.length; i++){
@@ -3420,10 +3763,6 @@ function showToast(text){
   }, 2200);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   BOOT
-   ═══════════════════════════════════════════════════════════════════════ */
-
 function boot(){
   injectMenuCSS();
   wrapDialogs();
@@ -3445,7 +3784,6 @@ if(document.readyState === 'loading'){
   boot();
 }
 
-/* Expose API */
 window.setStreamChatLang = setLang;
 window.translateStreamChat = translateString;
 
