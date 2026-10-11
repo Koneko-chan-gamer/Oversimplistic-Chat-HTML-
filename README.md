@@ -1,20 +1,28 @@
-# Oversimplistic-Chat-HTML-
-This is a *VERY* simple HTML for Twitch &amp; Kick Chat! (uses AI for designing, unfortunately because I'm too bad at it, I'm only good at anything else BUT designing T~T)
+# Oversimplistic Chat HTML
+Simple HTML file that let's you to view *ANY* chat you wish to look at. Some requires tokens / APIs (so I'm not sure if they work properly, yet.) It supports 3+ languages too!
+
+Yes, the design itself is AI, while everything else isn't AI, that's the only thing I've used it on. If you wish for me to redesign the whole thing myself, tell me, or you can make a fork, yourself, if you wish, of course.
+
+# ****BASICS****
+This HTML *CAN* be laggy if your settings are too high or too much for your device. I've made it where it *might* be able to support lots of devices.
+
+This HTML does *NOT* show personal information besides PC specs (nothing related to your IP address, Wi-Fi, or accounts).
+
+Some things may not work!
 
 
-I'd *LOVE* to add more if possible, but with how much I added to it, I kinda doubt I could add anymore. But if you wish to support me, even a little, you should go check out my YouTube channel! 
+# ****EXPECTED****
+Welcoming may be a little confusing since it is defaulted to Japanese due to me being a VTuber myself, and knowing Japanese.
 
-YouTube: @TheRhythmGamingChannel
+YouTube & Discord may be *VERY* confusing to setup yourself. 
 
-Twitch: Kawaiikoneko3128
-
-Steam: CookieKid92 (I know, *BAD* usernames lol) 
-
-
-The rest is just translated stuff for other users that doesn't know English!
+Mods & Integrations may be bad!
 
 
+# ****NEEDED INFORMATION****
 
-英語がわからない場合は、ブラウザの自動翻訳機能を使うことをお勧めします。しかし、基本的な英語がわかり、メッセージの翻訳だけが必要な場合は、設定ページを開き、「Chat」と書かれた英語のボタンをクリック（またはタップ）してください。次に「Translation (Google Translate)」をクリックし、「Enable auto-translate（自動翻訳を有効にする）」と「Translate ALL messages (not just foreign)（すべてのメッセージを翻訳する）」を選択します。そして、「Target language」ボタンを使って、使用したい言語に変更してください。「Provider」には「Google Translate (free, default)」を設定してください。
+This connects to *NOTHING* besides public APIs. You *CAN* check the code yourself by turning the HTML into a **.txt** file, or go to the built-in HTML Editor to check for yourself.
 
-可能であれば、後で他の言語への対応も追加してみたいと思います！ただ、すべてが1つのHTMLファイルにまとまっているため、そうするのはかなり難しいんです 😭
+*EVERYTHING* about this *IS* editable and customizable! So if you're a nerdy-codey-boi, you can change *ANYTHING* about it!
+
+If something is wrong / unusable, I *WILL* do everything in my power / abilities to fix it if possible!
